@@ -4,13 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pl.softcredit.mpjk.core.JpkException;
+import pl.softcredit.mpjk.core.configuration.ConfigurationService;
 import pl.softcredit.mpjk.engine.JpkProcessor;
 
 
 public class JpkCLI {
 
-    final static Logger log = LoggerFactory.getLogger(JpkCLI.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(JpkCLI.class);
+    private static final ConfigurationService configurationService =
+            new ConfigurationService("G:\\work\\m-jpk\\src\\main\\resources\\config.properties");
 
     public JpkCLI(JpkProcessor... processors) throws JpkException {
 
@@ -23,12 +25,8 @@ public class JpkCLI {
 
     public static void main(String[] args) {
 
-        System.out.println("ewwerwerwre");
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        LOGGER.info(configurationService.getWorkingDirectoryPath());
+        LOGGER.info(configurationService.getSchemeDirectoryPath());
 
 /*        try {
             JpkCLI auditPerformer = new JpkCLI(new FormalValidationProcessor());
