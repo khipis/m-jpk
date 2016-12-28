@@ -1,4 +1,4 @@
-package pl.softcredit.mpjk.processors;
+package pl.softcredit.mpjk.engine;
 
 public interface JpkProcessor {
 

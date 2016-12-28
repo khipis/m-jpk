@@ -1,4 +1,4 @@
-package pl.softcredit.mpjk;
+package pl.softcredit.mpjk.core;
 
 public class JpkException extends Exception {
 

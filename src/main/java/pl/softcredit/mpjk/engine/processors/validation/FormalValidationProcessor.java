@@ -1,6 +1,6 @@
-package pl.softcredit.mpjk.processors.validation;
+package pl.softcredit.mpjk.engine.processors.validation;
 
-import pl.softcredit.mpjk.processors.JpkProcessor;
+import pl.softcredit.mpjk.engine.JpkProcessor;
 
 
 public class FormalValidationProcessor implements JpkProcessor {

@@ -1,11 +1,11 @@
-package pl.softcredit.mpjk.performer;
+package pl.softcredit.mpjk.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pl.softcredit.mpjk.JpkException;
-import pl.softcredit.mpjk.processors.JpkProcessor;
-import pl.softcredit.mpjk.processors.validation.FormalValidationProcessor;
+import pl.softcredit.mpjk.core.JpkException;
+import pl.softcredit.mpjk.engine.JpkProcessor;
+import pl.softcredit.mpjk.engine.processors.validation.FormalValidationProcessor;
 
 
 public class JpkCLI {
