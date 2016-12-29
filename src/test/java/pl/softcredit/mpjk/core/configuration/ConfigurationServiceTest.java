@@ -11,7 +11,8 @@ public class ConfigurationServiceTest {
     @Test
     public void shouldLoadConfigurationFile() {
         assertThat(configurationService.getWorkingDirectoryPath()).isNotEmpty();
-        assertThat(configurationService.getSchemeDirectoryPath()).isNotEmpty();
+        assertThat(configurationService.getSchemeFilePath()).isNotEmpty();
+        assertThat(configurationService.getInputFilePath()).isNotEmpty();
     }
 
 }

@@ -1,6 +1,5 @@
 package pl.softcredit.mpjk.core.configuration;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,14 +14,10 @@ public final class ConfigurationService {
     private static final Properties properties = new Properties();
 
     public ConfigurationService(String configFilePath) {
-        InputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(configFilePath);
+        try(InputStream fileInputStream = new FileInputStream(configFilePath)) {
             properties.load(fileInputStream);
         } catch (IOException e) {
             LOGGER.error("Problem while loading configuration file: " + configFilePath);
-        } finally {
-            IOUtils.closeQuietly(fileInputStream);
         }
     }
 
@@ -30,8 +25,12 @@ public final class ConfigurationService {
         return properties.getProperty("working.directory.path");
     }
 
-    public String getSchemeDirectoryPath() {
-        return properties.getProperty("scheme.directory.path");
+    public String getSchemeFilePath() {
+        return properties.getProperty("scheme.file.path");
+    }
+
+    public String getInputFilePath() {
+        return properties.getProperty("input.file.path");
     }
 
 }

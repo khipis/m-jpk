@@ -7,6 +7,8 @@ import pl.softcredit.mpjk.core.JpkException;
 import pl.softcredit.mpjk.core.configuration.ConfigurationService;
 import pl.softcredit.mpjk.engine.JpkProcessor;
 
+import static pl.softcredit.mpjk.engine.JpkProcessors.FORMAL_VALIDATION_PROCESSOR;
+
 
 public class JpkCLI {
 
@@ -14,25 +16,18 @@ public class JpkCLI {
     private static final ConfigurationService configurationService =
             new ConfigurationService("G:\\work\\m-jpk\\src\\main\\resources\\config.properties");
 
-    public JpkCLI(JpkProcessor... processors) throws JpkException {
-
+    private JpkCLI(JpkProcessor... processors) throws JpkException {
         for (JpkProcessor processor : processors) {
-
-            processor.process("", "");
+            processor.process(configurationService);
         }
     }
 
-
     public static void main(String[] args) {
-
-        LOGGER.info(configurationService.getWorkingDirectoryPath());
-        LOGGER.info(configurationService.getSchemeDirectoryPath());
-
-/*        try {
-            JpkCLI auditPerformer = new JpkCLI(new FormalValidationProcessor());
+       try {
+            new JpkCLI(FORMAL_VALIDATION_PROCESSOR);
         } catch (JpkException e) {
-            log.error("Cannot perform audit: " + e.getMessage());
-        }*/
+            LOGGER.error("Cannot perform validation: " + e.getMessage());
+        }
     }
 
 }
