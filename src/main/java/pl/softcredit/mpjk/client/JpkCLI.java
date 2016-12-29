@@ -9,7 +9,6 @@ import pl.softcredit.mpjk.engine.JpkProcessor;
 
 import static pl.softcredit.mpjk.engine.JpkProcessors.FORMAL_VALIDATION_PROCESSOR;
 
-
 public class JpkCLI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JpkCLI.class);
