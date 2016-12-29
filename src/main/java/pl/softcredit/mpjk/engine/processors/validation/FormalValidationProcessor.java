@@ -39,10 +39,8 @@ public class FormalValidationProcessor implements JpkProcessor {
 
             LOGGER.info(xmlFile.getSystemId() + " is valid");
 
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SAXException | IOException e) {
+            LOGGER.info(e.toString());
         }
     }
 
