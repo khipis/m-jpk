@@ -6,7 +6,7 @@
     <groupId>pl.softcredit.mjpk</groupId>
     <artifactId>mjpk</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>0.0.8-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -19,6 +19,7 @@
         <junit.version>4.12</junit.version>
         <assertj.version>1.2.0</assertj.version>
         <commons.io.version>1.3.2</commons.io.version>
+        <maven.antrun.version>1.8</maven.antrun.version>
     </properties>
 
     <dependencies>
@@ -77,6 +78,25 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven.antrun.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <copy file="${basedir}/target/${artifactId}-${version}.jar" tofile="${basedir}/release/mjpk.jar"/>
+                            </tasks>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
