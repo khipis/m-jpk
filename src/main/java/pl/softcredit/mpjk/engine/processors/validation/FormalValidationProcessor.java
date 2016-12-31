@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.xml.sax.SAXException;
 
 import pl.softcredit.mpjk.core.configuration.ConfigurationService;
-import pl.softcredit.mpjk.engine.JpkProcessor;
+import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
 import java.io.File;
 import java.io.IOException;

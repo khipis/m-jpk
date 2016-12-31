@@ -1,4 +1,4 @@
-package pl.softcredit.mpjk.engine;
+package pl.softcredit.mpjk.engine.processors;
 
 import pl.softcredit.mpjk.core.configuration.ConfigurationService;
 
