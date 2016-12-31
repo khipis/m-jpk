@@ -15,13 +15,13 @@ public class CleanWorkingDirectoryProcessor implements JpkProcessor {
 
     private static final Logger LOGGER = getLogger(CleanWorkingDirectoryProcessor.class);
 
-    public void process(ConfigurationService configurationService) {
-        LOGGER.info("Cleaning working directory path: " + configurationService.getWorkingDirectoryPath());
-        File workingDirectoryPath = new File(configurationService.getWorkingDirectoryPath());
+    public void process(ConfigurationService config) {
+        LOGGER.info("Cleaning working directory path: " + config.getWorkingDirectoryPath());
+        File workingDirectoryPath = new File(config.getWorkingDirectoryPath());
         try {
             cleanDirectory(workingDirectoryPath);
         } catch (IOException e) {
-            LOGGER.error("Problem while cleaning working directory: " + configurationService.getWorkingDirectoryPath(), e);
+            LOGGER.error("Problem while cleaning working directory: " + config.getWorkingDirectoryPath(), e);
         }
     }
 }
