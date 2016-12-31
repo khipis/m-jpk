@@ -1,0 +1,1 @@
+G:\work\m-jpk\release\jre\32bit\jre8\bin\java -jar mjpk.jar
