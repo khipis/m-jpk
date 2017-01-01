@@ -9,6 +9,7 @@ import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 
 import java.io.File;
 
+import static java.io.File.separator;
 import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,36 +19,40 @@ import static org.mockito.Mockito.when;
 public class CleanWorkingDirectoryProcessorTest {
 
     private static final String FILE_CONTENT = "VALID";
+    private static final String TEMP_FILE_NAME = "tempfile.xml";
+    private static final String TEMP_WORKING_DIR = "target/working-dir";
+    private static final String TEMP_INPUT_FILE = TEMP_WORKING_DIR + separator + "tempfile.xml";
 
     @Mock
     private JpkConfiguration config;
 
-    private CleanWorkingDirectoryProcessor cleanWorkingDirectoryProcessor = new CleanWorkingDirectoryProcessor();
+    private CleanWorkingDirectoryProcessor cleanWorkingDirectoryProcessor =
+            new CleanWorkingDirectoryProcessor();
 
     @Test
     public void shouldCreateWorkingDirIfItNotExists() throws Exception {
-        deleteDirectory(new File("target/working-dir"));
+        deleteDirectory(new File(TEMP_WORKING_DIR));
         whenConfiguration();
 
         cleanWorkingDirectoryProcessor.process(config);
 
-        assertThat(new File("target/working-dir")).exists();
+        assertThat(new File(TEMP_WORKING_DIR)).exists();
     }
 
     @Test
     public void shouldCleanWorkingDirIfExists() throws Exception {
         whenConfiguration();
-        writeStringToFile(new File("target/working-dir/tempfile.xml"), "Some content");
+        writeStringToFile(new File(TEMP_INPUT_FILE), FILE_CONTENT);
 
         cleanWorkingDirectoryProcessor.process(config);
 
-        assertThat(new File("target/working-dir")).exists();
-        assertThat(new File("target/working-dir/tempfile.xml")).doesNotExist();
+        assertThat(new File(TEMP_WORKING_DIR)).exists();
+        assertThat(new File(TEMP_INPUT_FILE)).doesNotExist();
     }
 
     private void whenConfiguration() {
-        when(config.getWorkingDirectoryPath()).thenReturn("target/working-dir");
-        when(config.getInputFilePath()).thenReturn("tempfile.xml");
+        when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
+        when(config.getInputFilePath()).thenReturn(TEMP_FILE_NAME);
     }
 
 }
