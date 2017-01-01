@@ -18,12 +18,10 @@ public class JpkOutputUtils {
 
     private static final Logger LOGGER = getLogger(JpkOutputUtils.class);
 
-    public static void saveFormalValidationOutput(JpkConfiguration config) {
-
+    public static void saveFormalValidationOutput(JpkConfiguration config, String valid) {
         File formalValidationOutputFile = new File(getOutputPathForFormalValidation(config));
-
         try {
-            writeStringToFile(formalValidationOutputFile, "VALID");
+            writeStringToFile(formalValidationOutputFile, valid);
         } catch (IOException e) {
             LOGGER.error("Cannot save formal validation output file: " + getOutputPathForFormalValidation(config), e);
         }
