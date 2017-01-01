@@ -20,7 +20,7 @@ public final class ConfigurationLoader {
             LOGGER.info("Using config.properties from app root: config.properties");
             jpkConfiguration = new FileJpkConfiguration("config.properties");
         } else {
-            LOGGER.info("Cannot find config path in argument and in root. Using default parameters for DEBUG");
+            LOGGER.info("Cannot find config path in argument and in root path. Using default parameters for DEBUG");
             jpkConfiguration = new DefaultJpkConfiguration();
 
         }
