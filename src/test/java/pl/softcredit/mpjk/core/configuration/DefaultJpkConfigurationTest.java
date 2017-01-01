@@ -10,9 +10,9 @@ public class DefaultJpkConfigurationTest {
 
     @Test
     public void shouldLoadConfigurationFile() {
-        assertThat(jpkConfiguration.getWorkingDirectoryPath()).isNotEmpty();
-        assertThat(jpkConfiguration.getSchemeFilePath()).isNotEmpty();
-        assertThat(jpkConfiguration.getInputFilePath()).isNotEmpty();
+        assertThat(jpkConfiguration.getWorkingDirectoryPath()).isEqualTo("working-dir");
+        assertThat(jpkConfiguration.getSchemeFilePath()).isEqualTo("schemes/Schemat_JPK_VAT(1)_v1-0.xsd");
+        assertThat(jpkConfiguration.getInputFilePath()).isEqualTo("input-files/JPK-VAT-TEST-0000.xml");
     }
 
 }

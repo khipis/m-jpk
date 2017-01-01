@@ -25,4 +25,9 @@ public final class DefaultJpkConfiguration implements JpkConfiguration {
         return "input-files/JPK-VAT-TEST-0000.xml";
     }
 
+    @Override
+    public String getConfigFilePath() {
+        return "";
+    }
+
 }

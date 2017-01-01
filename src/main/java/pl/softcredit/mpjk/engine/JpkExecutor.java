@@ -14,18 +14,17 @@ import static java.util.Collections.unmodifiableList;
 public class JpkExecutor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JpkExecutor.class);
-    private final JpkConfiguration fileJpkConfiguration;
+    private final JpkConfiguration jpkConfiguration;
 
-    public JpkExecutor(JpkConfiguration fileJpkConfiguration) {
-        this.fileJpkConfiguration = fileJpkConfiguration;
-
+    public JpkExecutor(JpkConfiguration jpkConfiguration) {
+        this.jpkConfiguration = jpkConfiguration;
     }
 
     public void execute(JpkProcessor... processors) {
         List<JpkProcessor> processorsCopy = unmodifiableList(asList(processors));
         LOGGER.info("Processors to execute: " + processorsCopy.size());
         for (JpkProcessor processor : processorsCopy) {
-            processor.process(fileJpkConfiguration);
+            processor.process(jpkConfiguration);
         }
     }
 

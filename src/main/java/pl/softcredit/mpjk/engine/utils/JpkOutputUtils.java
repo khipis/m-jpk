@@ -29,15 +29,15 @@ public class JpkOutputUtils {
 
     }
 
-    private static String getOutputPathForFormalValidation(JpkConfiguration config) {
+    public static String getOutputPathForFormalValidation(JpkConfiguration config) {
         return getOutputPath(config) + VALIDATION_EXTENSION;
     }
 
-    private static String getOutputPath(JpkConfiguration config) {
+    public static String getOutputPath(JpkConfiguration config) {
         return config.getWorkingDirectoryPath() + separator +  extractFileNameFromInputFilePath(config);
     }
 
-    private static String extractFileNameFromInputFilePath(JpkConfiguration config) {
+    public static String extractFileNameFromInputFilePath(JpkConfiguration config) {
         Path p = Paths.get(config.getInputFilePath());
         return p.getFileName().toString();
     }

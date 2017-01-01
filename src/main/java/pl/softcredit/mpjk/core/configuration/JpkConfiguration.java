@@ -7,4 +7,6 @@ public interface JpkConfiguration {
     String getSchemeFilePath();
 
     String getInputFilePath();
+
+    String getConfigFilePath();
 }
