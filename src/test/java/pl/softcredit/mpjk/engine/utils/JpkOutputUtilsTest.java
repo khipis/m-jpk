@@ -35,8 +35,7 @@ public class JpkOutputUtilsTest {
         File createdFile = new File(TEMP_INPUT_FILE + VALIDATION_EXTENSION);
 
         assertThat(createdFile).exists();
-        String result = readFileToString(createdFile);
-        assertThat(result).isEqualTo(FILE_CONTENT);
+        assertThat(readFileToString(createdFile)).isEqualTo(FILE_CONTENT);
     }
 
     private void whenConfiguration() {

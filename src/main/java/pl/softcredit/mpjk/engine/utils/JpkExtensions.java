@@ -1,6 +1,6 @@
 package pl.softcredit.mpjk.engine.utils;
 
-enum JpkExtensions {
+public enum JpkExtensions {
     AES_EXTENSION(".aes"),
     ZIP_EXTENSION(".zip"),
     XADES_EXTENSION(".xades"),
