@@ -1,8 +1,8 @@
 package pl.softcredit.mpjk.engine.processors;
 
-import pl.softcredit.mpjk.core.configuration.ConfigurationService;
+import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 
 public interface JpkProcessor {
 
-    void process(ConfigurationService configurationService);
+    void process(JpkConfiguration jpkConfiguration);
 }

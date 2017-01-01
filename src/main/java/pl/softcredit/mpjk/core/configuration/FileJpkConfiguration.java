@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public final class ConfigurationService {
+public final class FileJpkConfiguration implements JpkConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileJpkConfiguration.class);
     private static final Properties properties = new Properties();
 
-    public ConfigurationService(String configFilePath) {
+    public FileJpkConfiguration(String configFilePath) {
         try(InputStream fileInputStream = new FileInputStream(configFilePath)) {
             properties.load(fileInputStream);
         } catch (IOException e) {
@@ -21,14 +21,17 @@ public final class ConfigurationService {
         }
     }
 
+    @Override
     public String getWorkingDirectoryPath() {
         return properties.getProperty("working.directory.path");
     }
 
+    @Override
     public String getSchemeFilePath() {
         return properties.getProperty("scheme.file.path");
     }
 
+    @Override
     public String getInputFilePath() {
         return properties.getProperty("input.file.path");
     }

@@ -3,7 +3,7 @@ package pl.softcredit.mpjk.engine.processors.validation;
 import org.slf4j.Logger;
 import org.xml.sax.SAXException;
 
-import pl.softcredit.mpjk.core.configuration.ConfigurationService;
+import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
 import java.io.File;
@@ -22,7 +22,7 @@ public class FormalValidationProcessor implements JpkProcessor {
 
     private static final Logger LOGGER = getLogger(FormalValidationProcessor.class);
 
-    public void process(ConfigurationService config) {
+    public void process(JpkConfiguration config) {
         try {
             LOGGER.info("Input file: " + config.getInputFilePath());
             LOGGER.info("Used scheme: " + config.getSchemeFilePath());

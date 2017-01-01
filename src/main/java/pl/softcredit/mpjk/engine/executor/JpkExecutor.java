@@ -3,7 +3,7 @@ package pl.softcredit.mpjk.engine.executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pl.softcredit.mpjk.core.configuration.ConfigurationService;
+import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
 import java.util.List;
@@ -14,18 +14,18 @@ import static java.util.Collections.unmodifiableList;
 public class JpkExecutor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JpkExecutor.class);
-    private final ConfigurationService configurationService;
+    private final JpkConfiguration fileJpkConfiguration;
 
-    public JpkExecutor(ConfigurationService configurationService) {
-        this.configurationService = configurationService;
+    public JpkExecutor(JpkConfiguration fileJpkConfiguration) {
+        this.fileJpkConfiguration = fileJpkConfiguration;
 
     }
 
     public void execute(JpkProcessor... processors) {
         List<JpkProcessor> processorsCopy = unmodifiableList(asList(processors));
+        LOGGER.info("Processors to execute: " + processorsCopy.size());
         for (JpkProcessor processor : processorsCopy) {
-            LOGGER.info(processors.getClass().getSimpleName());
-            processor.process(configurationService);
+            processor.process(fileJpkConfiguration);
         }
     }
 
