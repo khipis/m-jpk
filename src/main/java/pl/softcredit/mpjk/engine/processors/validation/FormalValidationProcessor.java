@@ -25,6 +25,7 @@ public class FormalValidationProcessor implements JpkProcessor {
 
     public void process(JpkConfiguration config) {
         try {
+
             LOGGER.info("Input file: " + config.getInputFilePath());
             LOGGER.info("Used scheme: " + config.getSchemeFilePath());
 
