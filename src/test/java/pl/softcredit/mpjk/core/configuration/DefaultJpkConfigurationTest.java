@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FileJpkConfigurationTest {
+public class DefaultJpkConfigurationTest {
 
-    private final JpkConfiguration jpkConfiguration = new FileJpkConfiguration("config.properties");
+    private final JpkConfiguration jpkConfiguration = new DefaultJpkConfiguration();
 
     @Test
     public void shouldLoadConfigurationFile() {
