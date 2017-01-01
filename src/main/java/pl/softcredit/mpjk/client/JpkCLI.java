@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import pl.softcredit.mpjk.core.configuration.ConfigurationLoader;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
-import pl.softcredit.mpjk.engine.executor.JpkExecutor;
+import pl.softcredit.mpjk.engine.JpkExecutor;
 
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.CLEAN_WORKING_DIRECTORY_PROCESSOR;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.FORMAL_VALIDATION_PROCESSOR;

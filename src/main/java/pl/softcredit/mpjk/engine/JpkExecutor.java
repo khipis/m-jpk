@@ -1,4 +1,4 @@
-package pl.softcredit.mpjk.engine.executor;
+package pl.softcredit.mpjk.engine;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

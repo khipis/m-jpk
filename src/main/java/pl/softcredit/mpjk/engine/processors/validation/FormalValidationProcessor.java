@@ -17,6 +17,7 @@ import javax.xml.validation.SchemaFactory;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static javax.xml.validation.SchemaFactory.newInstance;
 import static org.slf4j.LoggerFactory.getLogger;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.saveFormalValidationOutput;
 
 public class FormalValidationProcessor implements JpkProcessor {
 
@@ -36,6 +37,7 @@ public class FormalValidationProcessor implements JpkProcessor {
             schema.newValidator().validate(xmlFile);
 
             LOGGER.info(xmlFile.getSystemId() + " is valid");
+            saveFormalValidationOutput(config);
 
         } catch (SAXException e) {
             LOGGER.error(e.toString());
