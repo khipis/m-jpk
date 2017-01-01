@@ -19,7 +19,7 @@ public final class FileJpkConfiguration implements JpkConfiguration {
         try(InputStream fileInputStream = new FileInputStream(configFilePath)) {
             properties.load(fileInputStream);
         } catch (IOException e) {
-            LOGGER.error("Problem while loading configuration file: " + configFilePath);
+            LOGGER.error("Problem while loading configuration file: " + configFilePath, e);
         }
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 
-public class JpkExecutor {
+public final class JpkExecutor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JpkExecutor.class);
     private final JpkConfiguration jpkConfiguration;

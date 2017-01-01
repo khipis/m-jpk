@@ -18,6 +18,9 @@ public class JpkOutputUtils {
 
     private static final Logger LOGGER = getLogger(JpkOutputUtils.class);
 
+    private JpkOutputUtils(){
+    }
+
     public static void saveFormalValidationOutput(JpkConfiguration config, String valid) {
 
         File formalValidationOutputFile = new File(getOutputPathForFormalValidation(config));
@@ -38,10 +41,7 @@ public class JpkOutputUtils {
     }
 
     public static String extractFileNameFromInputFilePath(JpkConfiguration config) {
-        Path p = Paths.get(config.getInputFilePath());
-        return p.getFileName().toString();
-    }
-
-    private JpkOutputUtils(){
+        Path inputFilePath = Paths.get(config.getInputFilePath());
+        return inputFilePath.getFileName().toString();
     }
 }

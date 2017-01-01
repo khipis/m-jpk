@@ -23,6 +23,7 @@ public class FormalValidationProcessor implements JpkProcessor {
 
     private static final Logger LOGGER = getLogger(FormalValidationProcessor.class);
 
+    @Override
     public void process(JpkConfiguration config) {
         try {
 
@@ -41,7 +42,7 @@ public class FormalValidationProcessor implements JpkProcessor {
             saveFormalValidationOutput(config, "VALID");
 
         } catch (SAXException e) {
-            LOGGER.error(e.toString());
+            LOGGER.error("Found problems in file: " + e.toString(), e);
             saveFormalValidationOutput(config, e.toString());
         } catch (IOException e) {
             LOGGER.error("Problem while reading scheme file: " + config.getSchemeFilePath(), e);

@@ -17,6 +17,7 @@ public class CleanWorkingDirectoryProcessor implements JpkProcessor {
 
     private static final Logger LOGGER = getLogger(CleanWorkingDirectoryProcessor.class);
 
+    @Override
     public void process(JpkConfiguration config) {
         String workingDirectoryPath = config.getWorkingDirectoryPath();
         File workingDirectory = new File(workingDirectoryPath);

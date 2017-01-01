@@ -9,6 +9,9 @@ public final class ConfigurationLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationLoader.class);
 
+    private ConfigurationLoader(){
+    }
+
     public static JpkConfiguration load(String[] args) {
 
         JpkConfiguration jpkConfiguration;
@@ -26,9 +29,6 @@ public final class ConfigurationLoader {
         }
 
         return jpkConfiguration;
-    }
-
-    private ConfigurationLoader(){
     }
 
 }
