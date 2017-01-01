@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:JPK xmlns:tns="http://jpk.mf.gov.pl/wzor/2016/03/09/03094/" xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2016/01/25/eD/DefinicjeTypy/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<tns:Naglowek>
+		<tns:KodFormularza wersjaSchemy="1-0" kodSystemowy="JPK_VAT (1)">JPK_VAT</tns:KodFormularza>
+		<tns:WariantFormularza>1</tns:WariantFormularza>
+		<tns:CelZlozenia>1</tns:CelZlozenia>
+		<tns:DataOd>2016-07-01</tns:DataOd>
+		<tns:DataDo>2016-07-31</tns:DataDo>
+		<tns:DomyslnyKodWaluty>PLN</tns:DomyslnyKodWaluty>
+		<tns:KodUrzedu>1435</tns:KodUrzedu>
+	</tns:Naglowek>
+	<tns:Podmiot1>
+		<tns:IdentyfikatorPodmiotu>
+			<etd:NIP>1111111111</etd:NIP>
+			<etd:PelnaNazwa>PEŁNA NAZWA PODMIOTU</etd:PelnaNazwa>
+			<etd:REGON>111111111</etd:REGON>
+		</tns:IdentyfikatorPodmiotu>
+		<tns:AdresPodmiotu>
+			<etd:KodKraju>PL</etd:KodKraju>
+			<etd:Wojewodztwo>WOJEWÓDZTWO</etd:Wojewodztwo>
+			<etd:Powiat>POWIAT</etd:Powiat>
+			<etd:Gmina>GMINA</etd:Gmina>
+			<etd:Ulica>ULICA</etd:Ulica>
+			<etd:NrDomu>1</etd:NrDomu>
+			<etd:NrLokalu>2</etd:NrLokalu>
+			<etd:Miejscowosc>MIEJSCOWOŚĆ</etd:Miejscowosc>
+			<etd:KodPocztowy>00-000</etd:KodPocztowy>
+			<etd:Poczta>POCZTA</etd:Poczta>
+		</tns:AdresPodmiotu>
+	</tns:Podmiot1>
+</tns:JPK>
