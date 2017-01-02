@@ -33,7 +33,7 @@ Utworzy folder m-jpk i pobierze aplikacje
 
     git pull
     
-Pobierze najswiezsza zawartosc.
+Pobierze aktualna zawartosc.
 
 Alternatywnym rozwiazaniem jest klikniecie zielonego przycisku "Clone or download"
 i pobranie 
@@ -41,6 +41,26 @@ i pobranie
 Aplikacja jest wyslana do repozytorium razem z binarnymi plikami, aby nie zmuszac
 uzytkownikow do budowania aplikacji we wlasnym zakresie. (katalog release)
  
+PLIK KONFIGURACYJNY
+==========================
+Sterowanie aplikacja odbywa sie poprzez plik konfiguracyjny. Aplikacja pobiera plik konfiguracyjny podany jako argument:
+
+    java -jar mjpk.jar "PATH\config.properties"
+    
+Nazwa i rozszerzenie pliku moga byc dowolne. W przypadku braku podania argumentu aplikacja sproboje otworzyc plik "config.properties"
+z katalogu w ktorym zostala uruchomiona. Jezeli go nie znajdzie zaladuje defaultowe wartosci (w celach developerskich) lecz zostanie to usuniete z wersji ostatecznej.
+
+Przykladowy zawartosc pliku konfiguracyjnego:
+    
+    working.directory.path=Sciezka do katalogu w ktorym mjpk bedzie zapisywac wyniki swojej pracy
+    scheme.file.path=Sciezka do pliku scheme sluzacego do walidacji wygenerowanego pliku JPK
+    input.file.path=Sciezka do pliku xml na ktorym aplikacja przeprowadzi swoje operacje
+    
+Sciezke nalezy rozdzielac podwojnym \\ przyklad -> C:\\windows\\temp (Do potwierdzenia)
+    
+Wszystkie nowe parametry beda dodawane w tym pliku. (np wartosc bool czy wykonywac formalna walidacje, parametry polaczenia z brama jpk)
+
+
 JRE
 ==========================
 Aplikacja jest kompilowana z wersja bytecode 1.7, co oznacza ze moze byc uruchamiana zarowno 
@@ -50,12 +70,13 @@ Kolejnym problemem jest dostepnosc Javy na komputerze klienta (moze byc zainstal
 Bezpieczniejszym rozwiazaniem jest zatem dostarczenie JRE (Java Runtime Environment) wraz z aplikacja.
 
 Architektura systemow klienta moze byc zarowno 32 jak i 64 bitowa. Z tego powodu w katalogu JRE
-znajduja sie 4 wersje Javy 7,8 32 bit oraz 7,8 64bit. Z kazda aplikacja mjpk moze wspolpracowac.
+znajduja sie 4 wersje Javy 7,8 (32bit) oraz 7,8 (64bit). Z kazda aplikacja mjpk moze wspolpracowac.
 
 W docelowej integracji z systemem, powinna byc mozliwosc wyboru wersji JRE dostarczonej
 z aplikacja lub tez zainstalowanej u klienta.
-
 (Wersje dostarczone z aplikacja nie musza byc instalowane!)
+
+
 
 
 
