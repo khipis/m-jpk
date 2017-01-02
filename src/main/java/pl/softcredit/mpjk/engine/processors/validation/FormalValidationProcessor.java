@@ -3,6 +3,7 @@ package pl.softcredit.mpjk.engine.processors.validation;
 import org.slf4j.Logger;
 import org.xml.sax.SAXException;
 
+import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
@@ -24,7 +25,7 @@ public class FormalValidationProcessor implements JpkProcessor {
     private static final Logger LOGGER = getLogger(FormalValidationProcessor.class);
 
     @Override
-    public void process(JpkConfiguration config) {
+    public void process(JpkConfiguration config) throws JpkException {
         try {
 
             LOGGER.info("Input file: " + config.getInputFilePath());
@@ -42,10 +43,11 @@ public class FormalValidationProcessor implements JpkProcessor {
             saveFormalValidationOutput(config, "VALID");
 
         } catch (SAXException e) {
-            LOGGER.error("Found problems in file: " + e.toString(), e);
+            LOGGER.error("Found problems in scheme file: " + e.toString(), e);
             saveFormalValidationOutput(config, e.toString());
         } catch (IOException e) {
-            LOGGER.error("Problem while reading scheme file: " + config.getSchemeFilePath(), e);
+            LOGGER.error("Problem while reading scheme file: " + config.getSchemeFilePath());
+            throw new JpkException(e);
         }
     }
 }

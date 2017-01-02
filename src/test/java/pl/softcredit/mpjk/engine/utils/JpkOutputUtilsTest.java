@@ -9,20 +9,18 @@ import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 
 import java.io.File;
 
-import static java.io.File.separator;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static pl.softcredit.mpjk.engine.TestDummies.FILE_CONTENT;
+import static pl.softcredit.mpjk.engine.TestDummies.TEMP_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestDummies.TEMP_INPUT_FILE;
+import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.saveFormalValidationOutput;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JpkOutputUtilsTest {
-
-    private static final String FILE_CONTENT = "VALID";
-    private static final String TEMP_FILE_NAME = "tempfile.xml";
-    private static final String TEMP_WORKING_DIR = "target/working-dir";
-    private static final String TEMP_INPUT_FILE = TEMP_WORKING_DIR + separator + "tempfile.xml";
 
     @Mock private JpkConfiguration config;
 
@@ -42,5 +40,4 @@ public class JpkOutputUtilsTest {
         when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
         when(config.getInputFilePath()).thenReturn(TEMP_FILE_NAME);
     }
-
 }

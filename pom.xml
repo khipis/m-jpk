@@ -6,7 +6,7 @@
     <groupId>pl.softcredit.mjpk</groupId>
     <artifactId>mjpk</artifactId>
     <packaging>jar</packaging>
-    <version>0.2.2</version>
+    <version>0.2.3</version>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>

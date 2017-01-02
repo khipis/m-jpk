@@ -2,6 +2,7 @@ package pl.softcredit.mpjk.engine.utils;
 
 import org.slf4j.Logger;
 
+import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 
 import java.io.File;
@@ -21,13 +22,15 @@ public class JpkOutputUtils {
     private JpkOutputUtils(){
     }
 
-    public static void saveFormalValidationOutput(JpkConfiguration config, String valid) {
+    public static void saveFormalValidationOutput(JpkConfiguration config, String valid)
+            throws JpkException {
 
         File formalValidationOutputFile = new File(getOutputPathForFormalValidation(config));
         try {
             writeStringToFile(formalValidationOutputFile, valid);
         } catch (IOException e) {
-            LOGGER.error("Cannot save formal validation output file: " + getOutputPathForFormalValidation(config), e);
+            LOGGER.error("Cannot save formal validation output file: " + getOutputPathForFormalValidation(config));
+            throw new JpkException(e);
         }
 
     }

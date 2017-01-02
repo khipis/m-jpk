@@ -2,6 +2,7 @@ package pl.softcredit.mpjk.engine.processors.preparation;
 
 import org.slf4j.Logger;
 
+import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
@@ -18,7 +19,7 @@ public class CleanWorkingDirectoryProcessor implements JpkProcessor {
     private static final Logger LOGGER = getLogger(CleanWorkingDirectoryProcessor.class);
 
     @Override
-    public void process(JpkConfiguration config) {
+    public void process(JpkConfiguration config) throws JpkException {
         String workingDirectoryPath = config.getWorkingDirectoryPath();
         File workingDirectory = new File(workingDirectoryPath);
         try {
@@ -36,7 +37,8 @@ public class CleanWorkingDirectoryProcessor implements JpkProcessor {
                 LOGGER.info("Created: " + workingDirectoryPath);
             }
         } catch (IOException e) {
-            LOGGER.error("Problem while cleaning working directory: " + config.getWorkingDirectoryPath(), e);
+            LOGGER.error("Problem while cleaning working directory: " + config.getWorkingDirectoryPath());
+            throw new JpkException(e);
         }
     }
 }

@@ -3,6 +3,7 @@ package pl.softcredit.mpjk.engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
@@ -20,7 +21,7 @@ public final class JpkExecutor {
         this.jpkConfiguration = jpkConfiguration;
     }
 
-    public void execute(JpkProcessor... processors) {
+    public void execute(JpkProcessor... processors) throws JpkException {
         List<JpkProcessor> processorsCopy = unmodifiableList(asList(processors));
         LOGGER.info("Processors to execute: " + processorsCopy.size());
         for (JpkProcessor processor : processorsCopy) {

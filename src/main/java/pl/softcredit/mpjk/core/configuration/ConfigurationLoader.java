@@ -3,6 +3,8 @@ package pl.softcredit.mpjk.core.configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pl.softcredit.mpjk.JpkException;
+
 import java.io.File;
 
 public final class ConfigurationLoader {
@@ -12,7 +14,7 @@ public final class ConfigurationLoader {
     private ConfigurationLoader(){
     }
 
-    public static JpkConfiguration load(String[] args) {
+    public static JpkConfiguration load(String[] args) throws JpkException {
 
         JpkConfiguration jpkConfiguration;
 

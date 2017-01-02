@@ -14,18 +14,18 @@ import static java.io.File.separator;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static pl.softcredit.mpjk.engine.TestDummies.FILE_CONTENT;
+import static pl.softcredit.mpjk.engine.TestDummies.INPUT_FILES_DIR;
+import static pl.softcredit.mpjk.engine.TestDummies.INVALID_FILE;
+import static pl.softcredit.mpjk.engine.TestDummies.JPK_VAT_SCHEME_FILE;
+import static pl.softcredit.mpjk.engine.TestDummies.SCHEMES_DIR;
+import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
+import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FormalValidationProcessorTest {
 
-    private static final String FILE_CONTENT = "VALID";
-    private static final String TEMP_WORKING_DIR = "target/working-dir";
-    private static final String SCHEMES_DIR = "src/test/resources/schemes/";
-    private static final String INPUT_FILES_DIR = "src/test/resources/input-files/";
-    private static final String VALID_FILE = "valid_JPK_VAT(1)_file.xml";
-    private static final String INVALID_FILE = "invalid_JPK_VAT(1)_file.xml";
-    private static final String JPK_VAT_SCHEME_FILE = "Schemat_JPK_VAT(1)_v1-0.xsd";
 
     @Mock
     private JpkConfiguration config;

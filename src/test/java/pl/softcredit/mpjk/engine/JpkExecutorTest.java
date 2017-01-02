@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.DefaultJpkConfiguration;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 import pl.softcredit.mpjk.engine.processors.JpkProcessor;
@@ -24,7 +25,7 @@ public class JpkExecutorTest {
     private JpkExecutor jpkExecutor = new JpkExecutor(config);
 
     @Test
-    public void shouldExecuteEveryPassedProcessor() {
+    public void shouldExecuteEveryPassedProcessor() throws JpkException {
         jpkExecutor.execute(processor1, processor2);
 
         verify(processor1).process(config);
