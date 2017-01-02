@@ -9,7 +9,9 @@ import pl.softcredit.mpjk.engine.JpkExecutor;
 
 import static pl.softcredit.mpjk.core.configuration.ConfigurationLoader.load;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.CLEAN_WORKING_DIRECTORY_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.CONFIG_PARAMETERS_VALIDATION_PROCESSOR;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.FORMAL_VALIDATION_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.SCHEME_VALIDATION_PROCESSOR;
 
 public class JpkCLI {
 
@@ -24,7 +26,9 @@ public class JpkCLI {
             JpkConfiguration config = load(args);
 
             new JpkExecutor(config)
-                    .execute(CLEAN_WORKING_DIRECTORY_PROCESSOR,
+                    .execute(CONFIG_PARAMETERS_VALIDATION_PROCESSOR,
+                             SCHEME_VALIDATION_PROCESSOR,
+                             CLEAN_WORKING_DIRECTORY_PROCESSOR,
                              FORMAL_VALIDATION_PROCESSOR);
         } catch (JpkException e) {
             LOGGER.error("Unexpected error occurs: ", e);

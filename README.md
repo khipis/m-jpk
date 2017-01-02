@@ -78,12 +78,14 @@ Obecny przeplyw aplikacji:
 
     -parsuj plik konfiguracyjny
     -zwaliduj plik konfiguracyjny
+        -sprawdz dostepnosc pliku inputFileName
+        -sprawdz dostepnosc pliku schemeFileName
+    -zwaliduj poprawnosc pliku schemeFileName
     -utworz lub wyczysc folder working.dir
-    -sprawdz dostepnosc pliku schemeFileName
-    -sprawdz dostepnosc pliku inputFileName
-    -przeprowadz walidacje
-    -zapisz wynik walidacji jako plik inputFileName.xml.validation z zawartoscia "VALID" w przypadku poprawnego pliku lub z opisem
-     bledu w przypadku niepoprawnego pliku
+    -przeprowadz walidacje pliku inputFileName
+    -zapisz wynik walidacji jako plik inputFileName.xml.validation 
+        -z zawartoscia "VALID" w przypadku poprawnego pliku 
+        -z opisem bledu w przypadku niepoprawnego pliku
 
 JRE
 ==========================
