@@ -60,6 +60,30 @@ Sciezke nalezy rozdzielac podwojnym \\ przyklad -> C:\\windows\\temp (Do potwier
     
 Wszystkie nowe parametry beda dodawane w tym pliku. (np wartosc bool czy wykonywac formalna walidacje, parametry polaczenia z brama jpk)
 
+URUCHAMIANIE APLIKACJI
+==========================
+W katalogu release przygotowane sa 4 skrypty uruchamiajace aplikacje na dostarczonej JRE. Przyklad zawartosci pliku:
+    
+    G:\work\m-jpk\release\jre\64bit\jre8\bin\java -jar mjpk.jar
+    
+W tym przypadku aplikacja pobierze zawartosc z pliku config.properties z biezacego katalogu. Uzywajac pliku ".bat" aplikacja otworzy
+konsole w ktorej na biezaco bedzie wyswietlac zadanie ktorym w danej chwili sie zajmuje. Okno konsoli nie bedzie widoczne w przypadku
+uruchomienia aplikacji jako proces z zewnetrznego systemu. Aplikacje mozna tez uruchomic dwukrotnie na nia klikajac (config.properties takze zostanie pobrany z biezacego katalogu). W kazdym z tych przypadkow aplikacja powinna utowrzyc plik mjpk.log (plik logow co aplikacja wykonywala w danym czasie).
+
+Przewidywania konfiguracja w zewnetrznym systemie:
+
+    executeProcess(PATH_TO_JRE + "java -jar mjpk.jar " + CONFIG_FILE_PATH);
+
+Obecny przeplyw aplikacji:
+
+    -parsuj plik konfiguracyjny
+    -zwaliduj plik konfiguracyjny
+    -utworz lub wyczysc folder working.dir
+    -sprawdz dostepnosc pliku schemeFileName
+    -sprawdz dostepnosc pliku inputFileName
+    -przeprowadz walidacje
+    -zapisz wynik walidacji jako plik inputFileName.xml.validation z zawartoscia "VALID" w przypadku poprawnego pliku lub z opisem
+     bledu w przypadku niepoprawnego pliku
 
 JRE
 ==========================
@@ -75,8 +99,3 @@ znajduja sie 4 wersje Javy 7,8 (32bit) oraz 7,8 (64bit). Z kazda aplikacja mjpk 
 W docelowej integracji z systemem, powinna byc mozliwosc wyboru wersji JRE dostarczonej
 z aplikacja lub tez zainstalowanej u klienta.
 (Wersje dostarczone z aplikacja nie musza byc instalowane!)
-
-
-
-
-
