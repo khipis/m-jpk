@@ -36,7 +36,7 @@ public class FormalValidationProcessorTest {
     @Mock
     private JpkConfiguration config;
 
-    private FormalValidationProcessor formalValidationProcessor = new FormalValidationProcessor();
+    private JpkProcessor formalValidationProcessor = new FormalValidationProcessor();
 
     @Test
     public void shouldReturnFileWithContentValidIfFileIsValidToScheme() throws Exception {

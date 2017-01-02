@@ -24,7 +24,7 @@ public class CleanWorkingDirectoryProcessorTest {
     @Mock
     private JpkConfiguration config;
 
-    private CleanWorkingDirectoryProcessor cleanWorkingDirectoryProcessor =
+    private JpkProcessor cleanWorkingDirectoryProcessor =
             new CleanWorkingDirectoryProcessor();
 
     @Test
