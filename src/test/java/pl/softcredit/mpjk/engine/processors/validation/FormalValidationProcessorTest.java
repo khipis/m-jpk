@@ -1,10 +1,13 @@
 package pl.softcredit.mpjk.engine.processors.validation;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 
 import java.io.File;
@@ -13,6 +16,7 @@ import java.io.IOException;
 import static java.io.File.separator;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.when;
 import static pl.softcredit.mpjk.engine.TestDummies.FILE_CONTENT;
 import static pl.softcredit.mpjk.engine.TestDummies.INPUT_FILES_DIR;
@@ -26,6 +30,8 @@ import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION
 @RunWith(MockitoJUnitRunner.class)
 public class FormalValidationProcessorTest {
 
+    @Rule
+    public ExpectedException expectedException = none();
 
     @Mock
     private JpkConfiguration config;
@@ -34,7 +40,7 @@ public class FormalValidationProcessorTest {
 
     @Test
     public void shouldReturnFileWithContentValidIfFileIsValidToScheme() throws Exception {
-        setupConfiguration(VALID_FILE, JPK_VAT_SCHEME_FILE);
+        whenConfigurationWith(VALID_FILE, JPK_VAT_SCHEME_FILE);
 
         formalValidationProcessor.process(config);
 
@@ -43,21 +49,30 @@ public class FormalValidationProcessorTest {
 
     @Test
     public void shouldReturnFileWithErrorDescriptionWhenFileIsInvalidToScheme() throws Exception {
-        setupConfiguration(INVALID_FILE, JPK_VAT_SCHEME_FILE);
+        whenConfigurationWith(INVALID_FILE, JPK_VAT_SCHEME_FILE);
 
         formalValidationProcessor.process(config);
 
-        assertFile(INVALID_FILE,
-                   "Invalid content was found starting with element");
+        assertFile(INVALID_FILE, "Invalid content was found starting with element");
     }
 
     @Test
     public void shouldReturnFileWithErrorDescriptionWhenSchemeIsInvalidToFile() throws Exception {
-        setupConfiguration(VALID_FILE, "Schemat_JPK_VAT(2)_v1-0.xsd");
+        whenConfigurationWith(VALID_FILE, "Schemat_JPK_VAT(2)_v1-0.xsd");
 
         formalValidationProcessor.process(config);
 
         assertFile(VALID_FILE, "Cannot find the declaration of element 'tns:JPK'.");
+    }
+
+    @Test
+    public void shouldThrowJpkExceptionWhenSchemeIsInvalidAtAll() throws Exception {
+        whenConfigurationWith(VALID_FILE, "invalidScheme.xsd");
+
+        formalValidationProcessor.process(config);
+
+        expectedException.expect(JpkException.class);
+        expectedException.expectMessage("Found problems in scheme file");
     }
 
     private void assertFile(String inputFile, String content) throws IOException {
@@ -66,7 +81,7 @@ public class FormalValidationProcessorTest {
         assertThat(readFileToString(createdFile)).contains(content);
     }
 
-    private void setupConfiguration(String inputFile, String schemeFile) {
+    private void whenConfigurationWith(String inputFile, String schemeFile) {
         when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
         when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR + schemeFile);
         when(config.getInputFilePath()).thenReturn(INPUT_FILES_DIR + inputFile);
