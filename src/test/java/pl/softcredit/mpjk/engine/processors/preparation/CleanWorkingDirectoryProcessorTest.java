@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
+import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
 import java.io.File;
 
