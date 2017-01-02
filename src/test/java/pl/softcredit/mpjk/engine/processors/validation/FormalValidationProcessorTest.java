@@ -51,6 +51,7 @@ public class FormalValidationProcessorTest {
     @Test
     public void shouldReturnFileWithErrorDescriptionWhenFileIsInvalidToScheme() throws Exception {
         whenConfigurationWith(INVALID_FILE, JPK_VAT_SCHEME_FILE);
+        expectedException.expect(JpkException.class);
 
         formalValidationProcessor.process(config);
 
@@ -60,6 +61,7 @@ public class FormalValidationProcessorTest {
     @Test
     public void shouldReturnFileWithErrorDescriptionWhenSchemeIsInvalidToFile() throws Exception {
         whenConfigurationWith(VALID_FILE, "Schemat_JPK_VAT(2)_v1-0.xsd");
+        expectedException.expect(JpkException.class);
 
         formalValidationProcessor.process(config);
 

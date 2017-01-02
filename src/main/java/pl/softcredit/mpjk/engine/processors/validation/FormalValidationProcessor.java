@@ -41,13 +41,11 @@ public class FormalValidationProcessor implements JpkProcessor {
 
             LOGGER.info(xmlFile.getSystemId() + " is valid");
             saveFormalValidationOutput(config, "VALID");
-
         } catch (SAXException e) {
-            LOGGER.error("Found problems in scheme file: " + e.toString(), e);
             saveFormalValidationOutput(config, e.toString());
+            throw new JpkException(e);
         } catch (IOException e) {
             LOGGER.error("Problem while reading scheme file: " + config.getSchemeFilePath());
-            throw new JpkException(e);
         }
     }
 }
