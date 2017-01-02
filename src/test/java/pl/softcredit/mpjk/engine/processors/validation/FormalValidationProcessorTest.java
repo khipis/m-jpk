@@ -66,16 +66,6 @@ public class FormalValidationProcessorTest {
         assertFile(VALID_FILE, "Cannot find the declaration of element 'tns:JPK'.");
     }
 
-    @Test
-    public void shouldThrowJpkExceptionWhenSchemeIsInvalidAtAll() throws Exception {
-        whenConfigurationWith(VALID_FILE, "invalidScheme.xsd");
-
-        formalValidationProcessor.process(config);
-
-        expectedException.expect(JpkException.class);
-        expectedException.expectMessage("Found problems in scheme file");
-    }
-
     private void assertFile(String inputFile, String content) throws IOException {
         File createdFile = getValidatedFile(inputFile);
         assertThat(createdFile).exists();
