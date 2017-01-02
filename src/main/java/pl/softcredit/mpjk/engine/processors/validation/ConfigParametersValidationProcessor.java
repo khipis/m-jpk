@@ -6,9 +6,8 @@ import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
-import java.nio.file.Paths;
-
 import static java.nio.file.Files.notExists;
+import static java.nio.file.Paths.get;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class ConfigParametersValidationProcessor implements JpkProcessor {
@@ -18,10 +17,12 @@ public class ConfigParametersValidationProcessor implements JpkProcessor {
     @Override
     public void process(JpkConfiguration config) throws JpkException {
         LOGGER.info("Performing config input validation.");
-        if (notExists(Paths.get(config.getInputFilePath()))) {
+        LOGGER.info("Check if input file exists.");
+        if (notExists(get(config.getInputFilePath()))) {
             throw new JpkException("Input file not exists: " + config.getInputFilePath());
         }
-        if (notExists(Paths.get(config.getSchemeFilePath()))) {
+        LOGGER.info("Check if scheme file exists.");
+        if (notExists(get(config.getSchemeFilePath()))) {
             throw new JpkException("Scheme file not exists: " + config.getSchemeFilePath());
         }
     }

@@ -35,8 +35,7 @@ public class ConfigParametersValidationProcessorTest {
     public void shouldThrowJpkExceptionWhenSchemeExistsButInputFileNot() throws Exception {
         setupConfiguration(NOT_EXISTED_FILE, SCHEMES_DIR + JPK_VAT_SCHEME_FILE);
 
-        expectedException.expect(JpkException.class);
-        expectedException.expectMessage("Input file not exists: " + INPUT_FILES_DIR + NOT_EXISTED_FILE);
+        expectedExceptionWithMessage("Input file not exists: " + INPUT_FILES_DIR + NOT_EXISTED_FILE);
 
         configParametersValidationProcessor.process(config);
     }
@@ -45,8 +44,7 @@ public class ConfigParametersValidationProcessorTest {
     public void shouldThrowJpkExceptionWhenInputFileExistsButSchemeFileNot() throws Exception {
         setupConfiguration(VALID_FILE, NOT_EXISTED_FILE);
 
-        expectedException.expect(JpkException.class);
-        expectedException.expectMessage("Scheme file not exists: " + SCHEMES_DIR + NOT_EXISTED_FILE);
+        expectedExceptionWithMessage("Scheme file not exists: " + SCHEMES_DIR + NOT_EXISTED_FILE);
 
         configParametersValidationProcessor.process(config);
     }
@@ -56,6 +54,11 @@ public class ConfigParametersValidationProcessorTest {
         setupConfiguration(VALID_FILE, JPK_VAT_SCHEME_FILE);
 
         configParametersValidationProcessor.process(config);
+    }
+
+    private void expectedExceptionWithMessage(String exceptionMessage) {
+        expectedException.expect(JpkException.class);
+        expectedException.expectMessage(exceptionMessage);
     }
 
     private void setupConfiguration(String inputFile, String schemeFile) {

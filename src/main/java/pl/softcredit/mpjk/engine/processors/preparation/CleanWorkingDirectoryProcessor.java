@@ -8,9 +8,9 @@ import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static java.nio.file.Files.createDirectories;
 import static org.apache.commons.io.FileUtils.cleanDirectory;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -33,7 +33,7 @@ public class CleanWorkingDirectoryProcessor implements JpkProcessor {
             else{
                 LOGGER.info("Working directory not exists");
                 LOGGER.info("Creating working directory");
-                Files.createDirectories(Paths.get(workingDirectoryPath));
+                createDirectories(Paths.get(workingDirectoryPath));
                 LOGGER.info("Created: " + workingDirectoryPath);
             }
         } catch (IOException e) {
