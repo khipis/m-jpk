@@ -17,9 +17,11 @@ import static pl.softcredit.mpjk.engine.TestDummies.TEMP_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestDummies.TEMP_INPUT_FILE;
 import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
+import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.extractFileNameFromInputFilePath;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.extractFileNameWithoutExtension;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPath;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForAesEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForFormalValidation;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForKeyGeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForZipStage;
@@ -67,6 +69,16 @@ public class JpkOutputUtilsTest {
         String result = getOutputPathForZipStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.xml.zip");
+    }
+
+    @Test
+    public void shouldGetOutputPathForAesEncryptStage() throws Exception {
+        when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
+        when(config.getInputFilePath()).thenReturn(TEMP_FILE_NAME + ZIP_EXTENSION);
+
+        String result = getOutputPathForAesEncryptStage(config);
+
+        assertThat(result).isEqualTo("target/working-dir\\tempfile.xml.zip.aes");
     }
 
     @Test

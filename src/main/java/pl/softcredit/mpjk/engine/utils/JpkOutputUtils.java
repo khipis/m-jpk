@@ -14,6 +14,7 @@ import static java.io.File.separator;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
+import static pl.softcredit.mpjk.engine.utils.JpkExtensions.AES_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.KEY_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
@@ -38,25 +39,16 @@ public class JpkOutputUtils {
 
     }
 
-    public static void saveZipStageOutput(JpkConfiguration config, String valid)
-            throws JpkException {
-
-        File formalValidationOutputFile = new File(getOutputPathForFormalValidation(config));
-        try {
-            writeStringToFile(formalValidationOutputFile, valid);
-        } catch (IOException e) {
-            LOGGER.error("Cannot save formal validation output file: " + getOutputPathForFormalValidation(config));
-            throw new JpkException(e);
-        }
-
-    }
-
     public static String getOutputPathForKeyGeneratorStage(JpkConfiguration config) {
         return removeExtension(getOutputPath(config)) + KEY_EXTENSION;
     }
 
     public static String getOutputPathForZipStage(JpkConfiguration config) {
         return getOutputPath(config) + ZIP_EXTENSION;
+    }
+
+    static String getOutputPathForAesEncryptStage(JpkConfiguration config) {
+        return getOutputPath(config) + AES_EXTENSION;
     }
 
     static String getOutputPathForFormalValidation(JpkConfiguration config) {
