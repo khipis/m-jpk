@@ -1,6 +1,5 @@
 package pl.softcredit.mpjk.engine.utils;
 
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 
 import pl.softcredit.mpjk.JpkException;
@@ -13,7 +12,9 @@ import java.nio.file.Paths;
 
 import static java.io.File.separator;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
+import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
+import static pl.softcredit.mpjk.engine.utils.JpkExtensions.KEY_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 
@@ -50,25 +51,29 @@ public class JpkOutputUtils {
 
     }
 
+    public static String getOutputPathForKeyGeneratorStage(JpkConfiguration config) {
+        return removeExtension(getOutputPath(config)) + KEY_EXTENSION;
+    }
+
     public static String getOutputPathForZipStage(JpkConfiguration config) {
         return getOutputPath(config) + ZIP_EXTENSION;
     }
 
-    public static String getOutputPathForFormalValidation(JpkConfiguration config) {
+    static String getOutputPathForFormalValidation(JpkConfiguration config) {
         return getOutputPath(config) + VALIDATION_EXTENSION;
     }
 
-    public static String getOutputPath(JpkConfiguration config) {
+    static String getOutputPath(JpkConfiguration config) {
         return config.getWorkingDirectoryPath() + separator +  extractFileNameFromInputFilePath(config);
     }
 
-    public static String extractFileNameFromInputFilePath(JpkConfiguration config) {
+    static String extractFileNameFromInputFilePath(JpkConfiguration config) {
         Path inputFilePath = Paths.get(config.getInputFilePath());
         return inputFilePath.getFileName().toString();
     }
 
-    public static String extractFileNameWithoutExtension(JpkConfiguration config) {
+    static String extractFileNameWithoutExtension(JpkConfiguration config) {
         Path inputFilePath = Paths.get(config.getInputFilePath());
-        return FilenameUtils.removeExtension(inputFilePath.getFileName().toString());
+        return removeExtension(inputFilePath.getFileName().toString());
     }
 }

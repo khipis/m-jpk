@@ -21,6 +21,7 @@ import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.extractFileNameFrom
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.extractFileNameWithoutExtension;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPath;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForFormalValidation;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForKeyGeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForZipStage;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.saveFormalValidationOutput;
 
@@ -48,6 +49,15 @@ public class JpkOutputUtilsTest {
         String result = getOutputPathForFormalValidation(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.xml.validation");
+    }
+
+    @Test
+    public void shouldGetOutputPathForKeyGeneratorStage() throws Exception {
+        whenConfiguration();
+
+        String result = getOutputPathForKeyGeneratorStage(config);
+
+        assertThat(result).isEqualTo("target/working-dir\\tempfile.key");
     }
 
     @Test

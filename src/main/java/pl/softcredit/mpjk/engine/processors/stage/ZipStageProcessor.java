@@ -23,10 +23,10 @@ public class ZipStageProcessor implements JpkProcessor {
     @Override
     public void process(JpkConfiguration config) throws JpkException {
 
-        String zipFileName = getOutputPathForZipStage(config);
-        LOGGER.info("Zipping file to: " + zipFileName);
+        String zipFileOutputPath = getOutputPathForZipStage(config);
+        LOGGER.info("Zipping file to: " + zipFileOutputPath);
 
-        try (FileOutputStream fileOutputStream = new FileOutputStream(zipFileName);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(zipFileOutputPath);
              ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
              FileInputStream fileInputStream = new FileInputStream(config.getInputFilePath())) {
 

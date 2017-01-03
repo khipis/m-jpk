@@ -87,6 +87,7 @@ Obecny przeplyw aplikacji:
         -z zawartoscia "VALID" w przypadku poprawnego pliku 
         -z opisem bledu w przypadku niepoprawnego pliku
     -spakuj plik xml do pliku zip
+    -generuj 256 bitowy klucz i zapisz do pliku key
 
 JRE
 ==========================
