@@ -75,9 +75,9 @@ public class JpkExecutorTest {
         executeAllProcessors();
 
         verify(configParametersValidationProcessor).process(config);
-        verify(cleanWorkingDirectoryProcessor).process(config);
+       // verify(cleanWorkingDirectoryProcessor).process(config);
 
-        verifyNoMoreInteractions(formalValidationProcessor,
+        verifyNoMoreInteractions(cleanWorkingDirectoryProcessor,formalValidationProcessor,
                                  schemeValidationProcessor);
     }
 

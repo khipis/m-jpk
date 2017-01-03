@@ -1,5 +1,6 @@
 package pl.softcredit.mpjk.engine.utils;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 
 import pl.softcredit.mpjk.JpkException;
@@ -14,6 +15,7 @@ import static java.io.File.separator;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.slf4j.LoggerFactory.getLogger;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
+import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 
 public class JpkOutputUtils {
 
@@ -35,6 +37,23 @@ public class JpkOutputUtils {
 
     }
 
+    public static void saveZipStageOutput(JpkConfiguration config, String valid)
+            throws JpkException {
+
+        File formalValidationOutputFile = new File(getOutputPathForFormalValidation(config));
+        try {
+            writeStringToFile(formalValidationOutputFile, valid);
+        } catch (IOException e) {
+            LOGGER.error("Cannot save formal validation output file: " + getOutputPathForFormalValidation(config));
+            throw new JpkException(e);
+        }
+
+    }
+
+    public static String getOutputPathForZipStage(JpkConfiguration config) {
+        return getOutputPath(config) + ZIP_EXTENSION;
+    }
+
     public static String getOutputPathForFormalValidation(JpkConfiguration config) {
         return getOutputPath(config) + VALIDATION_EXTENSION;
     }
@@ -46,5 +65,10 @@ public class JpkOutputUtils {
     public static String extractFileNameFromInputFilePath(JpkConfiguration config) {
         Path inputFilePath = Paths.get(config.getInputFilePath());
         return inputFilePath.getFileName().toString();
+    }
+
+    public static String extractFileNameWithoutExtension(JpkConfiguration config) {
+        Path inputFilePath = Paths.get(config.getInputFilePath());
+        return FilenameUtils.removeExtension(inputFilePath.getFileName().toString());
     }
 }
