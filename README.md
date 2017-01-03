@@ -86,8 +86,8 @@ Obecny przeplyw aplikacji:
     -zapisz wynik walidacji jako plik inputFileName.xml.validation 
         -z zawartoscia "VALID" w przypadku poprawnego pliku 
         -z opisem bledu w przypadku niepoprawnego pliku
-    -spakuj plik xml do pliku zip
     -generuj 256 bitowy klucz i zapisz do pliku key
+    -spakuj plik xml do pliku zip
 
 JRE
 ==========================

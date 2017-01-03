@@ -33,8 +33,8 @@ public class JpkCLI {
                             SCHEME_VALIDATION_PROCESSOR,
                             CLEAN_WORKING_DIRECTORY_PROCESSOR,
                             FORMAL_VALIDATION_PROCESSOR,
-                            ZIP_STAGE_PROCESSOR,
-                            KEY_GENERATOR_STAGE_PROCESSOR
+                            KEY_GENERATOR_STAGE_PROCESSOR,
+                            ZIP_STAGE_PROCESSOR
                     );
         } catch (JpkException e) {
             LOGGER.error("Unexpected error occurs: ", e);
