@@ -24,6 +24,7 @@ import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPath;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForAesEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForFormalValidation;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForKeyGeneratorStage;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForVectorGeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForZipStage;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.saveFormalValidationOutput;
 
@@ -60,6 +61,15 @@ public class JpkOutputUtilsTest {
         String result = getOutputPathForKeyGeneratorStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.key");
+    }
+
+    @Test
+    public void shouldGetOutputPathForVectorGeneratorStage() throws Exception {
+        whenConfiguration();
+
+        String result = getOutputPathForVectorGeneratorStage(config);
+
+        assertThat(result).isEqualTo("target/working-dir\\tempfile.vec");
     }
 
     @Test

@@ -17,6 +17,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.AES_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.KEY_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
+import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VEC_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 
 public class JpkOutputUtils {
@@ -41,6 +42,10 @@ public class JpkOutputUtils {
 
     public static String getOutputPathForKeyGeneratorStage(JpkConfiguration config) {
         return removeExtension(getOutputPath(config)) + KEY_EXTENSION;
+    }
+
+    public static String getOutputPathForVectorGeneratorStage(JpkConfiguration config) {
+        return removeExtension(getOutputPath(config)) + VEC_EXTENSION;
     }
 
     public static String getOutputPathForZipStage(JpkConfiguration config) {

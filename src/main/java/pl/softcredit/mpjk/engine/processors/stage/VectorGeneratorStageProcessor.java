@@ -16,18 +16,18 @@ import javax.crypto.SecretKey;
 import static javax.crypto.KeyGenerator.getInstance;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.slf4j.LoggerFactory.getLogger;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForKeyGeneratorStage;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForVectorGeneratorStage;
 
-public class KeyGeneratorStageProcessor implements JpkProcessor {
+public class VectorGeneratorStageProcessor implements JpkProcessor {
 
-    private static final Logger LOGGER = getLogger(KeyGeneratorStageProcessor.class);
-    private static final int BITS_COUNT = 256;
+    private static final Logger LOGGER = getLogger(VectorGeneratorStageProcessor.class);
+    private static final int BITS_COUNT = 128;
 
     @Override
     public void process(JpkConfiguration config) throws JpkException {
 
-        String keyFileOutputPath = getOutputPathForKeyGeneratorStage(config);
-        LOGGER.info("Generating client key to: " + keyFileOutputPath);
+        String vectorFileOutputPath = getOutputPathForVectorGeneratorStage(config);
+        LOGGER.info("Generating client vector to: " + vectorFileOutputPath);
 
         try {
             KeyGenerator keyGen = getInstance("AES");
@@ -35,15 +35,15 @@ public class KeyGeneratorStageProcessor implements JpkProcessor {
 
             SecretKey secretKey = keyGen.generateKey();
             String generatedKey = new String(secretKey.getEncoded());
-            generatedKey = "12345678901234567890123456789012";
+            generatedKey = "1234567890123456";
 
-            writeStringToFile(new File(keyFileOutputPath), generatedKey);
+            writeStringToFile(new File(vectorFileOutputPath), generatedKey);
 
         } catch (NoSuchAlgorithmException e) {
-            LOGGER.error("Problem while generating AES client key.");
+            LOGGER.error("Problem while generating AES client vector.");
             throw new JpkException(e);
         } catch (IOException e) {
-            LOGGER.error("Problem while saving client key to file.");
+            LOGGER.error("Problem while saving client vector to file.");
             throw new JpkException(e);
         }
     }
