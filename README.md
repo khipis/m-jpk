@@ -87,6 +87,7 @@ Obecny przeplyw aplikacji:
         -z zawartoscia "VALID" w przypadku poprawnego pliku 
         -z opisem bledu w przypadku niepoprawnego pliku
     -generuj 256 bitowy klucz i zapisz do pliku key
+    -generuj 128 bitowy vector i zapisz do pliku vec
     -spakuj plik xml do pliku zip
 
 JRE
