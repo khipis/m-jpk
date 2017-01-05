@@ -16,7 +16,7 @@ import javax.crypto.SecretKey;
 import static javax.crypto.KeyGenerator.getInstance;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.slf4j.LoggerFactory.getLogger;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForKeyGeneratorStage;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getPathForKeyGeneratorStage;
 
 public class KeyGeneratorStageProcessor implements JpkProcessor {
 
@@ -26,7 +26,7 @@ public class KeyGeneratorStageProcessor implements JpkProcessor {
     @Override
     public void process(JpkConfiguration config) throws JpkException {
 
-        String keyFileOutputPath = getOutputPathForKeyGeneratorStage(config);
+        String keyFileOutputPath = getPathForKeyGeneratorStage(config);
         LOGGER.info("Generating client key to: " + keyFileOutputPath);
 
         try {

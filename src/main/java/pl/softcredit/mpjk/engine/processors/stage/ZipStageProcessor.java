@@ -14,7 +14,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForZipStage;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getPathForZipStage;
 
 public class ZipStageProcessor implements JpkProcessor {
 
@@ -23,7 +23,7 @@ public class ZipStageProcessor implements JpkProcessor {
     @Override
     public void process(JpkConfiguration config) throws JpkException {
 
-        String zipFileOutputPath = getOutputPathForZipStage(config);
+        String zipFileOutputPath = getPathForZipStage(config);
         LOGGER.info("Zipping file to: " + zipFileOutputPath);
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(zipFileOutputPath);

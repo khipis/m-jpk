@@ -30,33 +30,33 @@ public class JpkOutputUtils {
     public static void saveFormalValidationOutput(JpkConfiguration config, String valid)
             throws JpkException {
 
-        File formalValidationOutputFile = new File(getOutputPathForFormalValidation(config));
+        File formalValidationOutputFile = new File(getPathForFormalValidation(config));
         try {
             writeStringToFile(formalValidationOutputFile, valid);
         } catch (IOException e) {
-            LOGGER.error("Cannot save formal validation output file: " + getOutputPathForFormalValidation(config));
+            LOGGER.error("Cannot save formal validation output file: " + getPathForFormalValidation(config));
             throw new JpkException(e);
         }
 
     }
 
-    public static String getOutputPathForKeyGeneratorStage(JpkConfiguration config) {
+    public static String getPathForKeyGeneratorStage(JpkConfiguration config) {
         return removeExtension(getOutputPath(config)) + KEY_EXTENSION;
     }
 
-    public static String getOutputPathForVectorGeneratorStage(JpkConfiguration config) {
+    public static String getPathForVectorGeneratorStage(JpkConfiguration config) {
         return removeExtension(getOutputPath(config)) + VEC_EXTENSION;
     }
 
-    public static String getOutputPathForZipStage(JpkConfiguration config) {
+    public static String getPathForZipStage(JpkConfiguration config) {
         return getOutputPath(config) + ZIP_EXTENSION;
     }
 
-    static String getOutputPathForAesEncryptStage(JpkConfiguration config) {
+    static String getPathForAesEncryptStage(JpkConfiguration config) {
         return getOutputPath(config) + AES_EXTENSION;
     }
 
-    static String getOutputPathForFormalValidation(JpkConfiguration config) {
+    static String getPathForFormalValidation(JpkConfiguration config) {
         return getOutputPath(config) + VALIDATION_EXTENSION;
     }
 

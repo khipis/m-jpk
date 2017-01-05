@@ -21,11 +21,11 @@ import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.extractFileNameFromInputFilePath;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.extractFileNameWithoutExtension;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPath;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForAesEncryptStage;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForFormalValidation;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForKeyGeneratorStage;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForVectorGeneratorStage;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getOutputPathForZipStage;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getPathForAesEncryptStage;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getPathForFormalValidation;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getPathForKeyGeneratorStage;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getPathForVectorGeneratorStage;
+import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getPathForZipStage;
 import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.saveFormalValidationOutput;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -49,7 +49,7 @@ public class JpkOutputUtilsTest {
     public void shouldGetOutputPathForFormalValidation() throws Exception {
         whenConfiguration();
 
-        String result = getOutputPathForFormalValidation(config);
+        String result = getPathForFormalValidation(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.xml.validation");
     }
@@ -58,7 +58,7 @@ public class JpkOutputUtilsTest {
     public void shouldGetOutputPathForKeyGeneratorStage() throws Exception {
         whenConfiguration();
 
-        String result = getOutputPathForKeyGeneratorStage(config);
+        String result = getPathForKeyGeneratorStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.key");
     }
@@ -67,7 +67,7 @@ public class JpkOutputUtilsTest {
     public void shouldGetOutputPathForVectorGeneratorStage() throws Exception {
         whenConfiguration();
 
-        String result = getOutputPathForVectorGeneratorStage(config);
+        String result = getPathForVectorGeneratorStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.vec");
     }
@@ -76,7 +76,7 @@ public class JpkOutputUtilsTest {
     public void shouldGetOutputPathForZipStage() throws Exception {
         whenConfiguration();
 
-        String result = getOutputPathForZipStage(config);
+        String result = getPathForZipStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.xml.zip");
     }
@@ -86,7 +86,7 @@ public class JpkOutputUtilsTest {
         when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
         when(config.getInputFilePath()).thenReturn(TEMP_FILE_NAME + ZIP_EXTENSION);
 
-        String result = getOutputPathForAesEncryptStage(config);
+        String result = getPathForAesEncryptStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.xml.zip.aes");
     }
