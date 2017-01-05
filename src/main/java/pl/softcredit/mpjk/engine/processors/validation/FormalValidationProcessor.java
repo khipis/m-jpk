@@ -46,6 +46,7 @@ public class FormalValidationProcessor implements JpkProcessor {
             throw new JpkException(e);
         } catch (IOException e) {
             LOGGER.error("Problem while reading scheme file: " + config.getSchemeFilePath());
+            throw new JpkException(e);
         }
     }
 }
