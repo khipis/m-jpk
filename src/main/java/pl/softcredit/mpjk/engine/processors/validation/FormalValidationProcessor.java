@@ -18,7 +18,7 @@ import javax.xml.validation.SchemaFactory;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static javax.xml.validation.SchemaFactory.newInstance;
 import static org.slf4j.LoggerFactory.getLogger;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.saveFormalValidationOutput;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.saveFormalValidationOutput;
 
 public class FormalValidationProcessor implements JpkProcessor {
 

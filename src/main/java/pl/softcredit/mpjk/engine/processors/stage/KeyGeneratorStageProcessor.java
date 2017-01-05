@@ -16,7 +16,7 @@ import javax.crypto.SecretKey;
 import static javax.crypto.KeyGenerator.getInstance;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.slf4j.LoggerFactory.getLogger;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getPathForKeyGeneratorStage;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForKeyGeneratorStage;
 
 public class KeyGeneratorStageProcessor implements JpkProcessor {
 

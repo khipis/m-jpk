@@ -14,7 +14,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import static pl.softcredit.mpjk.engine.utils.JpkOutputUtils.getPathForZipStage;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
 
 public class ZipStageProcessor implements JpkProcessor {
 
