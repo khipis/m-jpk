@@ -12,6 +12,7 @@ import pl.softcredit.mpjk.engine.processors.stage.AesEncryptStageProcessor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.rules.ExpectedException.none;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.getProcessingFlow;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.getProcessorByString;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,11 +37,32 @@ public class JpkProcessorsTest {
     }
 
     @Test
+    public void shouldConstructProcessingFlowFromPassedString() throws JpkException {
+        JpkProcessor[] result = getProcessingFlow(
+                "CONFIG_PARAMETERS_VALIDATION,SCHEME_VALIDATION,CLEAN_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,VECTOR_GENERATOR_STAGE,ZIP_STAGE,AES_ENCRYPT_STAGE");
+
+        assertThat(result).hasSize(8);
+
+        result = getProcessingFlow(
+                "clean_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,vector_generator_stage");
+
+        assertThat(result).hasSize(4);
+    }
+
+    @Test
     public void shouldThrowJpkExceptionWhenProcessorNameIsInvalid() throws JpkException {
         expectedException.expect(JpkException.class);
         expectedException.expectMessage("There is no processor with name: INVALID_PROCESSOR_NAME");
 
         getProcessorByString("INVALID_PROCESSOR_NAME");
+    }
+
+    @Test
+    public void shouldThrowJpkExceptionWhenOneOfProcessorsIsInvalid() throws JpkException {
+        expectedException.expect(JpkException.class);
+        expectedException.expectMessage("There is no processor with name: INVALID_PROCESSOR_NAME");
+
+        getProcessingFlow("CONFIG_PARAMETERS_VALIDATION,invalid_processor_name");
     }
 
 }

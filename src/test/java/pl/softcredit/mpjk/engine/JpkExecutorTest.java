@@ -24,6 +24,7 @@ import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE;
 import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
 import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.VALIDATION_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.AES_DECRYPT_STAGE_PROCESSOR;
@@ -35,6 +36,7 @@ import static pl.softcredit.mpjk.engine.processors.JpkProcessors.KEY_GENERATOR_S
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.SCHEME_VALIDATION_PROCESSOR;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.VECTOR_GENERATOR_STAGE_PROCESSOR;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.ZIP_STAGE_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.getProcessingFlow;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
 import static pl.softcredit.mpjk.engine.utils.JpkZip.unzipFile;
 
@@ -83,6 +85,20 @@ public class JpkExecutorTest {
 
         System.out.println(fileContent);
         System.out.println(unzippedFileContent);
+    }
+
+
+    @Test
+    public void shouldPerformOnlyFormalValidation() throws JpkException, IOException {
+        new JpkExecutor(config).execute(
+                getProcessingFlow("FORMAL_VALIDATION")
+        );
+
+        File[] files = new File(TEMP_WORKING_DIR).listFiles();
+
+        assertThat(files).hasSize(1);
+        assertThat(files[0]).exists();
+        assertThat(files[0].getName()).isEqualTo(VALIDATION_FILE_NAME);
     }
 
     private void whenConfigurationWith(String inputFile, String schemeFile) {

@@ -13,6 +13,8 @@ import pl.softcredit.mpjk.engine.processors.validation.ConfigParametersValidatio
 import pl.softcredit.mpjk.engine.processors.validation.FormalValidationProcessor;
 import pl.softcredit.mpjk.engine.processors.validation.SchemeValidationProcessor;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public final class JpkProcessors {
@@ -48,12 +50,21 @@ public final class JpkProcessors {
     public static final JpkProcessor getProcessorByString(String processorName)
             throws JpkException {
         String processorNameUpperCase = processorName.toUpperCase();
-        if(PROCESSORS_MAP.containsKey(processorNameUpperCase)){
+        if (PROCESSORS_MAP.containsKey(processorNameUpperCase)) {
             return PROCESSORS_MAP.get(processorNameUpperCase);
-        }
-        else{
+        } else {
             throw new JpkException("There is no processor with name: " + processorNameUpperCase);
         }
+    }
+
+    public static final JpkProcessor[] getProcessingFlow(String commaSeparatedProcessingFlow)
+            throws JpkException {
+        String[] processorsNames = commaSeparatedProcessingFlow.split(",");
+        List<JpkProcessor> jpkProcessorsFlow = new LinkedList<>();
+        for (String processorName : processorsNames) {
+            jpkProcessorsFlow.add(getProcessorByString(processorName));
+        }
+        return jpkProcessorsFlow.toArray(new JpkProcessor[jpkProcessorsFlow.size()]);
     }
 
     private JpkProcessors() {

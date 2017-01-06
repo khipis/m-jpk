@@ -59,6 +59,9 @@ Przykladowy zawartosc pliku konfiguracyjnego:
     
 Obecnie: processing.flow=CONFIG_PARAMETERS_VALIDATION,SCHEME_VALIDATION,CLEAN_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,VECTOR_GENERATOR_STAGE,ZIP_STAGE,AES_ENCRYPT_STAGE,AES_DECRYPT
 Ostatnia AES_DECRYPT w celach testowych
+
+W przypadku checi przeprowadzenia tylko formalnej walidacji:
+    processing.flow=CONFIG_PARAMETERS_VALIDATION,FORMAL_VALIDATION
     
 Sciezke nalezy rozdzielac podwojnym \\ przyklad -> C:\\windows\\temp (Do potwierdzenia)
     

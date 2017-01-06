@@ -10,6 +10,7 @@ public class TestPaths {
     public static final String SCHEMES_DIR = "src/test/resources/schemes/";
     public static final String RESOURCES_INPUT_FILES = "src/test/resources/input-files/";
     public static final String VALID_FILE_NAME = "valid_JPK_VAT(1)_file.xml";
+    public static final String VALIDATION_FILE_NAME = "valid_JPK_VAT(1)_file.xml.validation";
     public static final String ZIP_FILE_NAME = "valid_JPK_VAT(1)_file.xml.zip";
     public static final String AES_FILE_NAME = "valid_JPK_VAT(1)_file.xml.zip.aes";
     public static final String KEY_FILE_NAME = "valid_JPK_VAT(1)_file.key";
