@@ -56,6 +56,10 @@ public class JpkUtils {
         return getPathForZipStage(config) + AES_EXTENSION;
     }
 
+    public static String getPathForAesDecryptStage(JpkConfiguration config) {
+        return removeExtension(config.getInputFilePath());
+    }
+
     static String getPathForFormalValidation(JpkConfiguration config) {
         return getOutputPath(config) + VALIDATION_EXTENSION;
     }

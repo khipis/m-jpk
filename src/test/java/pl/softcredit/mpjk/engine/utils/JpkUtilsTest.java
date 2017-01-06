@@ -1,5 +1,6 @@
 package pl.softcredit.mpjk.engine.utils;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,6 +21,7 @@ import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameFromInputFilePath;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameWithoutExtension;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getOutputPath;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForAesDecryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForAesEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForFormalValidation;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForKeyGeneratorStage;
@@ -30,12 +32,17 @@ import static pl.softcredit.mpjk.engine.utils.JpkUtils.saveFormalValidationOutpu
 @RunWith(MockitoJUnitRunner.class)
 public class JpkUtilsTest {
 
-    @Mock private JpkConfiguration config;
+    @Mock
+    private JpkConfiguration config;
+
+    @Before
+    public void setUp() {
+        when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
+        when(config.getInputFilePath()).thenReturn(TEMP_FILE_NAME);
+    }
 
     @Test
     public void shouldSaveFormalValidationOutputWithContent() throws Exception {
-        whenConfiguration();
-
         saveFormalValidationOutput(config, FILE_CONTENT);
 
         File createdFile = new File(TEMP_INPUT_FILE + VALIDATION_EXTENSION);
@@ -46,8 +53,6 @@ public class JpkUtilsTest {
 
     @Test
     public void shouldGetOutputPathForFormalValidation() throws Exception {
-        whenConfiguration();
-
         String result = getPathForFormalValidation(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.xml.validation");
@@ -55,8 +60,6 @@ public class JpkUtilsTest {
 
     @Test
     public void shouldGetOutputPathForKeyGeneratorStage() throws Exception {
-        whenConfiguration();
-
         String result = getPathForKeyGeneratorStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.key");
@@ -64,8 +67,6 @@ public class JpkUtilsTest {
 
     @Test
     public void shouldGetOutputPathForVectorGeneratorStage() throws Exception {
-        whenConfiguration();
-
         String result = getPathForVectorGeneratorStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.vec");
@@ -73,8 +74,6 @@ public class JpkUtilsTest {
 
     @Test
     public void shouldGetOutputPathForZipStage() throws Exception {
-        whenConfiguration();
-
         String result = getPathForZipStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.xml.zip");
@@ -82,17 +81,22 @@ public class JpkUtilsTest {
 
     @Test
     public void shouldGetOutputPathForAesEncryptStage() throws Exception {
-        whenConfiguration();
-
         String result = getPathForAesEncryptStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.xml.zip.aes");
     }
 
     @Test
-    public void shouldExtractFileName() throws Exception {
-        whenConfiguration();
+    public void shouldRemoveAesExtension() throws Exception {
+        when(config.getInputFilePath()).thenReturn("target/working-dir\\tempfile.xml.zip.aes");
 
+        String result = getPathForAesDecryptStage(config);
+
+        assertThat(result).isEqualTo("target/working-dir\\tempfile.xml.zip");
+    }
+
+    @Test
+    public void shouldExtractFileName() throws Exception {
         String result = extractFileNameFromInputFilePath(config);
 
         assertThat(result).isEqualTo("tempfile.xml");
@@ -100,8 +104,6 @@ public class JpkUtilsTest {
 
     @Test
     public void shouldExtractFileNameWithoutExtension() throws Exception {
-        whenConfiguration();
-
         String result = extractFileNameWithoutExtension(config);
 
         assertThat(result).isEqualTo("tempfile");
@@ -109,15 +111,10 @@ public class JpkUtilsTest {
 
     @Test
     public void shouldGetOutputPath() throws Exception {
-        whenConfiguration();
-
         String result = getOutputPath(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.xml");
     }
 
-    private void whenConfiguration() {
-        when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
-        when(config.getInputFilePath()).thenReturn(TEMP_FILE_NAME);
-    }
+
 }
