@@ -13,7 +13,7 @@ import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
 import static org.junit.rules.ExpectedException.*;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestDummies.INPUT_FILES_DIR;
+import static pl.softcredit.mpjk.engine.TestDummies.RESOURCES_INPUT_FILES;
 import static pl.softcredit.mpjk.engine.TestDummies.JPK_VAT_SCHEME_FILE;
 import static pl.softcredit.mpjk.engine.TestDummies.NOT_EXISTED_FILE;
 import static pl.softcredit.mpjk.engine.TestDummies.SCHEMES_DIR;
@@ -35,7 +35,8 @@ public class ConfigParametersValidationProcessorTest {
     public void shouldThrowJpkExceptionWhenSchemeExistsButInputFileNot() throws Exception {
         setupConfiguration(NOT_EXISTED_FILE, SCHEMES_DIR + JPK_VAT_SCHEME_FILE);
 
-        expectedExceptionWithMessage("Input file not exists: " + INPUT_FILES_DIR + NOT_EXISTED_FILE);
+        expectedExceptionWithMessage("Input file not exists: " + RESOURCES_INPUT_FILES
+                                     + NOT_EXISTED_FILE);
 
         configParametersValidationProcessor.process(config);
     }
@@ -64,6 +65,6 @@ public class ConfigParametersValidationProcessorTest {
     private void setupConfiguration(String inputFile, String schemeFile) {
         when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
         when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR + schemeFile);
-        when(config.getInputFilePath()).thenReturn(INPUT_FILES_DIR + inputFile);
+        when(config.getInputFilePath()).thenReturn(RESOURCES_INPUT_FILES + inputFile);
     }
 }

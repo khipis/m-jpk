@@ -18,6 +18,7 @@ import static pl.softcredit.mpjk.engine.TestDummies.FILE_CONTENT;
 import static pl.softcredit.mpjk.engine.TestDummies.TEMP_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestDummies.TEMP_INPUT_FILE;
 import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.CLEAN_WORKING_DIRECTORY_PROCESSOR;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CleanWorkingDirectoryProcessorTest {
@@ -25,8 +26,7 @@ public class CleanWorkingDirectoryProcessorTest {
     @Mock
     private JpkConfiguration config;
 
-    private JpkProcessor cleanWorkingDirectoryProcessor =
-            new CleanWorkingDirectoryProcessor();
+    private JpkProcessor cleanWorkingDirectoryProcessor = CLEAN_WORKING_DIRECTORY_PROCESSOR;
 
     @Test
     public void shouldCreateWorkingDirIfItNotExists() throws Exception {

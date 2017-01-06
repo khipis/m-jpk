@@ -13,7 +13,7 @@ import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestDummies.INPUT_FILES_DIR;
+import static pl.softcredit.mpjk.engine.TestDummies.RESOURCES_INPUT_FILES;
 import static pl.softcredit.mpjk.engine.TestDummies.SCHEMES_DIR;
 import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_NAME;
@@ -41,7 +41,7 @@ public class SchemeValidationProcessorTest {
     private void whenConfigurationWith(String inputFile, String schemeFile) {
         when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
         when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR + schemeFile);
-        when(config.getInputFilePath()).thenReturn(INPUT_FILES_DIR + inputFile);
+        when(config.getInputFilePath()).thenReturn(RESOURCES_INPUT_FILES + inputFile);
     }
 
 }
