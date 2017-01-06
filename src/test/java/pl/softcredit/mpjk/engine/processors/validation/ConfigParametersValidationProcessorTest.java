@@ -18,7 +18,7 @@ import static pl.softcredit.mpjk.engine.TestDummies.JPK_VAT_SCHEME_FILE;
 import static pl.softcredit.mpjk.engine.TestDummies.NOT_EXISTED_FILE;
 import static pl.softcredit.mpjk.engine.TestDummies.SCHEMES_DIR;
 import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE;
+import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_NAME;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConfigParametersValidationProcessorTest {
@@ -42,7 +42,7 @@ public class ConfigParametersValidationProcessorTest {
 
     @Test
     public void shouldThrowJpkExceptionWhenInputFileExistsButSchemeFileNot() throws Exception {
-        setupConfiguration(VALID_FILE, NOT_EXISTED_FILE);
+        setupConfiguration(VALID_FILE_NAME, NOT_EXISTED_FILE);
 
         expectedExceptionWithMessage("Scheme file not exists: " + SCHEMES_DIR + NOT_EXISTED_FILE);
 
@@ -51,7 +51,7 @@ public class ConfigParametersValidationProcessorTest {
 
     @Test
     public void shouldNotThrowAnyExceptionWhenInputFileAndSchemeExists() throws Exception {
-        setupConfiguration(VALID_FILE, JPK_VAT_SCHEME_FILE);
+        setupConfiguration(VALID_FILE_NAME, JPK_VAT_SCHEME_FILE);
 
         configParametersValidationProcessor.process(config);
     }

@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 import static pl.softcredit.mpjk.engine.TestDummies.INPUT_FILES_DIR;
 import static pl.softcredit.mpjk.engine.TestDummies.SCHEMES_DIR;
 import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE;
+import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_NAME;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SchemeValidationProcessorTest {
@@ -31,7 +31,7 @@ public class SchemeValidationProcessorTest {
 
     @Test
     public void shouldThrowJpkExceptionWhenSchemeIsInvalidAtAll() throws Exception {
-        whenConfigurationWith(VALID_FILE, "invalidScheme.xsd");
+        whenConfigurationWith(VALID_FILE_NAME, "invalidScheme.xsd");
 
         expectedException.expect(JpkException.class);
 

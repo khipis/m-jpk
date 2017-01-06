@@ -25,7 +25,7 @@ import static pl.softcredit.mpjk.engine.TestDummies.INVALID_FILE;
 import static pl.softcredit.mpjk.engine.TestDummies.JPK_VAT_SCHEME_FILE;
 import static pl.softcredit.mpjk.engine.TestDummies.SCHEMES_DIR;
 import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE;
+import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_NAME;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,11 +41,11 @@ public class FormalValidationProcessorTest {
 
     @Test
     public void shouldReturnFileWithContentValidIfFileIsValidToScheme() throws Exception {
-        whenConfigurationWith(VALID_FILE, JPK_VAT_SCHEME_FILE);
+        whenConfigurationWith(VALID_FILE_NAME, JPK_VAT_SCHEME_FILE);
 
         formalValidationProcessor.process(config);
 
-        assertFile(VALID_FILE, FILE_CONTENT);
+        assertFile(VALID_FILE_NAME, FILE_CONTENT);
     }
 
     @Test
@@ -60,12 +60,12 @@ public class FormalValidationProcessorTest {
 
     @Test
     public void shouldReturnFileWithErrorDescriptionWhenSchemeIsInvalidToFile() throws Exception {
-        whenConfigurationWith(VALID_FILE, "Schemat_JPK_VAT(2)_v1-0.xsd");
+        whenConfigurationWith(VALID_FILE_NAME, "Schemat_JPK_VAT(2)_v1-0.xsd");
         expectedException.expect(JpkException.class);
 
         formalValidationProcessor.process(config);
 
-        assertFile(VALID_FILE, "Cannot find the declaration of element 'tns:JPK'.");
+        assertFile(VALID_FILE_NAME, "Cannot find the declaration of element 'tns:JPK'.");
     }
 
     private void assertFile(String inputFile, String content) throws IOException {
