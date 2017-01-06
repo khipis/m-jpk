@@ -89,6 +89,8 @@ Obecny przeplyw aplikacji:
     -generuj 256 bitowy klucz i zapisz do pliku key
     -generuj 128 bitowy vector i zapisz do pliku vec
     -spakuj plik xml do pliku zip
+    -zaszyfruj plik zip algorytmem AES256 na podstawie wartosci wygenerowanych key i vec
+        
 
 JRE
 ==========================
