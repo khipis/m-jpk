@@ -6,6 +6,7 @@ public enum JpkExtensions {
     XADES_EXTENSION(".xades"),
     KEY_EXTENSION(".key"),
     VEC_EXTENSION(".vec"),
+    XML_EXTENSION(".xml"),
     VALIDATION_EXTENSION(".validation")
     ;
 

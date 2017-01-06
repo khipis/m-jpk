@@ -18,6 +18,7 @@ import static pl.softcredit.mpjk.engine.utils.JpkExtensions.AES_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.KEY_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VEC_EXTENSION;
+import static pl.softcredit.mpjk.engine.utils.JpkExtensions.XML_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 
 public class JpkUtils {
@@ -50,11 +51,11 @@ public class JpkUtils {
     }
 
     public static String getPathForZipStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), 3) + ZIP_EXTENSION;
+        return removeNExtensions(getOutputPath(config), 3) + XML_EXTENSION + ZIP_EXTENSION;
     }
 
     public static String getPathForAesEncryptStage(JpkConfiguration config) {
-        return getPathForZipStage(config) + AES_EXTENSION;
+        return removeNExtensions(getOutputPath(config), 3) + XML_EXTENSION + ZIP_EXTENSION + AES_EXTENSION;
     }
 
     public static String getPathForAesDecryptStage(JpkConfiguration config) {
