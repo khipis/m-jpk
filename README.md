@@ -1,4 +1,4 @@
-README for mjpk 0.2.0
+MJPK
 ==========================
 Integracja z mFirma -> Jednolity Plik Kontrolny
 
