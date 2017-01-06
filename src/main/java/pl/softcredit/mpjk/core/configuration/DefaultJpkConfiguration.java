@@ -22,4 +22,9 @@ public final class DefaultJpkConfiguration implements JpkConfiguration {
         return "";
     }
 
+    @Override
+    public String getProcessingFlow() {
+        return "CONFIG_PARAMETERS_VALIDATION,SCHEME_VALIDATION,CLEAN_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,VECTOR_GENERATOR_STAGE,ZIP_STAGE,AES_ENCRYPT_STAGE,AES_DECRYPT";
+    }
+
 }

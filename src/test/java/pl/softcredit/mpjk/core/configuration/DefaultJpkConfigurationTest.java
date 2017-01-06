@@ -13,6 +13,7 @@ public class DefaultJpkConfigurationTest {
         assertThat(jpkConfiguration.getWorkingDirectoryPath()).isEqualTo("working-dir");
         assertThat(jpkConfiguration.getSchemeFilePath()).isEqualTo("schemes/Schemat_JPK_VAT(1)_v1-0.xsd");
         assertThat(jpkConfiguration.getInputFilePath()).isEqualTo("input-files/JPK-VAT-TEST-0000.xml");
+        assertThat(jpkConfiguration.getProcessingFlow()).isEqualTo("CONFIG_PARAMETERS_VALIDATION,SCHEME_VALIDATION,CLEAN_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,VECTOR_GENERATOR_STAGE,ZIP_STAGE,AES_ENCRYPT_STAGE,AES_DECRYPT");
     }
 
 }

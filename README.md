@@ -55,6 +55,10 @@ Przykladowy zawartosc pliku konfiguracyjnego:
     working.directory.path=Sciezka do katalogu w ktorym mjpk bedzie zapisywac wyniki swojej pracy
     scheme.file.path=Sciezka do pliku scheme sluzacego do walidacji wygenerowanego pliku JPK
     input.file.path=Sciezka do pliku xml na ktorym aplikacja przeprowadzi swoje operacje
+    processing.flow=Operacje ktore powinna wykonac aplikacja rozdzielone przecinkiem
+    
+Obecnie: processing.flow=CONFIG_PARAMETERS_VALIDATION,SCHEME_VALIDATION,CLEAN_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,VECTOR_GENERATOR_STAGE,ZIP_STAGE,AES_ENCRYPT_STAGE,AES_DECRYPT
+Ostatnia AES_DECRYPT w celach testowych
     
 Sciezke nalezy rozdzielac podwojnym \\ przyklad -> C:\\windows\\temp (Do potwierdzenia)
     

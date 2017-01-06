@@ -45,4 +45,9 @@ public final class FileJpkConfiguration implements JpkConfiguration {
     public String getConfigFilePath(){
         return configFilePath;
     }
+
+    @Override
+    public String getProcessingFlow() {
+        return properties.getProperty("processing.flow");
+    }
 }

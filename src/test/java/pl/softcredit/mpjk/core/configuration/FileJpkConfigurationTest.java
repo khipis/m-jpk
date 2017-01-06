@@ -15,6 +15,7 @@ public class FileJpkConfigurationTest {
         assertThat(jpkConfiguration.getWorkingDirectoryPath()).isNotEmpty();
         assertThat(jpkConfiguration.getSchemeFilePath()).isNotEmpty();
         assertThat(jpkConfiguration.getInputFilePath()).isNotEmpty();
+        assertThat(jpkConfiguration.getProcessingFlow()).isNotEmpty();
     }
 
     @Test(expected = JpkException.class)

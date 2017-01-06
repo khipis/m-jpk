@@ -9,4 +9,6 @@ public interface JpkConfiguration {
     String getInputFilePath();
 
     String getConfigFilePath();
+
+    String getProcessingFlow();
 }
