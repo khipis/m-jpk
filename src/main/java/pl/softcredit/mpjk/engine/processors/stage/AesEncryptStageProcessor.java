@@ -13,19 +13,14 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
-import static javax.crypto.Cipher.ENCRYPT_MODE;
-import static javax.crypto.Cipher.getInstance;
 import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
 import static org.slf4j.LoggerFactory.getLogger;
+import static pl.softcredit.mpjk.engine.utils.JpkCrypt.encryptAES256;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForAesEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForKeyGeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorGeneratorStage;
@@ -45,13 +40,7 @@ public class AesEncryptStageProcessor implements JpkProcessor {
             byte[] key = readAllBytes(get(getPathForKeyGeneratorStage(config)));
             byte[] vector = readAllBytes(get(getPathForVectorGeneratorStage(config)));
             byte[] zippedFileToEncrypt = readAllBytes(get(getPathForZipStage(config)));
-
-            SecretKey secret = new SecretKeySpec(key, "AES");
-
-            Cipher cipher = getInstance("AES/CBC/PKCS5Padding");
-
-            cipher.init(ENCRYPT_MODE, secret, new IvParameterSpec(vector));
-            byte[] aesEncryptedBytes = cipher.doFinal(zippedFileToEncrypt);
+            byte[] aesEncryptedBytes = encryptAES256(key, vector, zippedFileToEncrypt);
 
             writeByteArrayToFile(new File(aesFileOutputPath), aesEncryptedBytes);
         } catch (IOException e) {
@@ -77,4 +66,7 @@ public class AesEncryptStageProcessor implements JpkProcessor {
 
 
     }
+
+
+
 }

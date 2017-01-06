@@ -24,7 +24,7 @@ import static pl.softcredit.mpjk.engine.TestDummies.JPK_VAT_SCHEME_FILE;
 import static pl.softcredit.mpjk.engine.TestDummies.SCHEMES_DIR;
 import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_NAME;
-import static pl.softcredit.mpjk.engine.TestDummies.VEC_FILE;
+import static pl.softcredit.mpjk.engine.TestDummies.VEC_FILE_NAME;
 
 @RunWith(MockitoJUnitRunner.class)
 public class VectorGeneratorStageProcessorTest {
@@ -48,7 +48,7 @@ public class VectorGeneratorStageProcessorTest {
 
         vectorGeneratorStageProcessor.process(config);
 
-        assertFile(VEC_FILE);
+        assertFile(VEC_FILE_NAME);
     }
 
     private void assertFile(String inputFile) throws IOException {
