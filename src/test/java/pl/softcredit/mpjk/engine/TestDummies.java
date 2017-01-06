@@ -16,5 +16,6 @@ public class TestDummies {
     public static final String NOT_EXISTED_FILE = "not_existed_file";
     public static final String TEMP_FILE_NAME = "tempfile.xml";
     public static final String TEMP_INPUT_FILE = TEMP_WORKING_DIR + separator + "tempfile.xml";
+    public static final String VALID_FILE_PATH_FROM_RESOURCES = INPUT_FILES_DIR + separator + VALID_FILE;
     public static final String EXCEPTION_MESSAGE = "some exception message" ;
 }
