@@ -51,7 +51,7 @@ public class AesEncryptStageProcessor implements JpkProcessor {
         } catch (InvalidKeyException e) {
             throw new JpkException(e);
         } catch (InvalidAlgorithmParameterException e) {
-            LOGGER.error("Problem with AES algorithm (probably no JCE in JRE)");
+            LOGGER.error("Problem with AES algorithm parameters");
             throw new JpkException(e);
         } catch (NoSuchPaddingException e) {
             LOGGER.error("Problem with AES algorithm (probably no JCE in JRE)");
