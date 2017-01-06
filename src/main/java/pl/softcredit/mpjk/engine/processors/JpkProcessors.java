@@ -2,6 +2,7 @@ package pl.softcredit.mpjk.engine.processors;
 
 import com.google.inject.internal.ImmutableMap;
 
+import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.engine.processors.preparation.CleanWorkingDirectoryProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.AesDecryptStageProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.AesEncryptStageProcessor;
@@ -43,6 +44,17 @@ public final class JpkProcessors {
                     put("AES_ENCRYPT_STAGE", AES_ENCRYPT_STAGE_PROCESSOR).
                     put("AES_DECRYPT_STAGE", AES_DECRYPT_STAGE_PROCESSOR).
                     build();
+
+    public static final JpkProcessor getProcessorByString(String processorName)
+            throws JpkException {
+        String processorNameUpperCase = processorName.toUpperCase();
+        if(PROCESSORS_MAP.containsKey(processorNameUpperCase)){
+            return PROCESSORS_MAP.get(processorNameUpperCase);
+        }
+        else{
+            throw new JpkException("There is no processor with name: " + processorNameUpperCase);
+        }
+    }
 
     private JpkProcessors() {
     }

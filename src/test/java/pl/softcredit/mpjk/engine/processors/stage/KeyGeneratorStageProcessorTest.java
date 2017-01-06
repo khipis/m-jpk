@@ -1,9 +1,7 @@
 package pl.softcredit.mpjk.engine.processors.stage;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -17,7 +15,6 @@ import java.io.IOException;
 import static java.io.File.separator;
 import static org.apache.commons.io.FileUtils.cleanDirectory;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.when;
 import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE;
 import static pl.softcredit.mpjk.engine.TestPaths.KEY_FILE_NAME;
@@ -29,9 +26,6 @@ import static pl.softcredit.mpjk.engine.processors.JpkProcessors.KEY_GENERATOR_S
 
 @RunWith(MockitoJUnitRunner.class)
 public class KeyGeneratorStageProcessorTest {
-
-    @Rule
-    public ExpectedException expectedException = none();
 
     @Mock
     private JpkConfiguration config;
