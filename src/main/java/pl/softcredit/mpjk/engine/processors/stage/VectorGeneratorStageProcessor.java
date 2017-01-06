@@ -14,7 +14,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 import static javax.crypto.KeyGenerator.getInstance;
-import static org.apache.commons.io.FileUtils.writeStringToFile;
+import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
 import static org.slf4j.LoggerFactory.getLogger;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorGeneratorStage;
 
@@ -33,11 +33,10 @@ public class VectorGeneratorStageProcessor implements JpkProcessor {
             KeyGenerator keyGen = getInstance("AES");
             keyGen.init(BITS_COUNT);
 
-            SecretKey secretKey = keyGen.generateKey();
-            String generatedKey = new String(secretKey.getEncoded());
-            generatedKey = "1234567890123456";
+            SecretKey vectorKey = keyGen.generateKey();
+            //generatedVector = "1234567890123456";
 
-            writeStringToFile(new File(vectorFileOutputPath), generatedKey);
+            writeByteArrayToFile(new File(vectorFileOutputPath), vectorKey.getEncoded());
 
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error("Problem while generating AES client vector.");

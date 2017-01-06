@@ -14,7 +14,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 import static javax.crypto.KeyGenerator.getInstance;
-import static org.apache.commons.io.FileUtils.writeStringToFile;
+import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
 import static org.slf4j.LoggerFactory.getLogger;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForKeyGeneratorStage;
 
@@ -35,9 +35,9 @@ public class KeyGeneratorStageProcessor implements JpkProcessor {
 
             SecretKey secretKey = keyGen.generateKey();
             String generatedKey = new String(secretKey.getEncoded());
-            generatedKey = "12345678901234567890123456789012";
+            //generatedKey = "12345678901234567890123456789012";
 
-            writeStringToFile(new File(keyFileOutputPath), generatedKey);
+            writeByteArrayToFile(new File(keyFileOutputPath), secretKey.getEncoded());
 
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error("Problem while generating AES client key.");

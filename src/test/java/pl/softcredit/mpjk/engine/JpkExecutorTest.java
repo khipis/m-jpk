@@ -1,124 +1,94 @@
 package pl.softcredit.mpjk.engine;
 
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import pl.softcredit.mpjk.JpkException;
-import pl.softcredit.mpjk.core.configuration.DefaultJpkConfiguration;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
-import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 import pl.softcredit.mpjk.engine.processors.preparation.CleanWorkingDirectoryProcessor;
 import pl.softcredit.mpjk.engine.processors.validation.ConfigParametersValidationProcessor;
 import pl.softcredit.mpjk.engine.processors.validation.FormalValidationProcessor;
 import pl.softcredit.mpjk.engine.processors.validation.SchemeValidationProcessor;
 
-import static org.junit.rules.ExpectedException.none;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static pl.softcredit.mpjk.engine.TestPaths.EXCEPTION_MESSAGE;
+import java.io.File;
+import java.io.IOException;
+
+import static org.apache.commons.io.FileUtils.cleanDirectory;
+import static org.apache.commons.io.FileUtils.readFileToString;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE;
+import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
+import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.AES_DECRYPT_STAGE_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.AES_ENCRYPT_STAGE_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.CLEAN_WORKING_DIRECTORY_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.CONFIG_PARAMETERS_VALIDATION_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.FORMAL_VALIDATION_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.KEY_GENERATOR_STAGE_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.SCHEME_VALIDATION_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.VECTOR_GENERATOR_STAGE_PROCESSOR;
+import static pl.softcredit.mpjk.engine.processors.JpkProcessors.ZIP_STAGE_PROCESSOR;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
+import static pl.softcredit.mpjk.engine.utils.JpkZip.unzipFile;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JpkExecutorTest {
 
-    @Rule
-    public ExpectedException expectedException = none();
-
     @Mock
     private ConfigParametersValidationProcessor configParametersValidationProcessor;
-
     @Mock
     private CleanWorkingDirectoryProcessor cleanWorkingDirectoryProcessor;
-
     @Mock
     private FormalValidationProcessor formalValidationProcessor;
-
     @Mock
     private SchemeValidationProcessor schemeValidationProcessor;
 
-    private JpkConfiguration config = new DefaultJpkConfiguration();
+    @Mock
+    private JpkConfiguration config;
 
-    private JpkExecutor jpkExecutor = new JpkExecutor(config);
-
-    @Test
-    public void shouldExecuteEveryPassedProcessor() throws JpkException {
-        executeAllProcessors();
-
-        verify(configParametersValidationProcessor).process(config);
-        verify(cleanWorkingDirectoryProcessor).process(config);
-        verify(formalValidationProcessor).process(config);
-        verify(schemeValidationProcessor).process(config);
+    @Before
+    public void setUp() throws IOException, JpkException {
+        cleanDirectory(new File(TEMP_WORKING_DIR));
+        whenConfigurationWith(VALID_FILE_NAME, JPK_VAT_SCHEME_FILE);
     }
 
     @Test
-    public void shouldStopProcessingAfterExceptionInConfigParametersProcessor() throws JpkException {
-        throwExceptionOnSpecificProcessor(configParametersValidationProcessor);
+    public void shouldExecuteWholeFlowOfJpkProcessing() throws JpkException, IOException {
+        new JpkExecutor(config).execute(
+                         CONFIG_PARAMETERS_VALIDATION_PROCESSOR,
+                         SCHEME_VALIDATION_PROCESSOR,
+                         CLEAN_WORKING_DIRECTORY_PROCESSOR,
+                         FORMAL_VALIDATION_PROCESSOR,
+                         KEY_GENERATOR_STAGE_PROCESSOR,
+                         VECTOR_GENERATOR_STAGE_PROCESSOR,
+                         ZIP_STAGE_PROCESSOR,
+                         AES_ENCRYPT_STAGE_PROCESSOR,
+                         AES_DECRYPT_STAGE_PROCESSOR
+                );
 
-        executeAllProcessors();
+        String fileContent = readFileToString(new File(config.getInputFilePath()));
 
-        verify(configParametersValidationProcessor).process(config);
+        unzipFile(getPathForZipStage(config), TEMP_WORKING_DIR);
 
-        verifyNoMoreInteractions(cleanWorkingDirectoryProcessor,
-                                 formalValidationProcessor,
-                                 schemeValidationProcessor);
+        String unzippedFileContent = readFileToString(new File(VALID_FILE_PATH));
+
+        assertThat(fileContent).isEqualTo(unzippedFileContent);
+
+        System.out.println(fileContent);
+        System.out.println(unzippedFileContent);
     }
 
-    @Test
-    public void shouldStopProcessingAfterExceptionInCleanWorkingDirectoryProcessor() throws JpkException {
-        throwExceptionOnSpecificProcessor(cleanWorkingDirectoryProcessor);
-
-        executeAllProcessors();
-
-        verify(configParametersValidationProcessor).process(config);
-       // verify(cleanWorkingDirectoryProcessor).process(config);
-
-        verifyNoMoreInteractions(cleanWorkingDirectoryProcessor,formalValidationProcessor,
-                                 schemeValidationProcessor);
+    private void whenConfigurationWith(String inputFile, String schemeFile) {
+        when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
+        when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR + schemeFile);
+        when(config.getInputFilePath()).thenReturn(RESOURCES_INPUT_FILES + inputFile);
     }
 
-    @Test
-    public void shouldStopProcessingAfterExceptionInFormalValidationProcessor() throws JpkException {
-        throwExceptionOnSpecificProcessor(formalValidationProcessor);
-
-        executeAllProcessors();
-
-        verify(configParametersValidationProcessor).process(config);
-        verify(cleanWorkingDirectoryProcessor).process(config);
-        verify(formalValidationProcessor).process(config);
-
-        verifyNoMoreInteractions(schemeValidationProcessor);
-    }
-
-    @Test
-    public void shouldStopProcessingAfterExceptionSchemeValidationProcessor() throws JpkException {
-        throwExceptionOnSpecificProcessor(schemeValidationProcessor);
-
-        executeAllProcessors();
-
-        verify(configParametersValidationProcessor).process(config);
-        verify(cleanWorkingDirectoryProcessor).process(config);
-        verify(formalValidationProcessor).process(config);
-        verify(schemeValidationProcessor).process(config);
-
-        verifyZeroInteractions();
-    }
-
-    private void throwExceptionOnSpecificProcessor(JpkProcessor processor) throws JpkException {
-        doThrow(new JpkException(EXCEPTION_MESSAGE))
-                .when(processor).process(config);
-        expectedException.expect(JpkException.class);
-        expectedException.expectMessage(EXCEPTION_MESSAGE);
-    }
-
-    private void executeAllProcessors() throws JpkException {
-        jpkExecutor.execute(configParametersValidationProcessor,
-                            cleanWorkingDirectoryProcessor,
-                            formalValidationProcessor,
-                            schemeValidationProcessor);
-    }
 }
