@@ -66,6 +66,24 @@ public class JpkUtilsTest {
     }
 
     @Test
+    public void shouldGetOutputPathForKeyGeneratorStageFromAesFile() throws Exception {
+        when(config.getInputFilePath()).thenReturn("target/working-dir\\tempfile.xml.zip.aes");
+
+        String result = getPathForKeyGeneratorStage(config);
+
+        assertThat(result).isEqualTo("target/working-dir\\tempfile.key");
+    }
+
+    @Test
+    public void shouldGetOutputPathForVectorGeneratorStageFromAesFile() throws Exception {
+        when(config.getInputFilePath()).thenReturn("target/working-dir\\tempfile.xml.zip.aes");
+
+        String result = getPathForVectorGeneratorStage(config);
+
+        assertThat(result).isEqualTo("target/working-dir\\tempfile.vec");
+    }
+
+    @Test
     public void shouldGetOutputPathForVectorGeneratorStage() throws Exception {
         String result = getPathForVectorGeneratorStage(config);
 

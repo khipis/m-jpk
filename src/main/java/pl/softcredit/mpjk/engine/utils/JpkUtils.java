@@ -24,7 +24,7 @@ public class JpkUtils {
 
     private static final Logger LOGGER = getLogger(JpkUtils.class);
 
-    private JpkUtils(){
+    private JpkUtils() {
     }
 
     public static void saveFormalValidationOutput(JpkConfiguration config, String valid)
@@ -34,22 +34,23 @@ public class JpkUtils {
         try {
             writeStringToFile(formalValidationOutputFile, valid);
         } catch (IOException e) {
-            LOGGER.error("Cannot save formal validation output file: " + getPathForFormalValidation(config));
+            LOGGER.error("Cannot save formal validation output file: " + getPathForFormalValidation(
+                    config));
             throw new JpkException(e);
         }
 
     }
 
     public static String getPathForKeyGeneratorStage(JpkConfiguration config) {
-        return removeExtension(getOutputPath(config)) + KEY_EXTENSION;
+        return removeNExtensions(getOutputPath(config), 3) + KEY_EXTENSION;
     }
 
     public static String getPathForVectorGeneratorStage(JpkConfiguration config) {
-        return removeExtension(getOutputPath(config)) + VEC_EXTENSION;
+        return removeNExtensions(getOutputPath(config), 3) + VEC_EXTENSION;
     }
 
     public static String getPathForZipStage(JpkConfiguration config) {
-        return getOutputPath(config) + ZIP_EXTENSION;
+        return removeNExtensions(getOutputPath(config), 3) + ZIP_EXTENSION;
     }
 
     public static String getPathForAesEncryptStage(JpkConfiguration config) {
@@ -65,7 +66,8 @@ public class JpkUtils {
     }
 
     static String getOutputPath(JpkConfiguration config) {
-        return config.getWorkingDirectoryPath() + separator +  extractFileNameFromInputFilePath(config);
+        return config.getWorkingDirectoryPath() + separator + extractFileNameFromInputFilePath(
+                config);
     }
 
     static String extractFileNameFromInputFilePath(JpkConfiguration config) {
@@ -76,5 +78,13 @@ public class JpkUtils {
     static String extractFileNameWithoutExtension(JpkConfiguration config) {
         Path inputFilePath = Paths.get(config.getInputFilePath());
         return removeExtension(inputFilePath.getFileName().toString());
+    }
+
+    private static String removeNExtensions(String filename, int n) {
+        String filenameWithoutExtensions = filename;
+        for (int i = 0; i < n; i++) {
+            filenameWithoutExtensions = removeExtension(filenameWithoutExtensions);
+        }
+        return filenameWithoutExtensions;
     }
 }
