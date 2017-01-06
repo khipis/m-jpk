@@ -14,10 +14,10 @@ import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestDummies.FILE_CONTENT;
-import static pl.softcredit.mpjk.engine.TestDummies.TEMP_FILE_NAME;
-import static pl.softcredit.mpjk.engine.TestDummies.TEMP_INPUT_FILE;
-import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.FILE_CONTENT;
+import static pl.softcredit.mpjk.engine.TestPaths.TEMP_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.TEMP_INPUT_FILE;
+import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.CLEAN_WORKING_DIRECTORY_PROCESSOR;
 
 @RunWith(MockitoJUnitRunner.class)

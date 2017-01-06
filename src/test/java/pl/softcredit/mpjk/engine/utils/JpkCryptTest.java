@@ -8,7 +8,7 @@ import java.io.File;
 
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_PATH_FROM_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH_FROM_RESOURCES;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.decryptAES256;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.encryptAES256;
 

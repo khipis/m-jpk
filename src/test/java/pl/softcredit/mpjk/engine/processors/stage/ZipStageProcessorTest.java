@@ -19,11 +19,11 @@ import static org.apache.commons.io.FileUtils.cleanDirectory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestDummies.JPK_VAT_SCHEME_FILE;
-import static pl.softcredit.mpjk.engine.TestDummies.RESOURCES_INPUT_FILES;
-import static pl.softcredit.mpjk.engine.TestDummies.SCHEMES_DIR;
-import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE;
+import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
+import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.ZIP_STAGE_PROCESSOR;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 
@@ -41,12 +41,11 @@ public class ZipStageProcessorTest {
     @Before
     public void setUp() throws IOException {
         cleanDirectory(new File(TEMP_WORKING_DIR));
+        whenConfigurationWith(VALID_FILE_NAME, JPK_VAT_SCHEME_FILE);
     }
 
     @Test
     public void shouldSaveZippedFileIntoWorkingDirectory() throws Exception {
-        whenConfigurationWith(VALID_FILE_NAME, JPK_VAT_SCHEME_FILE);
-
         zipStageProcessor.process(config);
 
         assertFile(VALID_FILE_NAME);

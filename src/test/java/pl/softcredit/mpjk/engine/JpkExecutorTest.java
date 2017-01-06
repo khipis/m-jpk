@@ -21,7 +21,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
-import static pl.softcredit.mpjk.engine.TestDummies.EXCEPTION_MESSAGE;
+import static pl.softcredit.mpjk.engine.TestPaths.EXCEPTION_MESSAGE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JpkExecutorTest {

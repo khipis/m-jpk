@@ -10,10 +10,10 @@ import static java.io.File.separator;
 import static org.apache.commons.io.FileUtils.cleanDirectory;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_NAME;
-import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_PATH_FROM_RESOURCES;
-import static pl.softcredit.mpjk.engine.TestDummies.ZIPPED_FILE_PATH;
+import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH_FROM_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIPPED_FILE_PATH;
 import static pl.softcredit.mpjk.engine.utils.JpkZip.unzipFile;
 import static pl.softcredit.mpjk.engine.utils.JpkZip.zipFile;
 

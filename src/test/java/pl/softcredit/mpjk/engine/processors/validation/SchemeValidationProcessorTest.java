@@ -13,10 +13,10 @@ import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestDummies.RESOURCES_INPUT_FILES;
-import static pl.softcredit.mpjk.engine.TestDummies.SCHEMES_DIR;
-import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
+import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SchemeValidationProcessorTest {

@@ -19,13 +19,13 @@ import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestDummies.FILE_CONTENT;
-import static pl.softcredit.mpjk.engine.TestDummies.RESOURCES_INPUT_FILES;
-import static pl.softcredit.mpjk.engine.TestDummies.INVALID_FILE;
-import static pl.softcredit.mpjk.engine.TestDummies.JPK_VAT_SCHEME_FILE;
-import static pl.softcredit.mpjk.engine.TestDummies.SCHEMES_DIR;
-import static pl.softcredit.mpjk.engine.TestDummies.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestDummies.VALID_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.FILE_CONTENT;
+import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
+import static pl.softcredit.mpjk.engine.TestPaths.INVALID_FILE;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE;
+import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
 
 @RunWith(MockitoJUnitRunner.class)
