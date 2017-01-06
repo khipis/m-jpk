@@ -33,10 +33,12 @@ public class JpkZipTest {
         unzipFile(ZIPPED_FILE_PATH, TEMP_WORKING_DIR);
 
         File unzippedFile = new File(TEMP_WORKING_DIR + separator + VALID_FILE_NAME);
+        File fileFromResources = new File(VALID_FILE_PATH_FROM_RESOURCES);
 
         assertThat(unzippedFile).exists();
+        assertThat(fileFromResources).exists();
 
-        String fileContent = readFileToString(new File(VALID_FILE_PATH_FROM_RESOURCES));
+        String fileContent = readFileToString(fileFromResources);
         String unzippedFileContent = readFileToString(unzippedFile);
         assertThat(fileContent).isEqualTo(unzippedFileContent);
 
