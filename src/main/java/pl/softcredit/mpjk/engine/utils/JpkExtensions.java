@@ -9,6 +9,7 @@ public enum JpkExtensions {
     XML_EXTENSION(".xml"),
     VALIDATION_EXTENSION(".validation"),
     BASE64_EXTENSION(".base64"),
+    SHA256_EXTENSION(".sha"),
     RSA_EXTENSION(".rsa")
     ;
 
