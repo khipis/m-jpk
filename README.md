@@ -13,6 +13,7 @@ Z punktu widzenia wdrozenia najwazniejszy jest katalog release, opis zawartosci:
     -working-dir : katalog na uzytek testow, w katalogu zapisywane sa wszystkie 
         operacje przeprowadzane na pliku JPK takie jak walidacja i w pozniejszym etapie: zip, aes, base64 itd. (powinna utworzyc sie podobna struktura do plikow w katalog input-files)
     -jre : katalog zawierajacy rozne wersje srodowiska uruchomieniowego wirtualnej maszyny Java
+    -resources : katalog zawierajacy pliki certyfikatow i klucze udostepnione przez Ministerstwo Finansow
     -mjpk.jar : glowny plik aplikacji 
     -config.properties : przykladowy plik konfiguracyjny
     -mjpk.log : Plik logowania, w ktorym zapisane sa wszystkie operacje wykonywane przez aplikacje
@@ -107,9 +108,18 @@ na wersji 8 oraz 7. Wynika to z faktu potrzeby uruchamiania aplikacji na systema
 Kolejnym problemem jest dostepnosc Javy na komputerze klienta (moze byc zainstalowana ale nie musi)
 Bezpieczniejszym rozwiazaniem jest zatem dostarczenie JRE (Java Runtime Environment) wraz z aplikacja.
 
+Certyfikat SSL udostepniony przez Ministerstwo Finansow w przypadku Javy powinien byc zaladowany
+programowo, przekazany jako parametr dla java.exe lub umieszczony w katalogu JRE/lib/security.
+Na ten moment wybrano trzecia mozliwosc (umieszczenie certifykatu w odpowiednim katalogu dla wszystkich 
+wersji JRE dostarczonych z aplikacja)
+
 Architektura systemow klienta moze byc zarowno 32 jak i 64 bitowa. Z tego powodu w katalogu JRE
 znajduja sie 4 wersje Javy 7,8 (32bit) oraz 7,8 (64bit). Z kazda aplikacja mjpk moze wspolpracowac.
 
 W docelowej integracji z systemem, powinna byc mozliwosc wyboru wersji JRE dostarczonej
 z aplikacja lub tez zainstalowanej u klienta.
-(Wersje dostarczone z aplikacja nie musza byc instalowane!)
+
+(Wersje dostarczone z aplikacja nie musza byc instalowane oraz posiadaja odrazu
+ wgrany certyfikat SSL z katalogu resources !)
+ 
+  
