@@ -21,6 +21,7 @@ public class TestPaths {
     public static final String TEMP_FILE_NAME = "tempfile.xml";
     public static final String TEMP_INPUT_FILE = TEMP_WORKING_DIR + separator + "tempfile.xml";
     public static final String VALID_FILE_PATH_FROM_RESOURCES = RESOURCES_INPUT_FILES + separator + VALID_FILE_NAME;
+    public static final String RSA_KEY_FILE_PATH_FROM_RESOURCES = "src/test/resources/resources/JPKMFTest-klucz publiczny do szyfrowania.pem";
     public static final String AES_FILE_PATH = TEMP_WORKING_DIR + separator + AES_FILE_NAME;
     public static final String ZIPPED_FILE_PATH = TEMP_WORKING_DIR + separator + VALID_FILE_NAME + ZIP_EXTENSION;
     public static final String VALID_FILE_PATH = TEMP_WORKING_DIR + separator + VALID_FILE_NAME;
