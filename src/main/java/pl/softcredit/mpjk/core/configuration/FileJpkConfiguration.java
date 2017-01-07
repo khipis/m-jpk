@@ -18,7 +18,7 @@ public final class FileJpkConfiguration implements JpkConfiguration {
 
     public FileJpkConfiguration(String configFilePath) throws JpkException {
         this.configFilePath = configFilePath;
-        try(InputStream fileInputStream = new FileInputStream(configFilePath)) {
+        try (InputStream fileInputStream = new FileInputStream(configFilePath)) {
             properties.load(fileInputStream);
         } catch (IOException e) {
             LOGGER.error("Problem while loading configuration file: " + configFilePath);
@@ -42,12 +42,17 @@ public final class FileJpkConfiguration implements JpkConfiguration {
     }
 
     @Override
-    public String getConfigFilePath(){
+    public String getConfigFilePath() {
         return configFilePath;
     }
 
     @Override
     public String getProcessingFlow() {
         return properties.getProperty("processing.flow");
+    }
+
+    @Override
+    public String getGatewayUrl() {
+        return properties.getProperty("gateway.url");
     }
 }

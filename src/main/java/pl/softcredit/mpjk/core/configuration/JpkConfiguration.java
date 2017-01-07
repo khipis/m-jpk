@@ -11,4 +11,6 @@ public interface JpkConfiguration {
     String getConfigFilePath();
 
     String getProcessingFlow();
+
+    String getGatewayUrl();
 }
