@@ -15,6 +15,7 @@ public class DefaultJpkConfigurationTest {
         assertThat(jpkConfiguration.getInputFilePath()).isEqualTo("input-files/JPK-VAT-TEST-0000.xml");
         assertThat(jpkConfiguration.getProcessingFlow()).isEqualTo("CONFIG_VALIDATION,SCHEME_VALIDATION,CLEAN_WORKING_DIRECTORY,FORMAL_VALIDATION,SHA256_GENERATOR,KEY_GENERATOR,VECTOR_GENERATOR,ZIP,AES_ENCRYPT,AES_DECRYPT,RSA_ENCRYPT");
         assertThat(jpkConfiguration.getGatewayUrl()).isEqualTo("https://test-e-dokumenty.mf.gov.pl/");
+        assertThat(jpkConfiguration.getRsaKeyPath()).isEqualTo("resources/JPKMFTest-klucz publiczny do szyfrowania.pem");
     }
 
 }
