@@ -121,5 +121,3 @@ z aplikacja lub tez zainstalowanej u klienta.
 
 (Wersje dostarczone z aplikacja nie musza byc instalowane oraz posiadaja odrazu
  wgrany certyfikat SSL z katalogu resources !)
- 
-  
