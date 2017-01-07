@@ -51,4 +51,21 @@ public class JpkCryptTest {
         assertThat(decodeBase64(SHA256_BASE64_ENCODED_VALID_FILE)).isEqualTo(sha256bytes);
     }
 
+    //TODO fix after implementing rsa crypt
+    @Test
+    public void shouldEncodeAndDecodeBase64TestKey() throws Exception {
+        byte[] bytes = "12345678901234567890123456789012".getBytes();
+
+       // assertThat(encodeBase64(bytes)).isEqualTo(SHA256_BASE64_ENCODED_VALID_FILE);
+        //assertThat(decodeBase64(SHA256_BASE64_ENCODED_VALID_FILE)).isEqualTo(bytes);
+    }
+
+    @Test
+    public void shouldEncodeAndDecodeBase64TestVector() throws Exception {
+        byte[] bytes = "1234567890123456".getBytes();
+
+       // assertThat(encodeBase64(bytes)).isEqualTo(SHA256_BASE64_ENCODED_VALID_FILE);
+      //  assertThat(decodeBase64(SHA256_BASE64_ENCODED_VALID_FILE)).isEqualTo(bytes);
+    }
+
 }
