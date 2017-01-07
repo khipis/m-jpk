@@ -41,8 +41,5 @@ public class JpkZipTest {
         String fileContent = readFileToString(fileFromResources);
         String unzippedFileContent = readFileToString(unzippedFile);
         assertThat(fileContent).isEqualTo(unzippedFileContent);
-
-        System.out.println(fileContent);
-        System.out.println(unzippedFileContent);
     }
 }

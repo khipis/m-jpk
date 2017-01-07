@@ -7,6 +7,7 @@ import pl.softcredit.mpjk.engine.processors.preparation.CleanWorkingDirectoryPro
 import pl.softcredit.mpjk.engine.processors.stage.AesDecryptStageProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.AesEncryptStageProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.KeyGeneratorStageProcessor;
+import pl.softcredit.mpjk.engine.processors.stage.RsaEncryptStageProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.ShaGeneratorStageProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.VectorGeneratorStageProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.ZipStageProcessor;
@@ -35,6 +36,7 @@ public final class JpkProcessors {
     public static final JpkProcessor ZIP_STAGE_PROCESSOR = new ZipStageProcessor();
     public static final JpkProcessor AES_ENCRYPT_STAGE_PROCESSOR = new AesEncryptStageProcessor();
     public static final JpkProcessor AES_DECRYPT_STAGE_PROCESSOR = new AesDecryptStageProcessor();
+    public static final JpkProcessor RSA_ENCRYPT_STAGE_PROCESSOR = new RsaEncryptStageProcessor();
 
     private static final Map<String, JpkProcessor> PROCESSORS_MAP =
             ImmutableMap.<String, JpkProcessor>builder().
@@ -48,6 +50,7 @@ public final class JpkProcessors {
                     put("ZIP", ZIP_STAGE_PROCESSOR).
                     put("AES_ENCRYPT", AES_ENCRYPT_STAGE_PROCESSOR).
                     put("AES_DECRYPT", AES_DECRYPT_STAGE_PROCESSOR).
+                    put("RSA_ENCRYPT", RSA_ENCRYPT_STAGE_PROCESSOR).
                     build();
 
     static final JpkProcessor getProcessorByString(String processorName)

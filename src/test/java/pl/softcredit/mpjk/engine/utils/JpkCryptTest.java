@@ -29,9 +29,6 @@ public class JpkCryptTest {
 
         assertThat(aesEncryptedBytes).isNotEqualTo(aesDecryptedBytes);
         assertThat(aesDecryptedBytes).isEqualTo(fileToEncrypt);
-
-        System.out.println(new String(aesEncryptedBytes));
-        System.out.println(new String(aesDecryptedBytes));
     }
 
     @Test

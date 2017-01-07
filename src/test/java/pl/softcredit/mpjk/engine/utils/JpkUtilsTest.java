@@ -25,8 +25,10 @@ import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForAesDecryptStage
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForAesEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForFormalValidation;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForKeyGeneratorStage;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForKeyRsaEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForShaGeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorGeneratorStage;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorRsaEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.saveFormalValidationOutput;
 
@@ -71,6 +73,20 @@ public class JpkUtilsTest {
         String result = getPathForShaGeneratorStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.sha");
+    }
+
+    @Test
+    public void shouldGetOutputPathForKeyRsaEncryptStage() throws Exception {
+        String result = getPathForKeyRsaEncryptStage(config);
+
+        assertThat(result).isEqualTo("target/working-dir\\tempfile.key.rsa");
+    }
+
+    @Test
+    public void shouldGetOutputPathForVecRsaEncryptStage() throws Exception {
+        String result = getPathForVectorRsaEncryptStage(config);
+
+        assertThat(result).isEqualTo("target/working-dir\\tempfile.vec.rsa");
     }
 
     @Test

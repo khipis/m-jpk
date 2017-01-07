@@ -16,6 +16,7 @@ import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.AES_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.KEY_EXTENSION;
+import static pl.softcredit.mpjk.engine.utils.JpkExtensions.RSA_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.SHA256_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VEC_EXTENSION;
@@ -49,6 +50,14 @@ public class JpkUtils {
 
     public static String getPathForShaGeneratorStage(JpkConfiguration config) {
         return removeNExtensions(getOutputPath(config), 3) + SHA256_EXTENSION;
+    }
+
+    public static String getPathForKeyRsaEncryptStage(JpkConfiguration config) {
+        return removeNExtensions(getOutputPath(config), 3) + KEY_EXTENSION + RSA_EXTENSION;
+    }
+
+    public static String getPathForVectorRsaEncryptStage(JpkConfiguration config) {
+        return removeNExtensions(getOutputPath(config), 3) + VEC_EXTENSION + RSA_EXTENSION;
     }
 
     public static String getPathForVectorGeneratorStage(JpkConfiguration config) {

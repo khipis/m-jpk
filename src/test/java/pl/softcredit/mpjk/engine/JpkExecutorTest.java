@@ -56,7 +56,6 @@ public class JpkExecutorTest {
 
     @Test
     public void shouldExecuteWholeFlowOfJpkProcessing() throws JpkException, IOException {
-
         JpkProcessor[] processingFlow = getProcessingFlow(new DefaultJpkConfiguration().getProcessingFlow());
 
         new JpkExecutor(config).execute(processingFlow);
@@ -68,11 +67,7 @@ public class JpkExecutorTest {
         String unzippedFileContent = readFileToString(new File(VALID_FILE_PATH));
 
         assertThat(fileContent).isEqualTo(unzippedFileContent);
-
-        System.out.println(fileContent);
-        System.out.println(unzippedFileContent);
     }
-
 
     @Test
     public void shouldPerformOnlyFormalValidation() throws JpkException, IOException {
