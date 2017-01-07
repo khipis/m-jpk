@@ -25,6 +25,7 @@ import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForAesDecryptStage
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForAesEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForFormalValidation;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForKeyGeneratorStage;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForShaGeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorGeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.saveFormalValidationOutput;
@@ -63,6 +64,13 @@ public class JpkUtilsTest {
         String result = getPathForKeyGeneratorStage(config);
 
         assertThat(result).isEqualTo("target/working-dir\\tempfile.key");
+    }
+
+    @Test
+    public void shouldGetOutputPathForShaGeneratorStage() throws Exception {
+        String result = getPathForShaGeneratorStage(config);
+
+        assertThat(result).isEqualTo("target/working-dir\\tempfile.sha");
     }
 
     @Test

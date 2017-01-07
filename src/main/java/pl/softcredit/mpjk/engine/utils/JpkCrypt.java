@@ -8,15 +8,17 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
 
 import static javax.crypto.Cipher.DECRYPT_MODE;
 import static javax.crypto.Cipher.ENCRYPT_MODE;
 import static javax.crypto.Cipher.getInstance;
+import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
+import static javax.xml.bind.DatatypeConverter.printBase64Binary;
 
 public class JpkCrypt {
 
@@ -43,11 +45,18 @@ public class JpkCrypt {
     }
 
     public static String encodeBase64(byte[] bytes) {
-        return DatatypeConverter.printBase64Binary(bytes);
+        return printBase64Binary(bytes);
     }
 
-    public static byte[] decodeBase64(String base64Encoded) {
-        return DatatypeConverter.parseBase64Binary(base64Encoded);
+    static byte[] decodeBase64(String base64Encoded) {
+        return parseBase64Binary(base64Encoded);
+    }
+
+    public static byte[] generateKeyBits(int bitsCount) throws NoSuchAlgorithmException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(bitsCount);
+        SecretKey secretKey = keyGen.generateKey();
+        return secretKey.getEncoded();
     }
 
     private static Cipher getCipher(byte[] key, byte[] vector, int decryptMode)

@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import pl.softcredit.mpjk.JpkException;
+import pl.softcredit.mpjk.core.configuration.DefaultJpkConfiguration;
 import pl.softcredit.mpjk.engine.processors.preparation.CleanWorkingDirectoryProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.AesEncryptStageProcessor;
 
@@ -23,11 +24,11 @@ public class JpkProcessorsTest {
 
     @Test
     public void shouldReturnProcessorByName() throws JpkException {
-        JpkProcessor result = getProcessorByString("AES_ENCRYPT_STAGE");
+        JpkProcessor result = getProcessorByString("AES_ENCRYPT");
 
         assertThat(result).isInstanceOf(AesEncryptStageProcessor.class);
 
-        result = getProcessorByString("aes_ENCRYPT_STAGE");
+        result = getProcessorByString("aes_ENCRYPT");
 
         assertThat(result).isInstanceOf(AesEncryptStageProcessor.class);
 
@@ -39,14 +40,19 @@ public class JpkProcessorsTest {
     @Test
     public void shouldConstructProcessingFlowFromPassedString() throws JpkException {
         JpkProcessor[] result = getProcessingFlow(
-                "CONFIG_PARAMETERS_VALIDATION,SCHEME_VALIDATION,CLEAN_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,VECTOR_GENERATOR_STAGE,ZIP_STAGE,AES_ENCRYPT_STAGE");
+                "CONFIG_VALIDATION,SCHEME_VALIDATION,CLEAN_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,VECTOR_GENERATOR,ZIP,AES_ENCRYPT");
 
         assertThat(result).hasSize(8);
 
         result = getProcessingFlow(
-                "clean_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,vector_generator_stage");
+                "clean_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,vector_generator");
 
         assertThat(result).hasSize(4);
+    }
+
+    @Test
+    public void shouldConstructEveryProcessorFromDefaultConfig() throws JpkException {
+        getProcessingFlow(new DefaultJpkConfiguration().getProcessingFlow());
     }
 
     @Test
@@ -62,7 +68,7 @@ public class JpkProcessorsTest {
         expectedException.expect(JpkException.class);
         expectedException.expectMessage("There is no processor with name: INVALID_PROCESSOR_NAME");
 
-        getProcessingFlow("CONFIG_PARAMETERS_VALIDATION,invalid_processor_name");
+        getProcessingFlow("CONFIG_VALIDATION,invalid_processor_name");
     }
 
 }

@@ -10,12 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-
-import static javax.crypto.KeyGenerator.getInstance;
 import static org.apache.commons.io.FileUtils.writeByteArrayToFile;
 import static org.slf4j.LoggerFactory.getLogger;
+import static pl.softcredit.mpjk.engine.utils.JpkCrypt.generateKeyBits;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForKeyGeneratorStage;
 
 public class KeyGeneratorStageProcessor implements JpkProcessor {
@@ -25,20 +22,11 @@ public class KeyGeneratorStageProcessor implements JpkProcessor {
 
     @Override
     public void process(JpkConfiguration config) throws JpkException {
-
         String keyFileOutputPath = getPathForKeyGeneratorStage(config);
         LOGGER.info("Generating client key to: " + keyFileOutputPath);
 
         try {
-            KeyGenerator keyGen = getInstance("AES");
-            keyGen.init(BITS_COUNT);
-
-            SecretKey secretKey = keyGen.generateKey();
-            String generatedKey = new String(secretKey.getEncoded());
-            //generatedKey = "12345678901234567890123456789012";
-
-            writeByteArrayToFile(new File(keyFileOutputPath), secretKey.getEncoded());
-
+            writeByteArrayToFile(new File(keyFileOutputPath), generateKeyBits(BITS_COUNT));
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error("Problem while generating AES client key.");
             throw new JpkException(e);

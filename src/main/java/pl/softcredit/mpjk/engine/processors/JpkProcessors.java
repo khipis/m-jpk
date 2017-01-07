@@ -7,6 +7,7 @@ import pl.softcredit.mpjk.engine.processors.preparation.CleanWorkingDirectoryPro
 import pl.softcredit.mpjk.engine.processors.stage.AesDecryptStageProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.AesEncryptStageProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.KeyGeneratorStageProcessor;
+import pl.softcredit.mpjk.engine.processors.stage.ShaGeneratorStageProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.VectorGeneratorStageProcessor;
 import pl.softcredit.mpjk.engine.processors.stage.ZipStageProcessor;
 import pl.softcredit.mpjk.engine.processors.validation.ConfigParametersValidationProcessor;
@@ -26,6 +27,7 @@ public final class JpkProcessors {
     public static final JpkProcessor CLEAN_WORKING_DIRECTORY_PROCESSOR =
             new CleanWorkingDirectoryProcessor();
     public static final JpkProcessor FORMAL_VALIDATION_PROCESSOR = new FormalValidationProcessor();
+    public static final JpkProcessor SHA256_GENERATOR_STAGE_PROCESSOR = new ShaGeneratorStageProcessor();
     public static final JpkProcessor KEY_GENERATOR_STAGE_PROCESSOR =
             new KeyGeneratorStageProcessor();
     public static final JpkProcessor VECTOR_GENERATOR_STAGE_PROCESSOR =
@@ -36,18 +38,19 @@ public final class JpkProcessors {
 
     private static final Map<String, JpkProcessor> PROCESSORS_MAP =
             ImmutableMap.<String, JpkProcessor>builder().
-                    put("CONFIG_PARAMETERS_VALIDATION", CONFIG_PARAMETERS_VALIDATION_PROCESSOR).
+                    put("CONFIG_VALIDATION", CONFIG_PARAMETERS_VALIDATION_PROCESSOR).
                     put("SCHEME_VALIDATION", SCHEME_VALIDATION_PROCESSOR).
                     put("CLEAN_WORKING_DIRECTORY", CLEAN_WORKING_DIRECTORY_PROCESSOR).
                     put("FORMAL_VALIDATION", FORMAL_VALIDATION_PROCESSOR).
+                    put("SHA256_GENERATOR", SHA256_GENERATOR_STAGE_PROCESSOR).
                     put("KEY_GENERATOR", KEY_GENERATOR_STAGE_PROCESSOR).
-                    put("VECTOR_GENERATOR_STAGE", VECTOR_GENERATOR_STAGE_PROCESSOR).
-                    put("ZIP_STAGE", ZIP_STAGE_PROCESSOR).
-                    put("AES_ENCRYPT_STAGE", AES_ENCRYPT_STAGE_PROCESSOR).
-                    put("AES_DECRYPT_STAGE", AES_DECRYPT_STAGE_PROCESSOR).
+                    put("VECTOR_GENERATOR", VECTOR_GENERATOR_STAGE_PROCESSOR).
+                    put("ZIP", ZIP_STAGE_PROCESSOR).
+                    put("AES_ENCRYPT", AES_ENCRYPT_STAGE_PROCESSOR).
+                    put("AES_DECRYPT", AES_DECRYPT_STAGE_PROCESSOR).
                     build();
 
-    public static final JpkProcessor getProcessorByString(String processorName)
+    static final JpkProcessor getProcessorByString(String processorName)
             throws JpkException {
         String processorNameUpperCase = processorName.toUpperCase();
         if (PROCESSORS_MAP.containsKey(processorNameUpperCase)) {

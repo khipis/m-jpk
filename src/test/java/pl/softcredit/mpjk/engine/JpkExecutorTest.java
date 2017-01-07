@@ -7,7 +7,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import pl.softcredit.mpjk.JpkException;
+import pl.softcredit.mpjk.core.configuration.DefaultJpkConfiguration;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
+import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 import pl.softcredit.mpjk.engine.processors.preparation.CleanWorkingDirectoryProcessor;
 import pl.softcredit.mpjk.engine.processors.validation.ConfigParametersValidationProcessor;
 import pl.softcredit.mpjk.engine.processors.validation.FormalValidationProcessor;
@@ -27,15 +29,6 @@ import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.VALIDATION_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH;
-import static pl.softcredit.mpjk.engine.processors.JpkProcessors.AES_DECRYPT_STAGE_PROCESSOR;
-import static pl.softcredit.mpjk.engine.processors.JpkProcessors.AES_ENCRYPT_STAGE_PROCESSOR;
-import static pl.softcredit.mpjk.engine.processors.JpkProcessors.CLEAN_WORKING_DIRECTORY_PROCESSOR;
-import static pl.softcredit.mpjk.engine.processors.JpkProcessors.CONFIG_PARAMETERS_VALIDATION_PROCESSOR;
-import static pl.softcredit.mpjk.engine.processors.JpkProcessors.FORMAL_VALIDATION_PROCESSOR;
-import static pl.softcredit.mpjk.engine.processors.JpkProcessors.KEY_GENERATOR_STAGE_PROCESSOR;
-import static pl.softcredit.mpjk.engine.processors.JpkProcessors.SCHEME_VALIDATION_PROCESSOR;
-import static pl.softcredit.mpjk.engine.processors.JpkProcessors.VECTOR_GENERATOR_STAGE_PROCESSOR;
-import static pl.softcredit.mpjk.engine.processors.JpkProcessors.ZIP_STAGE_PROCESSOR;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.getProcessingFlow;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
 import static pl.softcredit.mpjk.engine.utils.JpkZip.unzipFile;
@@ -63,17 +56,10 @@ public class JpkExecutorTest {
 
     @Test
     public void shouldExecuteWholeFlowOfJpkProcessing() throws JpkException, IOException {
-        new JpkExecutor(config).execute(
-                         CONFIG_PARAMETERS_VALIDATION_PROCESSOR,
-                         SCHEME_VALIDATION_PROCESSOR,
-                         CLEAN_WORKING_DIRECTORY_PROCESSOR,
-                         FORMAL_VALIDATION_PROCESSOR,
-                         KEY_GENERATOR_STAGE_PROCESSOR,
-                         VECTOR_GENERATOR_STAGE_PROCESSOR,
-                         ZIP_STAGE_PROCESSOR,
-                         AES_ENCRYPT_STAGE_PROCESSOR,
-                         AES_DECRYPT_STAGE_PROCESSOR
-                );
+
+        JpkProcessor[] processingFlow = getProcessingFlow(new DefaultJpkConfiguration().getProcessingFlow());
+
+        new JpkExecutor(config).execute(processingFlow);
 
         String fileContent = readFileToString(new File(config.getInputFilePath()));
 
@@ -90,9 +76,7 @@ public class JpkExecutorTest {
 
     @Test
     public void shouldPerformOnlyFormalValidation() throws JpkException, IOException {
-        new JpkExecutor(config).execute(
-                getProcessingFlow("FORMAL_VALIDATION")
-        );
+        new JpkExecutor(config).execute(getProcessingFlow("FORMAL_VALIDATION"));
 
         File[] files = new File(TEMP_WORKING_DIR).listFiles();
 
