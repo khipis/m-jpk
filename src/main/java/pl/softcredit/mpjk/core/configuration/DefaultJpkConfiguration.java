@@ -32,4 +32,9 @@ public final class DefaultJpkConfiguration implements JpkConfiguration {
         return "https://test-e-dokumenty.mf.gov.pl/";
     }
 
+    @Override
+    public String getRsaKeyPath() {
+        return "resources/JPKMFTest-klucz publiczny do szyfrowania.pem";
+    }
+
 }

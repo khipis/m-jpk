@@ -13,4 +13,6 @@ public interface JpkConfiguration {
     String getProcessingFlow();
 
     String getGatewayUrl();
+
+    String getRsaKeyPath();
 }

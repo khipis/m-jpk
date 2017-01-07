@@ -55,4 +55,9 @@ public final class FileJpkConfiguration implements JpkConfiguration {
     public String getGatewayUrl() {
         return properties.getProperty("gateway.url");
     }
+
+    @Override
+    public String getRsaKeyPath() {
+        return properties.getProperty("rsa.key.path");
+    }
 }
