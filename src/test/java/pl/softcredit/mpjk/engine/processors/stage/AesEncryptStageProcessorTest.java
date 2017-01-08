@@ -17,11 +17,14 @@ import static org.apache.commons.io.FileUtils.cleanDirectory;
 import static org.apache.commons.io.FileUtils.copyDirectory;
 import static org.mockito.Mockito.when;
 import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_NAME_SCHEME_VERSION_1;
-import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_NAME_SCHEME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR_PATH_IN_TEST_RESOURCES;
 import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
 import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.assertFile;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.AES_ENCRYPT_STAGE_PROCESSOR;
 
@@ -37,15 +40,24 @@ public class AesEncryptStageProcessorTest {
     public void setUp() throws IOException, JpkException {
         cleanDirectory(new File(WORKING_DIR_PATH_IN_TARGET));
         copyDirectory(new File(INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES), new File(WORKING_DIR_PATH_IN_TARGET));
-
-        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
     }
 
     @Test
-    public void shouldSaveAesEncryptedFileIntoWorkingDirectory() throws Exception {
+    public void shouldSaveAesEncryptedFileIntoWorkingDirectoryForVersion1() throws Exception {
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
+
         aesEncryptStageProcessor.process(config);
 
         assertFile(AES_FILE_NAME_SCHEME_VERSION_1);
+    }
+
+    @Test
+    public void shouldSaveAesEncryptedFileIntoWorkingDirectoryForVersion2() throws Exception {
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_2, JPK_VAT_SCHEME_FILE_NAME_VERSION_2);
+
+        aesEncryptStageProcessor.process(config);
+
+        assertFile(AES_FILE_NAME_SCHEME_VERSION_2);
     }
 
     private void whenConfigurationWith(String inputFile, String schemeFile) {

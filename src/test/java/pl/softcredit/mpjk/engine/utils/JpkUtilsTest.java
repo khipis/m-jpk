@@ -42,13 +42,21 @@ import xades4j.verification.UnexpectedJCAException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_2;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_IN_RESOURCES_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.INVALID_SCHEME_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.INVALID_SCHEME_PATH_IN_RESOURCES_VERSION_2;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_PATH_IN_RESOURCES_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
 import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_FROM_MF_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_FROM_MF_IN_RESOURCES_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_PATH_IN_RESOURCES_VERSION_1;
-import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_PATH_IN_RESOURCES_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_2;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameFromInputFilePath;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameWithoutExtension;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getContentLength;
@@ -79,7 +87,11 @@ public class JpkUtilsTest {
 
     @Test
     public void shouldReturnValidWhenSchemeIsValid() throws Exception {
-        String result = validateScheme(JPK_VAT_SCHEME_FILE_NAME_VERSION_1_PATH_IN_RESOURCES_VERSION_1);
+        String result = validateScheme(JPK_VAT_SCHEME_FILE_NAME_PATH_IN_RESOURCES_VERSION_1);
+
+        assertThat(result).isEqualTo("VALID");
+
+        result = validateScheme(JPK_VAT_SCHEME_FILE_NAME_PATH_IN_RESOURCES_VERSION_2);
 
         assertThat(result).isEqualTo("VALID");
     }
@@ -87,6 +99,14 @@ public class JpkUtilsTest {
     @Test
     public void shouldReturnValidationResultWhenSchemeIsInvalid() throws Exception {
         String result = validateScheme(INVALID_SCHEME_PATH_IN_RESOURCES_VERSION_1);
+
+        assertThat(result).isEqualTo(
+                "org.xml.sax.SAXParseException; systemId: file:"
+                + "/G:/work/m-jpk/src/test/resources/schemes/invalidScheme.xsd; lineNumber: 3; columnNumber: 3;"
+                + " The element type \"xsd:schema\" must be terminated by the matching end-tag \"</xsd:schema>\"."
+        );
+
+        result = validateScheme(INVALID_SCHEME_PATH_IN_RESOURCES_VERSION_2);
 
         assertThat(result).isEqualTo(
                 "org.xml.sax.SAXParseException; systemId: file:"
@@ -202,9 +222,12 @@ public class JpkUtilsTest {
     }
 
     @Test
-    public void shouldGetContentLength() throws Exception {
+    public void shouldGetContentLengthForVersion1() throws Exception {
         long result = getContentLength(new File(AES_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_1));
         assertThat(result).isEqualTo(800L);
+
+        result = getContentLength(new File(AES_FILE_PATH_IN_RESOURCES_VERSION_1));
+        assertThat(result).isEqualTo(816L);
 
         result = getContentLength(new File(ZIP_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_1));
         assertThat(result).isEqualTo(797L);
@@ -216,6 +239,23 @@ public class JpkUtilsTest {
         assertThat(result).isEqualTo(1393L);
     }
 
+    @Test
+    public void shouldGetContentLengthForVersion2() throws Exception {
+        long result = getContentLength(new File(AES_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_2));
+        assertThat(result).isEqualTo(1856L);
+
+        result = getContentLength(new File(AES_FILE_PATH_IN_RESOURCES_VERSION_2));
+        assertThat(result).isEqualTo(1856L);
+
+        result = getContentLength(new File(ZIP_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_2));
+        assertThat(result).isEqualTo(1850L);
+
+        result = getContentLength(new File(XML_FILE_PATH_IN_RESOURCES_VERSION_2));
+        assertThat(result).isEqualTo(21102L);
+
+        result = getContentLength(new File(XML_FILE_FROM_MF_IN_RESOURCES_VERSION_2));
+        assertThat(result).isEqualTo(21102L);
+    }
     @Test
     public void shouldGetOutputPat222h() throws Exception {
         try {

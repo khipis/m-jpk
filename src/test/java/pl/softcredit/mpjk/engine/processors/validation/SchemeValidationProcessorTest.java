@@ -29,6 +29,7 @@ public class SchemeValidationProcessorTest {
 
     private JpkProcessor schemeValidationProcessor = new SchemeValidationProcessor();
 
+
     @Test
     public void shouldThrowJpkExceptionWhenSchemeIsInvalidAtAll() throws Exception {
         whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, "invalidScheme.xsd");

@@ -18,12 +18,15 @@ import static org.apache.commons.io.FileUtils.copyDirectory;
 import static org.assertj.core.util.Files.delete;
 import static org.mockito.Mockito.when;
 import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_IN_WORKING_DIR_VERSION_1;
-import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_IN_WORKING_DIR_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR_PATH_IN_TEST_RESOURCES;
 import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
-import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_1;
 import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_NAME_SCHEME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.assertFile;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.AES_DECRYPT_STAGE_PROCESSOR;
 
@@ -39,12 +42,23 @@ public class AesDecryptStageProcessorTest {
     public void setUp() throws IOException, JpkException {
         cleanDirectory(new File(WORKING_DIR_PATH_IN_TARGET));
         copyDirectory(new File(INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES), new File(WORKING_DIR_PATH_IN_TARGET));
+      }
+
+    @Test
+    public void shouldSaveAesDecryptedFileIntoWorkingDirectoryForVersion1() throws Exception {
         delete(new File(ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_1));
         whenConfigurationWith(AES_FILE_PATH_IN_WORKING_DIR_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
+
+        aesDecryptStageProcessor.process(config);
+
+        assertFile(ZIP_FILE_NAME_SCHEME_VERSION_1);
     }
 
     @Test
-    public void shouldSaveAesDecryptedFileIntoWorkingDirectory() throws Exception {
+    public void shouldSaveAesDecryptedFileIntoWorkingDirectoryForVersion2() throws Exception {
+        delete(new File(ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_2));
+        whenConfigurationWith(AES_FILE_PATH_IN_WORKING_DIR_VERSION_2, JPK_VAT_SCHEME_FILE_NAME_VERSION_2);
+
         aesDecryptStageProcessor.process(config);
 
         assertFile(ZIP_FILE_NAME_SCHEME_VERSION_1);

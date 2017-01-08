@@ -19,6 +19,7 @@ import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.when;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_CONTENT;
 import static pl.softcredit.mpjk.engine.TestPaths.INVALID_XML_FILE;
 import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1;
@@ -26,6 +27,7 @@ import static pl.softcredit.mpjk.engine.TestPaths.INPUT_FILES_DIR_PATH_IN_TEST_R
 import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR_PATH_IN_TEST_RESOURCES;
 import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
 import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_2;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -40,7 +42,7 @@ public class FormalValidationProcessorTest {
     private JpkProcessor formalValidationProcessor = new FormalValidationProcessor();
 
     @Test
-    public void shouldReturnFileWithContentValidIfFileIsValidToScheme() throws Exception {
+    public void shouldReturnFileWithContentValidIfFileIsValidToSchemeForVersion1() throws Exception {
         whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
 
         formalValidationProcessor.process(config);
@@ -49,8 +51,27 @@ public class FormalValidationProcessorTest {
     }
 
     @Test
-    public void shouldReturnFileWithErrorDescriptionWhenFileIsInvalidToScheme() throws Exception {
+    public void shouldReturnFileWithErrorDescriptionWhenFileIsInvalidToSchemeForVersion1() throws Exception {
         whenConfigurationWith(INVALID_XML_FILE, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
+        expectedException.expect(JpkException.class);
+
+        formalValidationProcessor.process(config);
+
+        assertFile(INVALID_XML_FILE, "Invalid content was found starting with element");
+    }
+
+    @Test
+    public void shouldReturnFileWithContentValidIfFileIsValidToSchemeForVersion2() throws Exception {
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_2, JPK_VAT_SCHEME_FILE_NAME_VERSION_2);
+
+        formalValidationProcessor.process(config);
+
+        assertFile(XML_FILE_NAME_SCHEME_VERSION_1, VALID_FILE_CONTENT);
+    }
+
+    @Test
+    public void shouldReturnFileWithErrorDescriptionWhenFileIsInvalidToSchemeForVersion2() throws Exception {
+        whenConfigurationWith(INVALID_XML_FILE, JPK_VAT_SCHEME_FILE_NAME_VERSION_2);
         expectedException.expect(JpkException.class);
 
         formalValidationProcessor.process(config);

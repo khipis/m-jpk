@@ -9,12 +9,12 @@ public final class DefaultJpkConfiguration implements JpkConfiguration {
 
     @Override
     public String getSchemeFilePath() {
-        return "schemes/Schemat_JPK_VAT(1)_v1-0.xsd";
+        return "schemes/Schemat_JPK_VAT(2)_v1-0.xsd";
     }
 
     @Override
     public String getInputFilePath() {
-        return "input-files/JPK-VAT-TEST-0000.xml";
+        return "input-files/JPK_VAT_002.xml";
     }
 
     @Override

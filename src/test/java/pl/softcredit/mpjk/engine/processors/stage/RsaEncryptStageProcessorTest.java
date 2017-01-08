@@ -20,14 +20,18 @@ import static org.apache.commons.io.FileUtils.copyDirectory;
 import static org.assertj.core.util.Files.delete;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1;
 import static pl.softcredit.mpjk.engine.TestPaths.INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_NAME_SCHEME_VERSION_1;
-import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_IN_WORKING_DIR_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_NAME_SCHEME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_IN_WORKING_DIR_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_IN_WORKING_DIR_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR_PATH_IN_TEST_RESOURCES;
 import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
 import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.assertFile;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.RSA_ENCRYPT_STAGE_PROCESSOR;
 
@@ -46,19 +50,31 @@ public class RsaEncryptStageProcessorTest {
     public void setUp() throws IOException {
         cleanDirectory(new File(WORKING_DIR_PATH_IN_TARGET));
         copyDirectory(new File(INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES), new File(WORKING_DIR_PATH_IN_TARGET));
-        delete(new File(RSA_KEY_FILE_PATH_IN_WORKING_DIR_VERSION_1));
-        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
     }
 
     @Test
-    public void shouldSaveFileWithGeneratedRsaKeyIntoWorkingDirectory() throws Exception {
+    public void shouldSaveFileWithGeneratedRsaKeyIntoWorkingDirectoryForVersion1() throws Exception {
+        delete(new File(RSA_KEY_FILE_PATH_IN_WORKING_DIR_VERSION_1));
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
+
         rsaGeneratorStageProcessor.process(config);
 
         assertFile(RSA_KEY_FILE_NAME_SCHEME_VERSION_1);
     }
 
     @Test
+    public void shouldSaveFileWithGeneratedRsaKeyIntoWorkingDirectoryForVersion2() throws Exception {
+        delete(new File(RSA_KEY_FILE_PATH_IN_WORKING_DIR_VERSION_2));
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_2, JPK_VAT_SCHEME_FILE_NAME_VERSION_2);
+
+        rsaGeneratorStageProcessor.process(config);
+
+        assertFile(RSA_KEY_FILE_NAME_SCHEME_VERSION_2);
+    }
+
+    @Test
     public void shouldThrowExceptionWhenCertificateIsInvalid() throws Exception {
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
         when(config.getRsaKeyPath()).thenReturn("invalid_certificate");
         expectedException.expect(JpkException.class);
 

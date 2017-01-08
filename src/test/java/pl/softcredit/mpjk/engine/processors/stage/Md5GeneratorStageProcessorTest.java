@@ -15,11 +15,14 @@ import java.io.IOException;
 import static org.apache.commons.io.FileUtils.cleanDirectory;
 import static org.mockito.Mockito.when;
 import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.MD5_FILE_NAME_SCHEME_VERSION_1;
 import static pl.softcredit.mpjk.engine.TestPaths.INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.MD5_FILE_NAME_SCHEME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR_PATH_IN_TEST_RESOURCES;
 import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
 import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_2;
 import static pl.softcredit.mpjk.engine.TestPaths.assertFile;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.MD5_GENERATOR_STAGE_PROCESSOR;
 
@@ -34,14 +37,24 @@ public class Md5GeneratorStageProcessorTest {
     @Before
     public void setUp() throws IOException {
         cleanDirectory(new File(WORKING_DIR_PATH_IN_TARGET));
-        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
     }
 
     @Test
-    public void shouldSaveFileWithGeneratedMd5IntoWorkingDirectory() throws Exception {
+    public void shouldSaveFileWithGeneratedMd5IntoWorkingDirectoryForVersion1() throws Exception {
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
+
         md5GeneratorStageProcessor.process(config);
 
         assertFile(MD5_FILE_NAME_SCHEME_VERSION_1);
+    }
+
+    @Test
+    public void shouldSaveFileWithGeneratedMd5IntoWorkingDirectoryForVersion2() throws Exception {
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_2, JPK_VAT_SCHEME_FILE_NAME_VERSION_2);
+
+        md5GeneratorStageProcessor.process(config);
+
+        assertFile(MD5_FILE_NAME_SCHEME_VERSION_2);
     }
 
     private void whenConfigurationWith(String inputFile, String schemeFile) {
