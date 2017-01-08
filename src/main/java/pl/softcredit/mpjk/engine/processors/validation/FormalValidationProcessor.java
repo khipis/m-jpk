@@ -1,7 +1,6 @@
 package pl.softcredit.mpjk.engine.processors.validation;
 
 import org.slf4j.Logger;
-import org.xml.sax.SAXException;
 
 import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
@@ -10,16 +9,11 @@ import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 import java.io.File;
 import java.io.IOException;
 
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
-import static javax.xml.validation.SchemaFactory.newInstance;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.slf4j.LoggerFactory.getLogger;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.VALID_CONTENT;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForFormalValidation;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.validateXmlFileAgainstScheme;
 
 public class FormalValidationProcessor implements JpkProcessor {
 
@@ -33,27 +27,21 @@ public class FormalValidationProcessor implements JpkProcessor {
         LOGGER.info("Generating formal validation file to: " + formalValidationFileOutputPath);
 
         try {
-            File schemaFile = new File(config.getSchemeFilePath());
-            Source xmlFile = new StreamSource(new File(config.getInputFilePath()));
 
-            SchemaFactory schemaFactory = newInstance(W3C_XML_SCHEMA_NS_URI);
+            String result = validateXmlFileAgainstScheme(config.getInputFilePath(),
+                                                         config.getSchemeFilePath());
 
-            Schema schema = schemaFactory.newSchema(schemaFile);
-            schema.newValidator().validate(xmlFile);
+            writeStringToFile(new File(formalValidationFileOutputPath), result);
 
-            LOGGER.info(xmlFile.getSystemId() + " is valid");
-
-            writeStringToFile(new File(formalValidationFileOutputPath), "VALID");
-        } catch (SAXException e) {
-            try {
-                writeStringToFile(new File(formalValidationFileOutputPath), e.toString());
-            } catch (IOException e1) {
-                LOGGER.error("Problem while saving formal validation output.");
-                throw new JpkException(e);
+            if (!VALID_CONTENT.equals(result)) {
+                throw new JpkException(
+                        config.getInputFilePath() + " is invalid to scheme : " + config
+                                .getSchemeFilePath());
             }
-            throw new JpkException(e);
+
+            writeStringToFile(new File(formalValidationFileOutputPath), VALID_CONTENT);
         } catch (IOException e) {
-            LOGGER.error("Problem while reading scheme file: " + config.getSchemeFilePath());
+            LOGGER.error("Problem while validation file against scheme");
             throw new JpkException(e);
         }
     }

@@ -1,22 +1,24 @@
 package pl.softcredit.mpjk.engine.utils;
 
-import org.slf4j.Logger;
 import org.xml.sax.SAXException;
 
 import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import static java.io.File.separator;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static javax.xml.validation.SchemaFactory.newInstance;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
-import static org.slf4j.LoggerFactory.getLogger;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.AES_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.BASE64_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.KEY_EXTENSION;
@@ -28,10 +30,11 @@ import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VEC_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.XML_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 
+
 public class JpkUtils {
 
-    private static final Logger LOGGER = getLogger(JpkUtils.class);
     private static final int EXTENSIONS_TO_REMOVE_COUNT = 3;
+    public static final String VALID_CONTENT = "VALID";
 
     private JpkUtils() {
     }
@@ -41,14 +44,27 @@ public class JpkUtils {
             File schemaFile = new File(schemeFilePath);
             SchemaFactory schemaFactory = newInstance(W3C_XML_SCHEMA_NS_URI);
             schemaFactory.newSchema(schemaFile);
-            return "VALID";
+            return VALID_CONTENT;
         } catch (SAXException e) {
             return e.toString();
         }
     }
 
-    public static String validateXmlFileAgainstScheme(String inputFile, String schemeFilePath)  {
-        return "VALID";
+    public static String validateXmlFileAgainstScheme(String inputFile, String schemeFilePath)
+            throws IOException {
+        try {
+            File schemaFile = new File(schemeFilePath);
+            Source xmlFile = new StreamSource(new File(inputFile));
+
+            SchemaFactory schemaFactory = newInstance(W3C_XML_SCHEMA_NS_URI);
+
+            Schema schema = schemaFactory.newSchema(schemaFile);
+            schema.newValidator().validate(xmlFile);
+
+            return VALID_CONTENT;
+        } catch (SAXException e) {
+            return e.toString();
+        }
     }
 
     public static String getPathForKeyGeneratorStage(JpkConfiguration config) {
