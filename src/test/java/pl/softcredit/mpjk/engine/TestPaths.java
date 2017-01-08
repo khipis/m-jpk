@@ -13,6 +13,7 @@ public class TestPaths {
     public static final String VALIDATION_FILE_NAME = "valid_JPK_VAT(1)_file.xml.validation";
     public static final String ZIP_FILE_NAME = "valid_JPK_VAT(1)_file.xml.zip";
     public static final String AES_FILE_NAME = "valid_JPK_VAT(1)_file.xml.zip.aes";
+    public static final String MD5_FILE_NAME = "valid_JPK_VAT(1)_file.xml.zip.aes.md5";
     public static final String KEY_FILE_NAME = "valid_JPK_VAT(1)_file.key";
     public static final String SHA_FILE_NAME = "valid_JPK_VAT(1)_file.sha";
     public static final String VEC_FILE_NAME = "valid_JPK_VAT(1)_file.vec";

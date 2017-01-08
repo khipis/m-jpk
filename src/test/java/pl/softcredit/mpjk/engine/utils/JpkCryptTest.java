@@ -8,16 +8,23 @@ import java.io.File;
 
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
 import static org.assertj.core.api.Assertions.assertThat;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_MF;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_RESOURCES;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH_FROM_RESOURCES;
-import static pl.softcredit.mpjk.engine.utils.JpkCrypt.*;
+import static pl.softcredit.mpjk.engine.utils.JpkCrypt.calculateMD5;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.calculateSHA256;
+import static pl.softcredit.mpjk.engine.utils.JpkCrypt.decodeBase64;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.decryptAES256;
+import static pl.softcredit.mpjk.engine.utils.JpkCrypt.encodeBase64;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.encryptAES256;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JpkCryptTest {
 
-    private static final String SHA256_BASE64_ENCODED_VALID_FILE = "ZZEMD0SHu8b3AeRIOU30OcT9+nrxFTWHaXNdqnif9FQ=";
+    private static final String SHA256_BASE64_ENCODED_VALID_FILE =
+            "ZZEMD0SHu8b3AeRIOU30OcT9+nrxFTWHaXNdqnif9FQ=";
+    private static final String MD5_BASE64_ENCODED_AES_FILE = "IybUpbd7yqmMdp3qqrLHxA==";
+    private static final String MD5_BASE64_ENCODED_AES_FILE_FROM_MF = "xWAZKMSjdsZZQQ3hrvbhsQ==";
 
     @Test
     public void shouldEncryptAndDecryptByteArray() throws Exception {
@@ -48,21 +55,17 @@ public class JpkCryptTest {
         assertThat(decodeBase64(SHA256_BASE64_ENCODED_VALID_FILE)).isEqualTo(sha256bytes);
     }
 
-    //TODO fix after implementing rsa crypt
     @Test
-    public void shouldEncodeAndDecodeBase64TestKey() throws Exception {
-        byte[] bytes = "12345678901234567890123456789012".getBytes();
+    public void shouldCalculateMD5() throws Exception {
+        byte[] fileBytes = readFileToByteArray(new File(AES_FILE_PATH_FROM_RESOURCES));
+        byte[] md5bytes = calculateMD5(fileBytes);
 
-       // assertThat(encodeBase64(bytes)).isEqualTo(SHA256_BASE64_ENCODED_VALID_FILE);
-        //assertThat(decodeBase64(SHA256_BASE64_ENCODED_VALID_FILE)).isEqualTo(bytes);
-    }
+        assertThat(encodeBase64(md5bytes)).isEqualTo(MD5_BASE64_ENCODED_AES_FILE);
 
-    @Test
-    public void shouldEncodeAndDecodeBase64TestVector() throws Exception {
-        byte[] bytes = "1234567890123456".getBytes();
+        fileBytes = readFileToByteArray(new File(AES_FILE_PATH_FROM_MF));
+        md5bytes = calculateMD5(fileBytes);
 
-       // assertThat(encodeBase64(bytes)).isEqualTo(SHA256_BASE64_ENCODED_VALID_FILE);
-      //  assertThat(decodeBase64(SHA256_BASE64_ENCODED_VALID_FILE)).isEqualTo(bytes);
+        assertThat(encodeBase64(md5bytes)).isEqualTo(MD5_BASE64_ENCODED_AES_FILE_FROM_MF);
     }
 
 }

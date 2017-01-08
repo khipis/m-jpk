@@ -21,7 +21,6 @@ import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForShaGeneratorSta
 public class ShaGeneratorStageProcessor implements JpkProcessor {
 
     private static final Logger LOGGER = getLogger(ShaGeneratorStageProcessor.class);
-    private static final int BITS_COUNT = 256;
 
     @Override
     public void process(JpkConfiguration config) throws JpkException {

@@ -44,6 +44,11 @@ public class JpkCrypt {
         return digest.digest(fileBytes);
     }
 
+    public static byte[] calculateMD5(byte[] fileBytes) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("MD5");
+        return digest.digest(fileBytes);
+    }
+
     public static String encodeBase64(byte[] bytes) {
         return printBase64Binary(bytes);
     }
