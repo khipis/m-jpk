@@ -35,7 +35,7 @@ public class JpkUtils {
     private JpkUtils() {
     }
 
-    public static String checkSchemeFormat(String schemeFilePath) throws JpkException {
+    public static String validateScheme(String schemeFilePath) throws JpkException {
         try {
             File schemaFile = new File(schemeFilePath);
             SchemaFactory schemaFactory = newInstance(W3C_XML_SCHEMA_NS_URI);
@@ -44,6 +44,10 @@ public class JpkUtils {
         } catch (SAXException e) {
             return e.toString();
         }
+    }
+
+    public static String validateXmlFileAgainstScheme(String inputFile, String schemeFilePath)  {
+        return "VALID";
     }
 
     public static String getPathForKeyGeneratorStage(JpkConfiguration config) {

@@ -49,6 +49,7 @@ import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_FROM_MF_PATH_FROM_R
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH_FROM_RESOURCES;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_SCHEME_PATH;
 import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_FROM_MF;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.*;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameFromInputFilePath;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameWithoutExtension;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getContentLength;
@@ -79,14 +80,14 @@ public class JpkUtilsTest {
 
     @Test
     public void shouldReturnValidWhenSchemeIsValid() throws Exception {
-        String result = JpkUtils.checkSchemeFormat(VALID_SCHEME_PATH);
+        String result = validateScheme(VALID_SCHEME_PATH);
 
         assertThat(result).isEqualTo("VALID");
     }
 
     @Test
     public void shouldReturnValidationResultWhenSchemeIsInvalid() throws Exception {
-        String result = JpkUtils.checkSchemeFormat(INVALID_SCHEME_PATH);
+        String result = validateScheme(INVALID_SCHEME_PATH);
 
         assertThat(result).isEqualTo(
                 "org.xml.sax.SAXParseException; systemId: file:"
