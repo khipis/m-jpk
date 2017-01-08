@@ -15,7 +15,6 @@ import java.io.IOException;
 
 import static org.apache.commons.io.FileUtils.cleanDirectory;
 import static org.apache.commons.io.FileUtils.copyDirectory;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Files.delete;
 import static org.mockito.Mockito.when;
 import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH;
@@ -24,6 +23,8 @@ import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
 import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.ZIPPED_FILE_PATH;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.assertFile;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.AES_DECRYPT_STAGE_PROCESSOR;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -46,7 +47,7 @@ public class AesDecryptStageProcessorTest {
     public void shouldSaveAesDecryptedFileIntoWorkingDirectory() throws Exception {
         aesDecryptStageProcessor.process(config);
 
-        assertThat(new File(ZIPPED_FILE_PATH)).exists();
+        assertFile(ZIP_FILE_NAME);
     }
 
     private void whenConfigurationWith(String inputFile, String schemeFile) {
