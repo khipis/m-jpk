@@ -30,9 +30,9 @@ public class Md5GeneratorStageProcessor implements JpkProcessor {
 
         try {
             byte[] bytesToCalculateSha = readAllBytes(get(config.getInputFilePath()));
-            byte[] sha256bytes = calculateSHA256(bytesToCalculateSha);
+            byte[] md5bytes = calculateSHA256(bytesToCalculateSha);
 
-            writeStringToFile(new File(md5FileOutputPath), encodeBase64(sha256bytes));
+            writeStringToFile(new File(md5FileOutputPath), encodeBase64(md5bytes));
 
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error("Problem while generating MD5");
