@@ -17,8 +17,9 @@ import javax.xml.validation.SchemaFactory;
 
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import static javax.xml.validation.SchemaFactory.newInstance;
+import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.slf4j.LoggerFactory.getLogger;
-import static pl.softcredit.mpjk.engine.utils.JpkUtils.saveFormalValidationOutput;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForFormalValidation;
 
 public class FormalValidationProcessor implements JpkProcessor {
 
@@ -26,11 +27,12 @@ public class FormalValidationProcessor implements JpkProcessor {
 
     @Override
     public void process(JpkConfiguration config) throws JpkException {
+        String formalValidationFileOutputPath = getPathForFormalValidation(config);
+        LOGGER.info("Input file: " + config.getInputFilePath());
+        LOGGER.info("Used scheme: " + config.getSchemeFilePath());
+        LOGGER.info("Generating formal validation file to: " + formalValidationFileOutputPath);
+
         try {
-
-            LOGGER.info("Input file: " + config.getInputFilePath());
-            LOGGER.info("Used scheme: " + config.getSchemeFilePath());
-
             File schemaFile = new File(config.getSchemeFilePath());
             Source xmlFile = new StreamSource(new File(config.getInputFilePath()));
 
@@ -40,9 +42,15 @@ public class FormalValidationProcessor implements JpkProcessor {
             schema.newValidator().validate(xmlFile);
 
             LOGGER.info(xmlFile.getSystemId() + " is valid");
-            saveFormalValidationOutput(config, "VALID");
+
+            writeStringToFile(new File(formalValidationFileOutputPath), "VALID");
         } catch (SAXException e) {
-            saveFormalValidationOutput(config, e.toString());
+            try {
+                writeStringToFile(new File(formalValidationFileOutputPath), e.toString());
+            } catch (IOException e1) {
+                LOGGER.error("Problem while saving formal validation output.");
+                throw new JpkException(e);
+            }
             throw new JpkException(e);
         } catch (IOException e) {
             LOGGER.error("Problem while reading scheme file: " + config.getSchemeFilePath());

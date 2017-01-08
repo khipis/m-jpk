@@ -2,16 +2,13 @@ package pl.softcredit.mpjk.engine.utils;
 
 import org.slf4j.Logger;
 
-import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static java.io.File.separator;
-import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.AES_EXTENSION;
@@ -32,22 +29,12 @@ public class JpkUtils {
     private JpkUtils() {
     }
 
-    public static void saveFormalValidationOutput(JpkConfiguration config, String valid)
-            throws JpkException {
-
-        File formalValidationOutputFile = new File(getPathForFormalValidation(config));
-        try {
-            writeStringToFile(formalValidationOutputFile, valid);
-        } catch (IOException e) {
-            LOGGER.error("Cannot save formal validation output file: " + getPathForFormalValidation(
-                    config));
-            throw new JpkException(e);
-        }
-
-    }
-
     public static String getPathForKeyGeneratorStage(JpkConfiguration config) {
         return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + KEY_EXTENSION;
+    }
+
+    public static long getContentLength(File file) {
+        return file.length();
     }
 
     public static String getPathForShaGeneratorStage(JpkConfiguration config) {
@@ -87,7 +74,7 @@ public class JpkUtils {
         return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + XML_EXTENSION + ZIP_EXTENSION;
     }
 
-    static String getPathForFormalValidation(JpkConfiguration config) {
+    public static String getPathForFormalValidation(JpkConfiguration config) {
         return getOutputPath(config) + VALIDATION_EXTENSION;
     }
 

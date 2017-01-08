@@ -22,6 +22,7 @@ import static org.apache.commons.io.FileUtils.cleanDirectory;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH;
 import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE;
 import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
 import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_FROM_RESOURCES;
@@ -30,7 +31,9 @@ import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.VALIDATION_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIPPED_FILE_PATH;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.getProcessingFlow;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.getContentLength;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
 import static pl.softcredit.mpjk.engine.utils.JpkZip.unzipFile;
 
@@ -63,6 +66,21 @@ public class JpkExecutorTest {
 
         String fileContent = readFileToString(new File(config.getInputFilePath()));
 
+        assertUnzippedContent(fileContent);
+//        assertContentLength();
+    }
+
+    private void assertContentLength() {
+        long result = getContentLength(new File(ZIPPED_FILE_PATH));
+
+        assertThat(result).isEqualTo(797L);
+
+        result = getContentLength(new File(AES_FILE_PATH));
+
+        assertThat(result).isEqualTo(1393L);
+    }
+
+    private void assertUnzippedContent(String fileContent) throws JpkException, IOException {
         unzipFile(getPathForZipStage(config), TEMP_WORKING_DIR);
 
         String unzippedFileContent = readFileToString(new File(VALID_FILE_PATH));

@@ -43,12 +43,10 @@ public class AesEncryptStageProcessor implements JpkProcessor {
             byte[] aesEncryptedBytes = encryptAES256(key, vector, zippedFileToEncrypt);
 
             writeByteArrayToFile(new File(aesFileOutputPath), aesEncryptedBytes);
-        } catch (IOException e) {
+        } catch (IOException | InvalidKeyException e) {
             throw new JpkException(e);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             LOGGER.error("Problem with AES algorithm (probably no JCE in JRE)");
-            throw new JpkException(e);
-        } catch (InvalidKeyException e) {
             throw new JpkException(e);
         } catch (InvalidAlgorithmParameterException e) {
             LOGGER.error("Problem with AES algorithm parameters");

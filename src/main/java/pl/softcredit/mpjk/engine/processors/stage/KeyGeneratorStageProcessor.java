@@ -27,6 +27,7 @@ public class KeyGeneratorStageProcessor implements JpkProcessor {
 
         try {
             writeByteArrayToFile(new File(keyFileOutputPath), generateKeyBits(BITS_COUNT));
+            //writeByteArrayToFile(new File(keyFileOutputPath), "12345678901234567890123456789012".getBytes());
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error("Problem while generating AES client key.");
             throw new JpkException(e);

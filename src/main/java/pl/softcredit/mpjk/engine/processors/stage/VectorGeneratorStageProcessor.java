@@ -32,6 +32,7 @@ public class VectorGeneratorStageProcessor implements JpkProcessor {
         try {
             byte[] keyBits = generateKeyBits(BITS_COUNT);
             writeByteArrayToFile(new File(vectorFileOutputPath), generateKeyBits(BITS_COUNT));
+            //writeByteArrayToFile(new File(vectorFileOutputPath), "1234567890123456".getBytes());
             writeStringToFile(new File(vectorFileOutputPathBase64), encodeBase64(keyBits));
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error("Problem while generating raw and base64 encoded vectors.");

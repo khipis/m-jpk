@@ -10,16 +10,17 @@ import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 
 import java.io.File;
 
-import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestPaths.FILE_CONTENT;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_MF;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_FILE_NAME;
-import static pl.softcredit.mpjk.engine.TestPaths.TEMP_INPUT_FILE;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_FROM_MF_PATH_FROM_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH_FROM_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_FROM_MF;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameFromInputFilePath;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameWithoutExtension;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.getContentLength;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getOutputPath;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForAesDecryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForAesEncryptStage;
@@ -31,7 +32,6 @@ import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForShaGeneratorSta
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorGeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorRsaEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
-import static pl.softcredit.mpjk.engine.utils.JpkUtils.saveFormalValidationOutput;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JpkUtilsTest {
@@ -43,16 +43,6 @@ public class JpkUtilsTest {
     public void setUp() {
         when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
         when(config.getInputFilePath()).thenReturn(TEMP_FILE_NAME);
-    }
-
-    @Test
-    public void shouldSaveFormalValidationOutputWithContent() throws Exception {
-        saveFormalValidationOutput(config, FILE_CONTENT);
-
-        File createdFile = new File(TEMP_INPUT_FILE + VALIDATION_EXTENSION);
-
-        assertThat(createdFile).exists();
-        assertThat(readFileToString(createdFile)).isEqualTo(FILE_CONTENT);
     }
 
     @Test
@@ -168,5 +158,23 @@ public class JpkUtilsTest {
         assertThat(result).isEqualTo("target/working-dir\\tempfile.xml");
     }
 
+    @Test
+    public void shouldGetContentLength() throws Exception {
+        long result = getContentLength(new File(AES_FILE_PATH_FROM_MF));
+
+        assertThat(result).isEqualTo(800L);
+
+        result = getContentLength(new File(ZIP_FILE_PATH_FROM_MF));
+
+        assertThat(result).isEqualTo(797L);
+
+        result = getContentLength(new File(VALID_FILE_PATH_FROM_RESOURCES));
+
+        assertThat(result).isEqualTo(1393L);
+
+        result = getContentLength(new File(VALID_FILE_FROM_MF_PATH_FROM_RESOURCES));
+
+        assertThat(result).isEqualTo(1393L);
+    }
 
 }
