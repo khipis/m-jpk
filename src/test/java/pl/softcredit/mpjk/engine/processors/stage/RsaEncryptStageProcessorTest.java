@@ -41,7 +41,7 @@ public class RsaEncryptStageProcessorTest {
     public void shouldSaveFileWithGeneratedRsaKeyIntoWorkingDirectory() throws Exception {
         rsaGeneratorStageProcessor.process(config);
 
-       assertFile(RSA_KEY_FILE_NAME);
+        assertFile(RSA_KEY_FILE_NAME);
     }
 
     private void whenConfigurationWith(String inputFile, String schemeFile) {
@@ -49,7 +49,5 @@ public class RsaEncryptStageProcessorTest {
         when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR + schemeFile);
         when(config.getInputFilePath()).thenReturn(RESOURCES_INPUT_FILES + inputFile);
     }
-
-
 
 }
