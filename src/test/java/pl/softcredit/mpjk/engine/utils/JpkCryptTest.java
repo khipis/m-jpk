@@ -10,6 +10,7 @@ import static org.apache.commons.io.FileUtils.readFileToByteArray;
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_MF;
 import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_FROM_RESOURCES;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH_FROM_RESOURCES;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.calculateMD5;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.calculateSHA256;
@@ -18,6 +19,7 @@ import static pl.softcredit.mpjk.engine.utils.JpkCrypt.decryptAES256;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.encodeBase64;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.encryptAES256;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.encryptRsa;
+import static pl.softcredit.mpjk.engine.utils.JpkCrypt.loadRsaPublicKey;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JpkCryptTest {
@@ -76,28 +78,17 @@ public class JpkCryptTest {
         assertThat(encodeBase64(md5bytes)).isEqualTo(MD5_BASE64_ENCODED_AES_FILE_FROM_MF);
     }
 
-
     @Test
-    public void shouldCalculateRsa() throws Exception {
-/*
-
-        assertThat(encodeBase64(md5bytes)).isEqualTo(MD5_BASE64_ENCODED_AES_FILE);
-
-        fileBytes = readFileToByteArray(new File(AES_FILE_PATH_FROM_MF));
-        md5bytes = calculateMD5(fileBytes);
-
-        assertThat(encodeBase64(md5bytes)).isEqualTo(MD5_BASE64_ENCODED_AES_FILE_FROM_MF);*/
-
-        // byte[] fileBytes = readFileToByteArray(new File(AES_FILE_PATH_FROM_RESOURCES));
-        byte[] fileBytes = KEY_FROM_MF.getBytes();
-
-        byte[] rsabytes = encryptRsa(
-                "G:\\work\\m-jpk\\src\\test\\resources\\resources\\JPKMFTest-klucz publiczny do szyfrowania.pem",
-                fileBytes);
-
-        System.out.println(encodeBase64(rsabytes));
-
+    public void shouldLoadPublicKeyFromTestCertificateDeliveredByMf() throws Exception {
+       loadRsaPublicKey(RSA_KEY_FILE_PATH_FROM_RESOURCES);
     }
 
+    @Test
+    public void shouldEncryptKeyByRsaWithPublicKeyFromTestCertificateDeliveredByMF() throws Exception {
+        byte[] keyBytes = KEY_FROM_MF.getBytes();
+        byte[] rsaBytes = encryptRsa(RSA_KEY_FILE_PATH_FROM_RESOURCES, keyBytes);
+
+        assertThat(encodeBase64(rsaBytes)).hasSize(344);
+    }
 
 }

@@ -24,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE;
 import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
+import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_FROM_RESOURCES;
 import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.VALIDATION_FILE_NAME;
@@ -84,6 +85,7 @@ public class JpkExecutorTest {
         when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
         when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR + schemeFile);
         when(config.getInputFilePath()).thenReturn(RESOURCES_INPUT_FILES + inputFile);
+        when(config.getRsaKeyPath()).thenReturn(RSA_KEY_FILE_PATH_FROM_RESOURCES);
     }
 
 }

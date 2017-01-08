@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import static java.io.File.separator;
 import static org.assertj.core.api.Assertions.assertThat;
+import static pl.softcredit.mpjk.engine.utils.JpkExtensions.RSA_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 
 public class TestPaths {
@@ -34,6 +35,7 @@ public class TestPaths {
     public static final String RSA_KEY_FILE_PATH_FROM_RESOURCES = "src/test/resources/resources/JPKMFTest-klucz publiczny do szyfrowania.pem";
     public static final String AES_FILE_PATH = TEMP_WORKING_DIR + separator + AES_FILE_NAME;
     public static final String ZIPPED_FILE_PATH = TEMP_WORKING_DIR + separator + VALID_FILE_NAME + ZIP_EXTENSION;
+    public static final String RSA_KEY_FILE_PATH = TEMP_WORKING_DIR + separator + KEY_FILE_NAME + RSA_EXTENSION;
     public static final String VALID_FILE_PATH = TEMP_WORKING_DIR + separator + VALID_FILE_NAME;
     public static final String EXCEPTION_MESSAGE = "some exception message" ;
 

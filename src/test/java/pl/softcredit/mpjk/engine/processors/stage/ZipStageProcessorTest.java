@@ -19,6 +19,7 @@ import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
 import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestPaths.assertFile;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.ZIP_STAGE_PROCESSOR;
 
@@ -40,7 +41,7 @@ public class ZipStageProcessorTest {
     public void shouldSaveZippedFileIntoWorkingDirectory() throws Exception {
         zipStageProcessor.process(config);
 
-        assertFile(VALID_FILE_NAME);
+        assertFile(ZIP_FILE_NAME);
     }
 
     private void whenConfigurationWith(String inputFile, String schemeFile) {

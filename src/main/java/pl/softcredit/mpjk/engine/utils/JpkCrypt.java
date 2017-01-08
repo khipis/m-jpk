@@ -21,7 +21,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static java.lang.System.*;
 import static javax.crypto.Cipher.DECRYPT_MODE;
 import static javax.crypto.Cipher.ENCRYPT_MODE;
 import static javax.crypto.Cipher.getInstance;
@@ -33,52 +32,25 @@ public class JpkCrypt {
     private JpkCrypt() {
     }
 
-    public static byte[] encryptRsa(String certificatePath, byte[] fileToEncrypt)
-            throws NoSuchPaddingException, NoSuchAlgorithmException, IOException,
-                   CertificateException, InvalidKeyException, BadPaddingException,
-                   IllegalBlockSizeException {
+    public static byte[] encryptRsa(String certificatePath, byte[] bytesToEncrypt)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
+                   BadPaddingException, IllegalBlockSizeException, CertificateException,
+                   IOException {
+        Cipher cipher = getInstance("RSA/ECB/PKCS1Padding");
+        RSAPublicKey rsaPublicKey = loadRsaPublicKey(certificatePath);
+        cipher.init(ENCRYPT_MODE, rsaPublicKey);
 
+        return cipher.doFinal(bytesToEncrypt);
+    }
+
+    public static RSAPublicKey loadRsaPublicKey(String certificatePath)
+            throws CertificateException, IOException {
         try (InputStream inStream = new FileInputStream(certificatePath)) {
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
             X509Certificate cert = (X509Certificate) cf.generateCertificate(inStream);
-
-
-            RSAPublicKey pubkey = (RSAPublicKey) cert.getPublicKey();
-            byte[] tempPub = pubkey.getEncoded();
-
-            out.println("Public key from certificate file:\n" + hex(new String(tempPub)) + "\n");
-            out.println("Public Key Algorithm = " + cert.getPublicKey().getAlgorithm() + "\n");
-            out.println("Plain message:\n" + new String(fileToEncrypt) + "\n");
-
-            cipher.init(Cipher.ENCRYPT_MODE, pubkey);
-
-            return cipher.doFinal(fileToEncrypt);
+            return (RSAPublicKey) cert.getPublicKey();
         }
-
     }
-
-
-    private static String hex(String binStr) {
-
-        String newStr = new String();
-
-        try {
-            String hexStr = "0123456789ABCDEF";
-            byte[] p = binStr.getBytes();
-            for (int k = 0; k < p.length; k++) {
-                int j = (p[k] >> 4) & 0xF;
-                newStr = newStr + hexStr.charAt(j);
-                j = p[k] & 0xF;
-                newStr = newStr + hexStr.charAt(j) + " ";
-            }
-        } catch (Exception e) {
-            out.println("Failed to convert into hex values: " + e);
-        }
-        return newStr;
-    }
-
 
     public static byte[] encryptAES256(byte[] key, byte[] vector, byte[] fileToEncrypt)
             throws InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException,

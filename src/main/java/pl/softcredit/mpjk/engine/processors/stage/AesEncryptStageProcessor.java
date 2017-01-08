@@ -45,7 +45,7 @@ public class AesEncryptStageProcessor implements JpkProcessor {
             writeByteArrayToFile(new File(aesFileOutputPath), aesEncryptedBytes);
         } catch (IOException e) {
             throw new JpkException(e);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             LOGGER.error("Problem with AES algorithm (probably no JCE in JRE)");
             throw new JpkException(e);
         } catch (InvalidKeyException e) {
@@ -53,14 +53,8 @@ public class AesEncryptStageProcessor implements JpkProcessor {
         } catch (InvalidAlgorithmParameterException e) {
             LOGGER.error("Problem with AES algorithm parameters");
             throw new JpkException(e);
-        } catch (NoSuchPaddingException e) {
-            LOGGER.error("Problem with AES algorithm (probably no JCE in JRE)");
-            throw new JpkException(e);
-        } catch (BadPaddingException e) {
-            LOGGER.error("Problem configured AES encrypt");
-            throw new JpkException(e);
-        } catch (IllegalBlockSizeException e) {
-            LOGGER.error("Problem configured AES encrypt");
+        } catch (BadPaddingException | IllegalBlockSizeException e) {
+            LOGGER.error("Problem with AES encrypt configuration");
             throw new JpkException(e);
         }
     }
