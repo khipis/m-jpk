@@ -9,6 +9,35 @@ import org.mockito.runners.MockitoJUnitRunner;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.security.Key;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.cert.X509Certificate;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.xml.crypto.dsig.SignatureMethod;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import xades4j.production.DataObjectReference;
+import xades4j.production.SignedDataObjects;
+import xades4j.production.XadesBesSigningProfile;
+import xades4j.production.XadesSigner;
+import xades4j.production.XadesSigningProfile;
+import xades4j.properties.DataObjectTransform;
+import xades4j.providers.KeyingDataProvider;
+import xades4j.providers.SigningCertChainException;
+import xades4j.providers.SigningKeyException;
+import xades4j.providers.impl.DefaultAlgorithmsProvider;
+import xades4j.verification.UnexpectedJCAException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -32,6 +61,7 @@ import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForShaGeneratorSta
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorGeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorRsaEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class JpkUtilsTest {
@@ -161,20 +191,99 @@ public class JpkUtilsTest {
     @Test
     public void shouldGetContentLength() throws Exception {
         long result = getContentLength(new File(AES_FILE_PATH_FROM_MF));
-
         assertThat(result).isEqualTo(800L);
 
         result = getContentLength(new File(ZIP_FILE_PATH_FROM_MF));
-
         assertThat(result).isEqualTo(797L);
 
         result = getContentLength(new File(VALID_FILE_PATH_FROM_RESOURCES));
-
         assertThat(result).isEqualTo(1393L);
 
         result = getContentLength(new File(VALID_FILE_FROM_MF_PATH_FROM_RESOURCES));
-
         assertThat(result).isEqualTo(1393L);
     }
+
+    @Test
+    public void shouldGetOutputPat222h() throws Exception {
+        try {
+            String alias = "alias do klucza i certu";
+            char haslo[] = "haslo".toCharArray();
+
+            // zaladowanie pliki p12
+            KeyStore store = KeyStore.getInstance("PKCS12");
+            store.load(new FileInputStream("sciezka do pliku .p12"), haslo);
+
+            //            Enumeration<String> aliases = store.aliases();
+            //            while (aliases.hasMoreElements()) {
+            //                String a = aliases.nextElement();
+            //                System.out.println(a);
+            //            }
+
+            // wyciagnij klucz prywatny
+            Key privKey = store.getKey(alias, haslo);
+            final PrivateKey privateKey = (PrivateKey) privKey;
+
+            // wyciagnij certyfikat
+            final X509Certificate cert = (X509Certificate) store.getCertificate(alias);
+
+            // provider dla xades
+            KeyingDataProvider keyingDataProv = new KeyingDataProvider() {
+
+                public List<X509Certificate> getSigningCertificateChain()
+                        throws SigningCertChainException, UnexpectedJCAException {
+                    return (List<X509Certificate>) (Object) Arrays.asList(cert);
+                }
+
+                public PrivateKey getSigningKey(X509Certificate signingCert)
+                        throws SigningKeyException, UnexpectedJCAException {
+                    return privateKey;
+                }
+            };
+
+            // plik xml do podpisania
+            String inputFile = "Sciezka do xml-a do podpisania";
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setNamespaceAware(true);
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            org.w3c.dom.Document inDoc = db.parse(new FileInputStream(inputFile));
+
+            // profil podpisu xades
+            XadesSigningProfile profile = new XadesBesSigningProfile(keyingDataProv)
+                    .withAlgorithmsProvider(MyAlgsProvider.class);
+
+            // zmienna podpisujaca
+            XadesSigner signer = profile.newSigner();
+
+            // dodatkowe dane do podpisu
+            SignedDataObjects dataObjs = new SignedDataObjects();
+            DataObjectReference obj = new DataObjectReference("");
+            obj.withTransform(new DataObjectTransform(
+                    "http://www.w3.org/2000/09/xmldsig#enveloped-signature"));
+            dataObjs.withSignedDataObject(obj);
+
+            // podpisanie
+            signer.sign(dataObjs, inDoc.getDocumentElement());
+
+            // Zapis podpisanego pliku
+            String outputFile = "Sciezka do wynikowego pliku xades";
+            OutputStream os = new FileOutputStream(outputFile);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer trans = tf.newTransformer();
+            trans.transform(new DOMSource(inDoc), new StreamResult(os));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    class MyAlgsProvider extends DefaultAlgorithmsProvider {
+
+        @Override
+        public String getSignatureAlgorithm(String keyAlgorithmName) {
+            return SignatureMethod.RSA_SHA1;
+        }
+    }
+
 
 }
