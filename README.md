@@ -37,7 +37,7 @@ Utworzy folder m-jpk i pobierze aplikacje
 Pobierze aktualna zawartosc.
 
 Alternatywnym rozwiazaniem jest klikniecie zielonego przycisku "Clone or download"
-i pobranie 
+i pobranie pliku .zip
     
 Aplikacja jest wyslana do repozytorium razem z binarnymi plikami, aby nie zmuszac
 uzytkownikow do budowania aplikacji we wlasnym zakresie. (katalog release)
@@ -57,6 +57,7 @@ Przykladowy zawartosc pliku konfiguracyjnego:
     scheme.file.path=Sciezka do pliku scheme sluzacego do walidacji wygenerowanego pliku JPK
     input.file.path=Sciezka do pliku xml na ktorym aplikacja przeprowadzi swoje operacje
     processing.flow=Operacje ktore powinna wykonac aplikacja rozdzielone przecinkiem
+    rsa.key.path=Sciezka do certyfikatu klucza publicznego RSA ( *.pem ) dostarczonego przez Ministerstwo Finansow
     
 Obecnie: processing.flow=CONFIG_PARAMETERS_VALIDATION,SCHEME_VALIDATION,CLEAN_WORKING_DIRECTORY,FORMAL_VALIDATION,KEY_GENERATOR,VECTOR_GENERATOR_STAGE,ZIP_STAGE,AES_ENCRYPT_STAGE,AES_DECRYPT
 Ostatnia AES_DECRYPT w celach testowych
