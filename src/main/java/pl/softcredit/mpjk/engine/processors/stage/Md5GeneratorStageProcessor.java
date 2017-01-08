@@ -14,7 +14,7 @@ import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.slf4j.LoggerFactory.getLogger;
-import static pl.softcredit.mpjk.engine.utils.JpkCrypt.calculateSHA256;
+import static pl.softcredit.mpjk.engine.utils.JpkCrypt.calculateMD5;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.encodeBase64;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForMd5GeneratorStage;
 
@@ -30,7 +30,7 @@ public class Md5GeneratorStageProcessor implements JpkProcessor {
 
         try {
             byte[] bytesToCalculateSha = readAllBytes(get(config.getInputFilePath()));
-            byte[] md5bytes = calculateSHA256(bytesToCalculateSha);
+            byte[] md5bytes = calculateMD5(bytesToCalculateSha);
 
             writeStringToFile(new File(md5FileOutputPath), encodeBase64(md5bytes));
 
