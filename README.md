@@ -94,10 +94,12 @@ Obecny przeplyw aplikacji:
     -zapisz wynik walidacji jako plik inputFileName.xml.validation 
         -z zawartoscia "VALID" w przypadku poprawnego pliku 
         -z opisem bledu w przypadku niepoprawnego pliku
+    -policz SHA256 pliku i zapisz do pliku .sha
     -generuj 256 bitowy klucz i zapisz do pliku key
     -generuj 128 bitowy vector i zapisz do pliku vec
     -spakuj plik xml do pliku zip
     -zaszyfruj plik zip algorytmem AES256 na podstawie wartosci wygenerowanych key i vec
+    -policz D5 zaszyfrowanego pliku .aesi zapisz do pliku md5
         
 
 JRE
