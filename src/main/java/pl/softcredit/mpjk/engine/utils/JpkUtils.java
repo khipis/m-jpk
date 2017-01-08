@@ -16,6 +16,7 @@ import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.AES_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.KEY_EXTENSION;
+import static pl.softcredit.mpjk.engine.utils.JpkExtensions.MD5_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.RSA_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.SHA256_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
@@ -26,6 +27,7 @@ import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 public class JpkUtils {
 
     private static final Logger LOGGER = getLogger(JpkUtils.class);
+    private static final int EXTENSIONS_TO_REMOVE_COUNT = 3;
 
     private JpkUtils() {
     }
@@ -45,35 +47,44 @@ public class JpkUtils {
     }
 
     public static String getPathForKeyGeneratorStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), 3) + KEY_EXTENSION;
+        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + KEY_EXTENSION;
     }
 
     public static String getPathForShaGeneratorStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), 3) + SHA256_EXTENSION;
+        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + SHA256_EXTENSION;
+    }
+
+    public static String getPathForMd5GeneratorStage(JpkConfiguration config) {
+        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT)
+               + XML_EXTENSION
+               + ZIP_EXTENSION
+               + AES_EXTENSION
+               + MD5_EXTENSION;
     }
 
     public static String getPathForKeyRsaEncryptStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), 3) + KEY_EXTENSION + RSA_EXTENSION;
+        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + KEY_EXTENSION + RSA_EXTENSION;
     }
 
     public static String getPathForVectorRsaEncryptStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), 3) + VEC_EXTENSION + RSA_EXTENSION;
+        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + VEC_EXTENSION + RSA_EXTENSION;
     }
 
     public static String getPathForVectorGeneratorStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), 3) + VEC_EXTENSION;
+        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + VEC_EXTENSION;
     }
 
     public static String getPathForZipStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), 3) + XML_EXTENSION + ZIP_EXTENSION;
+        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + XML_EXTENSION + ZIP_EXTENSION;
     }
 
     public static String getPathForAesEncryptStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), 3) + XML_EXTENSION + ZIP_EXTENSION + AES_EXTENSION;
+        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + XML_EXTENSION + ZIP_EXTENSION
+               + AES_EXTENSION;
     }
 
     public static String getPathForAesDecryptStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), 3) + XML_EXTENSION + ZIP_EXTENSION;
+        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + XML_EXTENSION + ZIP_EXTENSION;
     }
 
     static String getPathForFormalValidation(JpkConfiguration config) {
