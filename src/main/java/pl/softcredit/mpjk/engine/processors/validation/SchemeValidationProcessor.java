@@ -7,7 +7,7 @@ import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import static pl.softcredit.mpjk.engine.utils.JpkUtils.checkSchemeFormat;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.validateScheme;
 
 public class SchemeValidationProcessor implements JpkProcessor {
 
@@ -16,7 +16,7 @@ public class SchemeValidationProcessor implements JpkProcessor {
     @Override
     public void process(JpkConfiguration config) throws JpkException {
 
-        String result = checkSchemeFormat(config.getSchemeFilePath());
+        String result = validateScheme(config.getSchemeFilePath());
 
         if (!"VALID".equals(result)) {
             LOGGER.error("Scheme is invalid: " + config.getSchemeFilePath());

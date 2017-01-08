@@ -10,10 +10,10 @@ import static java.io.File.separator;
 import static org.apache.commons.io.FileUtils.cleanDirectory;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
-import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH_FROM_RESOURCES;
-import static pl.softcredit.mpjk.engine.TestPaths.ZIPPED_FILE_PATH;
+import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_1;
 import static pl.softcredit.mpjk.engine.utils.JpkZip.unzipFile;
 import static pl.softcredit.mpjk.engine.utils.JpkZip.zipFile;
 
@@ -21,19 +21,19 @@ public class JpkZipTest {
 
     @Before
     public void setUp() throws IOException {
-        cleanDirectory(new File(TEMP_WORKING_DIR));
+        cleanDirectory(new File(WORKING_DIR_PATH_IN_TARGET));
     }
 
     @Test
     public void shouldZipAndUnzipFile() throws Exception {
-        zipFile(VALID_FILE_PATH_FROM_RESOURCES, ZIPPED_FILE_PATH);
+        zipFile(XML_FILE_PATH_IN_RESOURCES_VERSION_1, ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_1);
 
-        assertThat(new File(ZIPPED_FILE_PATH)).exists();
+        assertThat(new File(ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_1)).exists();
 
-        unzipFile(ZIPPED_FILE_PATH, TEMP_WORKING_DIR);
+        unzipFile(ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_1, WORKING_DIR_PATH_IN_TARGET);
 
-        File unzippedFile = new File(TEMP_WORKING_DIR + separator + VALID_FILE_NAME);
-        File fileFromResources = new File(VALID_FILE_PATH_FROM_RESOURCES);
+        File unzippedFile = new File(WORKING_DIR_PATH_IN_TARGET + separator + XML_FILE_NAME_SCHEME_VERSION_1);
+        File fileFromResources = new File(XML_FILE_PATH_IN_RESOURCES_VERSION_1);
 
         assertThat(unzippedFile).exists();
         assertThat(fileFromResources).exists();

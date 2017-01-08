@@ -8,10 +8,10 @@ import java.io.File;
 
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
 import static org.assertj.core.api.Assertions.assertThat;
-import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_MF;
-import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_RESOURCES;
-import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_FROM_RESOURCES;
-import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH_FROM_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_PATH_IN_RESOURCES_VERSION_1;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.calculateMD5;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.calculateSHA256;
 import static pl.softcredit.mpjk.engine.utils.JpkCrypt.decodeBase64;
@@ -34,7 +34,7 @@ public class JpkCryptTest {
 
     @Test
     public void shouldEncryptAndDecryptByteArray() throws Exception {
-        byte[] fileToEncrypt = readFileToByteArray(new File(VALID_FILE_PATH_FROM_RESOURCES));
+        byte[] fileToEncrypt = readFileToByteArray(new File(XML_FILE_PATH_IN_RESOURCES_VERSION_1));
         byte[] aesEncryptedBytes = encryptAES256(KEY_FROM_MF.getBytes(), VECTOR_FROM_MF.getBytes(), fileToEncrypt);
         byte[] aesDecryptedBytes = decryptAES256(KEY_FROM_MF.getBytes(), VECTOR_FROM_MF.getBytes(), aesEncryptedBytes);
 
@@ -44,7 +44,7 @@ public class JpkCryptTest {
 
     @Test
     public void shouldCalculateSHA256() throws Exception {
-        byte[] fileBytes = readFileToByteArray(new File(VALID_FILE_PATH_FROM_RESOURCES));
+        byte[] fileBytes = readFileToByteArray(new File(XML_FILE_PATH_IN_RESOURCES_VERSION_1));
         byte[] sha256bytes = calculateSHA256(fileBytes);
 
         assertThat(encodeBase64(sha256bytes)).isEqualTo(SHA256_BASE64_ENCODED_VALID_FILE);
@@ -52,7 +52,7 @@ public class JpkCryptTest {
 
     @Test
     public void shouldEncodeAndDecodeBase64() throws Exception {
-        byte[] fileBytes = readFileToByteArray(new File(VALID_FILE_PATH_FROM_RESOURCES));
+        byte[] fileBytes = readFileToByteArray(new File(XML_FILE_PATH_IN_RESOURCES_VERSION_1));
         byte[] sha256bytes = calculateSHA256(fileBytes);
 
         assertThat(encodeBase64(sha256bytes)).isEqualTo(SHA256_BASE64_ENCODED_VALID_FILE);
@@ -67,12 +67,12 @@ public class JpkCryptTest {
 
     @Test
     public void shouldCalculateMD5() throws Exception {
-        byte[] fileBytes = readFileToByteArray(new File(AES_FILE_PATH_FROM_RESOURCES));
+        byte[] fileBytes = readFileToByteArray(new File(AES_FILE_PATH_IN_RESOURCES_VERSION_1));
         byte[] md5bytes = calculateMD5(fileBytes);
 
         assertThat(encodeBase64(md5bytes)).isEqualTo(MD5_BASE64_ENCODED_AES_FILE);
 
-        fileBytes = readFileToByteArray(new File(AES_FILE_PATH_FROM_MF));
+        fileBytes = readFileToByteArray(new File(AES_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_1));
         md5bytes = calculateMD5(fileBytes);
 
         assertThat(encodeBase64(md5bytes)).isEqualTo(MD5_BASE64_ENCODED_AES_FILE_FROM_MF);
@@ -80,13 +80,13 @@ public class JpkCryptTest {
 
     @Test
     public void shouldLoadPublicKeyFromTestCertificateDeliveredByMf() throws Exception {
-       loadRsaPublicKey(RSA_KEY_FILE_PATH_FROM_RESOURCES);
+       loadRsaPublicKey(RSA_KEY_FILE_PATH_IN_RESOURCES_VERSION_1);
     }
 
     @Test
     public void shouldEncryptKeyByRsaWithPublicKeyFromTestCertificateDeliveredByMF() throws Exception {
         byte[] keyBytes = KEY_FROM_MF.getBytes();
-        byte[] rsaBytes = encryptRsa(RSA_KEY_FILE_PATH_FROM_RESOURCES, keyBytes);
+        byte[] rsaBytes = encryptRsa(RSA_KEY_FILE_PATH_IN_RESOURCES_VERSION_1, keyBytes);
 
         assertThat(encodeBase64(rsaBytes)).hasSize(344);
     }

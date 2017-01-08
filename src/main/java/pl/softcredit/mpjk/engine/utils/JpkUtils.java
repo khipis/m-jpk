@@ -18,6 +18,7 @@ import static javax.xml.validation.SchemaFactory.newInstance;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.AES_EXTENSION;
+import static pl.softcredit.mpjk.engine.utils.JpkExtensions.BASE64_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.KEY_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.MD5_EXTENSION;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.RSA_EXTENSION;
@@ -71,11 +72,7 @@ public class JpkUtils {
     }
 
     public static String getPathForKeyRsaEncryptStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + KEY_EXTENSION + RSA_EXTENSION;
-    }
-
-    public static String getPathForVectorRsaEncryptStage(JpkConfiguration config) {
-        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + VEC_EXTENSION + RSA_EXTENSION;
+        return removeNExtensions(getOutputPath(config), EXTENSIONS_TO_REMOVE_COUNT) + KEY_EXTENSION + RSA_EXTENSION + BASE64_EXTENSION;
     }
 
     public static String getPathForVectorGeneratorStage(JpkConfiguration config) {

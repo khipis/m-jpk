@@ -41,15 +41,14 @@ import xades4j.verification.UnexpectedJCAException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_MF;
-import static pl.softcredit.mpjk.engine.TestPaths.INVALID_SCHEME_PATH;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.INVALID_SCHEME_PATH_IN_RESOURCES_VERSION_1;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_FILE_NAME;
-import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_FROM_MF_PATH_FROM_RESOURCES;
-import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH_FROM_RESOURCES;
-import static pl.softcredit.mpjk.engine.TestPaths.VALID_SCHEME_PATH;
-import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_FROM_MF;
-import static pl.softcredit.mpjk.engine.utils.JpkUtils.*;
+import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_FROM_MF_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_1;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameFromInputFilePath;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameWithoutExtension;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getContentLength;
@@ -62,8 +61,8 @@ import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForKeyRsaEncryptSt
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForMd5GeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForShaGeneratorStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorGeneratorStage;
-import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForVectorRsaEncryptStage;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
+import static pl.softcredit.mpjk.engine.utils.JpkUtils.validateScheme;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -74,20 +73,20 @@ public class JpkUtilsTest {
 
     @Before
     public void setUp() {
-        when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
+        when(config.getWorkingDirectoryPath()).thenReturn(WORKING_DIR_PATH_IN_TARGET);
         when(config.getInputFilePath()).thenReturn(TEMP_FILE_NAME);
     }
 
     @Test
     public void shouldReturnValidWhenSchemeIsValid() throws Exception {
-        String result = validateScheme(VALID_SCHEME_PATH);
+        String result = validateScheme(JPK_VAT_SCHEME_FILE_NAME_VERSION_1_PATH_IN_RESOURCES_VERSION_1);
 
         assertThat(result).isEqualTo("VALID");
     }
 
     @Test
     public void shouldReturnValidationResultWhenSchemeIsInvalid() throws Exception {
-        String result = validateScheme(INVALID_SCHEME_PATH);
+        String result = validateScheme(INVALID_SCHEME_PATH_IN_RESOURCES_VERSION_1);
 
         assertThat(result).isEqualTo(
                 "org.xml.sax.SAXParseException; systemId: file:"
@@ -130,14 +129,7 @@ public class JpkUtilsTest {
     public void shouldGetOutputPathForKeyRsaEncryptStage() throws Exception {
         String result = getPathForKeyRsaEncryptStage(config);
 
-        assertThat(result).isEqualTo("target/working-dir\\tempfile.key.rsa");
-    }
-
-    @Test
-    public void shouldGetOutputPathForVecRsaEncryptStage() throws Exception {
-        String result = getPathForVectorRsaEncryptStage(config);
-
-        assertThat(result).isEqualTo("target/working-dir\\tempfile.vec.rsa");
+        assertThat(result).isEqualTo("target/working-dir\\tempfile.key.rsa.base64");
     }
 
     @Test
@@ -211,16 +203,16 @@ public class JpkUtilsTest {
 
     @Test
     public void shouldGetContentLength() throws Exception {
-        long result = getContentLength(new File(AES_FILE_PATH_FROM_MF));
+        long result = getContentLength(new File(AES_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_1));
         assertThat(result).isEqualTo(800L);
 
-        result = getContentLength(new File(ZIP_FILE_PATH_FROM_MF));
+        result = getContentLength(new File(ZIP_FILE_PATH_FROM_MF_IN_RESOURCES_VERSION_1));
         assertThat(result).isEqualTo(797L);
 
-        result = getContentLength(new File(VALID_FILE_PATH_FROM_RESOURCES));
+        result = getContentLength(new File(XML_FILE_PATH_IN_RESOURCES_VERSION_1));
         assertThat(result).isEqualTo(1393L);
 
-        result = getContentLength(new File(VALID_FILE_FROM_MF_PATH_FROM_RESOURCES));
+        result = getContentLength(new File(XML_FILE_FROM_MF_IN_RESOURCES_VERSION_1));
         assertThat(result).isEqualTo(1393L);
     }
 
@@ -262,7 +254,7 @@ public class JpkUtilsTest {
             };
 
             // plik xml do podpisania
-            String inputFile = VALID_FILE_FROM_MF_PATH_FROM_RESOURCES;
+            String inputFile = XML_FILE_FROM_MF_IN_RESOURCES_VERSION_1;
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             dbf.setNamespaceAware(true);
             DocumentBuilder db = dbf.newDocumentBuilder();

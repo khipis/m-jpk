@@ -13,10 +13,10 @@ import pl.softcredit.mpjk.engine.processors.JpkProcessor;
 
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
-import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
-import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR_PATH_IN_TEST_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_1;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SchemeValidationProcessorTest {
@@ -31,7 +31,7 @@ public class SchemeValidationProcessorTest {
 
     @Test
     public void shouldThrowJpkExceptionWhenSchemeIsInvalidAtAll() throws Exception {
-        whenConfigurationWith(VALID_FILE_NAME, "invalidScheme.xsd");
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, "invalidScheme.xsd");
 
         expectedException.expect(JpkException.class);
         expectedException.expectMessage(
@@ -43,9 +43,9 @@ public class SchemeValidationProcessorTest {
     }
 
     private void whenConfigurationWith(String inputFile, String schemeFile) {
-        when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
-        when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR + schemeFile);
-        when(config.getInputFilePath()).thenReturn(RESOURCES_INPUT_FILES + inputFile);
+        when(config.getWorkingDirectoryPath()).thenReturn(WORKING_DIR_PATH_IN_TARGET);
+        when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR_PATH_IN_TEST_RESOURCES + schemeFile);
+        when(config.getInputFilePath()).thenReturn(INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES + inputFile);
     }
 
 }

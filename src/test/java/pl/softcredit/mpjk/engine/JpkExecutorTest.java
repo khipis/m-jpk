@@ -22,16 +22,16 @@ import static org.apache.commons.io.FileUtils.cleanDirectory;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH;
-import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE;
-import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
-import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_FROM_RESOURCES;
-import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
-import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestPaths.VALIDATION_FILE_NAME;
-import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
-import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH;
-import static pl.softcredit.mpjk.engine.TestPaths.ZIPPED_FILE_PATH;
+import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_IN_WORKING_DIR_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.RSA_KEY_FILE_PATH_IN_RESOURCES_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR_PATH_IN_TEST_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
+import static pl.softcredit.mpjk.engine.TestPaths.VALIDATION_FILE_NAME_SCHEME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_PATH_IN_WORKING_DIR_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_1;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.getProcessingFlow;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getContentLength;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.getPathForZipStage;
@@ -54,8 +54,8 @@ public class JpkExecutorTest {
 
     @Before
     public void setUp() throws IOException, JpkException {
-        cleanDirectory(new File(TEMP_WORKING_DIR));
-        whenConfigurationWith(VALID_FILE_NAME, JPK_VAT_SCHEME_FILE);
+        cleanDirectory(new File(WORKING_DIR_PATH_IN_TARGET));
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
     }
 
     @Test
@@ -71,19 +71,20 @@ public class JpkExecutorTest {
     }
 
     private void assertContentLength() {
-        long result = getContentLength(new File(ZIPPED_FILE_PATH));
+        long result = getContentLength(new File(ZIP_FILE_PATH_IN_WORKING_DIR_VERSION_1));
 
         assertThat(result).isEqualTo(797L);
 
-        result = getContentLength(new File(AES_FILE_PATH));
+        result = getContentLength(new File(AES_FILE_PATH_IN_WORKING_DIR_VERSION_1));
 
         assertThat(result).isEqualTo(1393L);
     }
 
     private void assertUnzippedContent(String fileContent) throws JpkException, IOException {
-        unzipFile(getPathForZipStage(config), TEMP_WORKING_DIR);
+        unzipFile(getPathForZipStage(config), WORKING_DIR_PATH_IN_TARGET);
 
-        String unzippedFileContent = readFileToString(new File(VALID_FILE_PATH));
+        String unzippedFileContent = readFileToString(new File(
+                XML_FILE_PATH_IN_WORKING_DIR_VERSION_1));
 
         assertThat(fileContent).isEqualTo(unzippedFileContent);
     }
@@ -92,18 +93,18 @@ public class JpkExecutorTest {
     public void shouldPerformOnlyFormalValidation() throws JpkException, IOException {
         new JpkExecutor(config).execute(getProcessingFlow("FORMAL_VALIDATION"));
 
-        File[] files = new File(TEMP_WORKING_DIR).listFiles();
+        File[] files = new File(WORKING_DIR_PATH_IN_TARGET).listFiles();
 
         assertThat(files).hasSize(1);
         assertThat(files[0]).exists();
-        assertThat(files[0].getName()).isEqualTo(VALIDATION_FILE_NAME);
+        assertThat(files[0].getName()).isEqualTo(VALIDATION_FILE_NAME_SCHEME_VERSION_1);
     }
 
     private void whenConfigurationWith(String inputFile, String schemeFile) {
-        when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
-        when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR + schemeFile);
-        when(config.getInputFilePath()).thenReturn(RESOURCES_INPUT_FILES + inputFile);
-        when(config.getRsaKeyPath()).thenReturn(RSA_KEY_FILE_PATH_FROM_RESOURCES);
+        when(config.getWorkingDirectoryPath()).thenReturn(WORKING_DIR_PATH_IN_TARGET);
+        when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR_PATH_IN_TEST_RESOURCES + schemeFile);
+        when(config.getInputFilePath()).thenReturn(INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES + inputFile);
+        when(config.getRsaKeyPath()).thenReturn(RSA_KEY_FILE_PATH_IN_RESOURCES_VERSION_1);
     }
 
 }

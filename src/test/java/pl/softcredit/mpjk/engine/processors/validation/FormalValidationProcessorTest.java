@@ -19,13 +19,13 @@ import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.when;
-import static pl.softcredit.mpjk.engine.TestPaths.FILE_CONTENT;
-import static pl.softcredit.mpjk.engine.TestPaths.INVALID_FILE;
-import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE;
-import static pl.softcredit.mpjk.engine.TestPaths.RESOURCES_INPUT_FILES;
-import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
-import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
-import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_CONTENT;
+import static pl.softcredit.mpjk.engine.TestPaths.INVALID_XML_FILE;
+import static pl.softcredit.mpjk.engine.TestPaths.JPK_VAT_SCHEME_FILE_NAME_VERSION_1;
+import static pl.softcredit.mpjk.engine.TestPaths.INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR_PATH_IN_TEST_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.WORKING_DIR_PATH_IN_TARGET;
+import static pl.softcredit.mpjk.engine.TestPaths.XML_FILE_NAME_SCHEME_VERSION_1;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.VALIDATION_EXTENSION;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,31 +41,31 @@ public class FormalValidationProcessorTest {
 
     @Test
     public void shouldReturnFileWithContentValidIfFileIsValidToScheme() throws Exception {
-        whenConfigurationWith(VALID_FILE_NAME, JPK_VAT_SCHEME_FILE);
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
 
         formalValidationProcessor.process(config);
 
-        assertFile(VALID_FILE_NAME, FILE_CONTENT);
+        assertFile(XML_FILE_NAME_SCHEME_VERSION_1, VALID_FILE_CONTENT);
     }
 
     @Test
     public void shouldReturnFileWithErrorDescriptionWhenFileIsInvalidToScheme() throws Exception {
-        whenConfigurationWith(INVALID_FILE, JPK_VAT_SCHEME_FILE);
+        whenConfigurationWith(INVALID_XML_FILE, JPK_VAT_SCHEME_FILE_NAME_VERSION_1);
         expectedException.expect(JpkException.class);
 
         formalValidationProcessor.process(config);
 
-        assertFile(INVALID_FILE, "Invalid content was found starting with element");
+        assertFile(INVALID_XML_FILE, "Invalid content was found starting with element");
     }
 
     @Test
     public void shouldReturnFileWithErrorDescriptionWhenSchemeIsInvalidToFile() throws Exception {
-        whenConfigurationWith(VALID_FILE_NAME, "Schemat_JPK_VAT(2)_v1-0.xsd");
+        whenConfigurationWith(XML_FILE_NAME_SCHEME_VERSION_1, "Schemat_JPK_VAT(2)_v1-0.xsd");
         expectedException.expect(JpkException.class);
 
         formalValidationProcessor.process(config);
 
-        assertFile(VALID_FILE_NAME, "Cannot find the declaration of element 'tns:JPK'.");
+        assertFile(XML_FILE_NAME_SCHEME_VERSION_1, "Cannot find the declaration of element 'tns:JPK'.");
     }
 
     private void assertFile(String inputFile, String content) throws IOException {
@@ -75,13 +75,13 @@ public class FormalValidationProcessorTest {
     }
 
     private void whenConfigurationWith(String inputFile, String schemeFile) {
-        when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
-        when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR + schemeFile);
-        when(config.getInputFilePath()).thenReturn(RESOURCES_INPUT_FILES + inputFile);
+        when(config.getWorkingDirectoryPath()).thenReturn(WORKING_DIR_PATH_IN_TARGET);
+        when(config.getSchemeFilePath()).thenReturn(SCHEMES_DIR_PATH_IN_TEST_RESOURCES + schemeFile);
+        when(config.getInputFilePath()).thenReturn(INPUT_FILES_DIR_PATH_IN_TEST_RESOURCES + inputFile);
     }
 
     private File getValidatedFile(String inputFile) {
-        return new File(TEMP_WORKING_DIR + separator + inputFile + VALIDATION_EXTENSION);
+        return new File(WORKING_DIR_PATH_IN_TARGET + separator + inputFile + VALIDATION_EXTENSION);
     }
 
 }
