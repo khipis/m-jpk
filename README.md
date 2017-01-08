@@ -4,7 +4,15 @@ Integracja z mFirma -> Jednolity Plik Kontrolny
 
 Obecnie dostepne funkcjonalnosci
     
-    -formalna walidacja pliku na podstawie schemy
+    -formalna walidacja pliku na podstawie schemy do pliku filename.xml.validation
+    -obliczanie skrotu SHA256 z pliku filename.xml do pliku filename.sha
+    -generowanie pliku ZIP do pliku filename.xml.zip
+    -generowanie klucza AES do pliku filename.key
+    -generowanie wektora AES do pliku filename.vec
+    -enkodowanie wektora AES do BASE64 do filename.vec.base64
+    -szyfrowanie klucza algorytmem RSA i zapis w BASE64 do pliku filename.key.rsa.base64
+    -szyfrowanie pliku ZIP algorytmem AES do pliku filename.xml.zip.aes
+    -wyliczanie skrotu MD5 z pliku filename.xml.zip.aes do filename.xml.zip.aes.md5
 
 Z punktu widzenia wdrozenia najwazniejszy jest katalog release, opis zawartosci:
 
