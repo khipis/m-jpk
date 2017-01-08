@@ -1,9 +1,16 @@
 package pl.softcredit.mpjk.engine.utils;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.security.interfaces.RSAPublicKey;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -14,6 +21,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import static java.lang.System.*;
 import static javax.crypto.Cipher.DECRYPT_MODE;
 import static javax.crypto.Cipher.ENCRYPT_MODE;
 import static javax.crypto.Cipher.getInstance;
@@ -24,6 +32,53 @@ public class JpkCrypt {
 
     private JpkCrypt() {
     }
+
+    public static byte[] encryptRsa(String certificatePath, byte[] fileToEncrypt)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, IOException,
+                   CertificateException, InvalidKeyException, BadPaddingException,
+                   IllegalBlockSizeException {
+
+        try (InputStream inStream = new FileInputStream(certificatePath)) {
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            X509Certificate cert = (X509Certificate) cf.generateCertificate(inStream);
+
+
+            RSAPublicKey pubkey = (RSAPublicKey) cert.getPublicKey();
+            byte[] tempPub = pubkey.getEncoded();
+
+            out.println("Public key from certificate file:\n" + hex(new String(tempPub)) + "\n");
+            out.println("Public Key Algorithm = " + cert.getPublicKey().getAlgorithm() + "\n");
+            out.println("Plain message:\n" + new String(fileToEncrypt) + "\n");
+
+            cipher.init(Cipher.ENCRYPT_MODE, pubkey);
+
+            return cipher.doFinal(fileToEncrypt);
+        }
+
+    }
+
+
+    private static String hex(String binStr) {
+
+        String newStr = new String();
+
+        try {
+            String hexStr = "0123456789ABCDEF";
+            byte[] p = binStr.getBytes();
+            for (int k = 0; k < p.length; k++) {
+                int j = (p[k] >> 4) & 0xF;
+                newStr = newStr + hexStr.charAt(j);
+                j = p[k] & 0xF;
+                newStr = newStr + hexStr.charAt(j) + " ";
+            }
+        } catch (Exception e) {
+            out.println("Failed to convert into hex values: " + e);
+        }
+        return newStr;
+    }
+
 
     public static byte[] encryptAES256(byte[] key, byte[] vector, byte[] fileToEncrypt)
             throws InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException,

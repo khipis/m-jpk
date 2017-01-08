@@ -22,6 +22,7 @@ import static pl.softcredit.mpjk.engine.TestPaths.SCHEMES_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestPaths.VEC_FILE_NAME;
+import static pl.softcredit.mpjk.engine.TestPaths.VEC_FILE_NAME_BASE64;
 import static pl.softcredit.mpjk.engine.processors.JpkProcessors.VECTOR_GENERATOR_STAGE_PROCESSOR;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -43,6 +44,7 @@ public class VectorGeneratorStageProcessorTest {
         vectorGeneratorStageProcessor.process(config);
 
         assertFile(VEC_FILE_NAME);
+        assertFile(VEC_FILE_NAME_BASE64);
     }
 
     private void assertFile(String inputFile) throws IOException {

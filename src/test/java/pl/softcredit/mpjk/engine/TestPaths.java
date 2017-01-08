@@ -17,6 +17,7 @@ public class TestPaths {
     public static final String KEY_FILE_NAME = "valid_JPK_VAT(1)_file.key";
     public static final String SHA_FILE_NAME = "valid_JPK_VAT(1)_file.sha";
     public static final String VEC_FILE_NAME = "valid_JPK_VAT(1)_file.vec";
+    public static final String VEC_FILE_NAME_BASE64 = "valid_JPK_VAT(1)_file.vec.base64";
     public static final String INVALID_FILE = "invalid_JPK_VAT(1)_file.xml";
     public static final String JPK_VAT_SCHEME_FILE = "Schemat_JPK_VAT(1)_v1-0.xsd";
     public static final String NOT_EXISTED_FILE = "not_existed_file";
