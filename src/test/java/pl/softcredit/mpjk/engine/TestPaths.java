@@ -16,6 +16,8 @@ public class TestPaths {
     public static final String RESOURCES_INPUT_FILES = "src/test/resources/input-files/";
     public static final String VALID_FILE_NAME = "valid_JPK_VAT(1)_file.xml";
     public static final String VALIDATION_FILE_NAME = "valid_JPK_VAT(1)_file.xml.validation";
+    public static final String INVALID_SCHEME_NAME = "invalidScheme.xsd";
+    public static final String VALID_JPK_VAT_SCHEME_NAME = "Schemat_JPK_VAT(1)_v1-0.xsd";
     public static final String ZIP_FILE_NAME = "valid_JPK_VAT(1)_file.xml.zip";
     public static final String AES_FILE_NAME = "valid_JPK_VAT(1)_file.xml.zip.aes";
     public static final String MD5_FILE_NAME = "valid_JPK_VAT(1)_file.xml.zip.aes.md5";
@@ -39,6 +41,8 @@ public class TestPaths {
     public static final String ZIPPED_FILE_PATH = TEMP_WORKING_DIR + separator + VALID_FILE_NAME + ZIP_EXTENSION;
     public static final String RSA_KEY_FILE_PATH = TEMP_WORKING_DIR + separator + KEY_FILE_NAME + RSA_EXTENSION;
     public static final String VALID_FILE_PATH = TEMP_WORKING_DIR + separator + VALID_FILE_NAME;
+    public static final String INVALID_SCHEME_PATH = SCHEMES_DIR + separator + INVALID_SCHEME_NAME;
+    public static final String VALID_SCHEME_PATH = SCHEMES_DIR + separator + VALID_JPK_VAT_SCHEME_NAME;
     public static final String EXCEPTION_MESSAGE = "some exception message" ;
 
     public static void assertFile(String inputFile) throws IOException {

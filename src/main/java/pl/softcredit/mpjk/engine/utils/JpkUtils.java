@@ -1,14 +1,20 @@
 package pl.softcredit.mpjk.engine.utils;
 
 import org.slf4j.Logger;
+import org.xml.sax.SAXException;
 
+import pl.softcredit.mpjk.JpkException;
 import pl.softcredit.mpjk.core.configuration.JpkConfiguration;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.xml.validation.SchemaFactory;
+
 import static java.io.File.separator;
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
+import static javax.xml.validation.SchemaFactory.newInstance;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.AES_EXTENSION;
@@ -27,6 +33,17 @@ public class JpkUtils {
     private static final int EXTENSIONS_TO_REMOVE_COUNT = 3;
 
     private JpkUtils() {
+    }
+
+    public static String checkSchemeFormat(String schemeFilePath) throws JpkException {
+        try {
+            File schemaFile = new File(schemeFilePath);
+            SchemaFactory schemaFactory = newInstance(W3C_XML_SCHEMA_NS_URI);
+            schemaFactory.newSchema(schemaFile);
+            return "VALID";
+        } catch (SAXException e) {
+            return e.toString();
+        }
     }
 
     public static String getPathForKeyGeneratorStage(JpkConfiguration config) {

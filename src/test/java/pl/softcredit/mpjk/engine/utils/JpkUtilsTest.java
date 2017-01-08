@@ -42,10 +42,12 @@ import xades4j.verification.UnexpectedJCAException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static pl.softcredit.mpjk.engine.TestPaths.AES_FILE_PATH_FROM_MF;
+import static pl.softcredit.mpjk.engine.TestPaths.INVALID_SCHEME_PATH;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_FILE_NAME;
 import static pl.softcredit.mpjk.engine.TestPaths.TEMP_WORKING_DIR;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_FROM_MF_PATH_FROM_RESOURCES;
 import static pl.softcredit.mpjk.engine.TestPaths.VALID_FILE_PATH_FROM_RESOURCES;
+import static pl.softcredit.mpjk.engine.TestPaths.VALID_SCHEME_PATH;
 import static pl.softcredit.mpjk.engine.TestPaths.ZIP_FILE_PATH_FROM_MF;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameFromInputFilePath;
 import static pl.softcredit.mpjk.engine.utils.JpkUtils.extractFileNameWithoutExtension;
@@ -73,6 +75,24 @@ public class JpkUtilsTest {
     public void setUp() {
         when(config.getWorkingDirectoryPath()).thenReturn(TEMP_WORKING_DIR);
         when(config.getInputFilePath()).thenReturn(TEMP_FILE_NAME);
+    }
+
+    @Test
+    public void shouldReturnValidWhenSchemeIsValid() throws Exception {
+        String result = JpkUtils.checkSchemeFormat(VALID_SCHEME_PATH);
+
+        assertThat(result).isEqualTo("VALID");
+    }
+
+    @Test
+    public void shouldReturnValidationResultWhenSchemeIsInvalid() throws Exception {
+        String result = JpkUtils.checkSchemeFormat(INVALID_SCHEME_PATH);
+
+        assertThat(result).isEqualTo(
+                "org.xml.sax.SAXParseException; systemId: file:"
+                + "/G:/work/m-jpk/src/test/resources/schemes/invalidScheme.xsd; lineNumber: 3; columnNumber: 3;"
+                + " The element type \"xsd:schema\" must be terminated by the matching end-tag \"</xsd:schema>\"."
+        );
     }
 
     @Test
@@ -241,7 +261,7 @@ public class JpkUtilsTest {
             };
 
             // plik xml do podpisania
-            String inputFile = "Sciezka do xml-a do podpisania";
+            String inputFile = VALID_FILE_FROM_MF_PATH_FROM_RESOURCES;
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             dbf.setNamespaceAware(true);
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -265,7 +285,7 @@ public class JpkUtilsTest {
             signer.sign(dataObjs, inDoc.getDocumentElement());
 
             // Zapis podpisanego pliku
-            String outputFile = "Sciezka do wynikowego pliku xades";
+            String outputFile = "G:\\eee.xml";
             OutputStream os = new FileOutputStream(outputFile);
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer trans = tf.newTransformer();

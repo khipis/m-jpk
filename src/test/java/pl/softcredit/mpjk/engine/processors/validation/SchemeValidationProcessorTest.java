@@ -34,6 +34,10 @@ public class SchemeValidationProcessorTest {
         whenConfigurationWith(VALID_FILE_NAME, "invalidScheme.xsd");
 
         expectedException.expect(JpkException.class);
+        expectedException.expectMessage(
+                "org.xml.sax.SAXParseException; systemId: file:/G:/work/m-jpk/src/test/resources/schemes/invalidScheme.xsd; "
+                + "lineNumber: 3; columnNumber: 3; The element type \"xsd:schema\" must be terminated by the matching end-tag \""
+                + "</xsd:schema>\".");
 
         schemeValidationProcessor.process(config);
     }
