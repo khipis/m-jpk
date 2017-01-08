@@ -1,6 +1,10 @@
 package pl.softcredit.mpjk.engine;
 
+import java.io.File;
+import java.io.IOException;
+
 import static java.io.File.separator;
+import static org.assertj.core.api.Assertions.assertThat;
 import static pl.softcredit.mpjk.engine.utils.JpkExtensions.ZIP_EXTENSION;
 
 public class TestPaths {
@@ -15,6 +19,7 @@ public class TestPaths {
     public static final String AES_FILE_NAME = "valid_JPK_VAT(1)_file.xml.zip.aes";
     public static final String MD5_FILE_NAME = "valid_JPK_VAT(1)_file.xml.zip.aes.md5";
     public static final String KEY_FILE_NAME = "valid_JPK_VAT(1)_file.key";
+    public static final String RSA_KEY_FILE_NAME = "valid_JPK_VAT(1)_file.key.rsa";
     public static final String SHA_FILE_NAME = "valid_JPK_VAT(1)_file.sha";
     public static final String VEC_FILE_NAME = "valid_JPK_VAT(1)_file.vec";
     public static final String VEC_FILE_NAME_BASE64 = "valid_JPK_VAT(1)_file.vec.base64";
@@ -31,4 +36,13 @@ public class TestPaths {
     public static final String ZIPPED_FILE_PATH = TEMP_WORKING_DIR + separator + VALID_FILE_NAME + ZIP_EXTENSION;
     public static final String VALID_FILE_PATH = TEMP_WORKING_DIR + separator + VALID_FILE_NAME;
     public static final String EXCEPTION_MESSAGE = "some exception message" ;
+
+    public static void assertFile(String inputFile) throws IOException {
+        File createdFile = getValidatedFile(inputFile);
+        assertThat(createdFile).exists();
+    }
+
+    private static File getValidatedFile(String inputFile) {
+        return new File(TEMP_WORKING_DIR + separator + inputFile);
+    }
 }

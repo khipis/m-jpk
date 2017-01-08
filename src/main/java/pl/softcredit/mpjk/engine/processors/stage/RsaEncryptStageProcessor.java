@@ -19,19 +19,13 @@ public class RsaEncryptStageProcessor implements JpkProcessor {
 
     @Override
     public void process(JpkConfiguration config) throws JpkException {
-
         String keyRsaFileOutputPath = getPathForKeyRsaEncryptStage(config);
-        String vecRsaFileOutputPath = getPathForKeyRsaEncryptStage(config);
-        LOGGER.info("Generating Key RSA to: " + keyRsaFileOutputPath);
-        LOGGER.info("Generating Vec RSA to: " + vecRsaFileOutputPath);
+        LOGGER.info("Encrypt Key RSA to: " + keyRsaFileOutputPath);
 
         try {
-
             writeStringToFile(new File(keyRsaFileOutputPath), "key");
-            writeStringToFile(new File(vecRsaFileOutputPath), "vec");
-
         } catch (IOException e) {
-            LOGGER.error("Problem while saving SHA256 to file");
+            LOGGER.error("Problem while saving RSA encrypted key to file");
             throw new JpkException(e);
         }
     }
