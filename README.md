@@ -67,8 +67,6 @@ W przypadku checi przeprowadzenia tylko formalnej walidacji:
     
 Sciezke nalezy rozdzielac podwojnym \\ przyklad -> C:\\windows\\temp (Do potwierdzenia)
     
-Wszystkie nowe parametry beda dodawane w tym pliku. (np wartosc bool czy wykonywac formalna walidacje, parametry polaczenia z brama jpk)
-
 URUCHAMIANIE APLIKACJI
 ==========================
 W katalogu release przygotowane sa 4 skrypty uruchamiajace aplikacje na dostarczonej JRE. Przyklad zawartosci pliku:
